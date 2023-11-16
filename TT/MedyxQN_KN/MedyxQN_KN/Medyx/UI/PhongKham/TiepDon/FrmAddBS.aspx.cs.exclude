@@ -1,0 +1,1560 @@
+﻿using System;
+using System.Collections.Generic;
+using HTC.Common.Web;
+using System.IO;
+using System.Web.Script.Serialization;
+using System.Text.RegularExpressions;
+using System.Globalization;
+using System.Net;
+using System.Text;
+using System.Data;
+using System.Configuration;
+using System.Data.SqlClient;
+using Telerik.Web.UI;
+using System.Web;
+
+public partial class UI_PhongKham_Reports_FrmAddBS : WebBase
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            base.Page_PreLoad(sender, e);
+            SetData();
+        }
+    }
+    
+    private void SetData()
+    {
+        txtMaBS.Focus();
+    }
+    protected void baraction_ButtonClick(object sender, RadToolBarEventArgs e)
+    {
+        switch (e.Item.Value)
+        {
+            case "cmdPrint":
+                if (CheckData() == true)
+                {
+                    //string portdnkcb = "http://beta.donthuocdientu.vn/api";
+                    //string username = "0145923";
+                    //string pass = "TtzYoA0qdw";
+                    string portdnkcb = "";
+                    string username = "";
+                    string pass = "";
+                    string loaitoken = "DTDT";
+                    DataTable dt = GetPort(loaitoken);
+                    if (dt.Rows.Count > 0)
+                    {
+                        portdnkcb = dt.Rows[0][0].ToString();
+                        username = dt.Rows[0][1].ToString();
+                        pass = dt.Rows[0][2].ToString();
+                    }
+                    try
+                    {
+                        DTDTAPI rf = new DTDTAPI();
+                        string token = rf.dangnhapCoSoKCB(portdnkcb, username, pass);
+                        //string malienthongbs = "0156MEDYX-CCHN";
+                        string malienthongbs = txtMaBS.Text.Trim();
+                        string kq = rf.themBS(portdnkcb, malienthongbs, token);
+                        UpdateMaLTDT(cboBacSy.SelectedValue, malienthongbs, txtpass.Text.Trim());
+                        ShowMessage(kq);
+                    }
+                    catch (Exception ex)
+                    {
+                        WriteLog("Loi: " + ex.ToString());
+                    }
+                }
+                break;
+            case "cmdExit":
+                Response.Redirect("~/Default.aspx");
+                break;
+            //case "exitcmdPrint":
+            //    ReportData = null;
+            //    //HTCReportViewer1.UnLoadReport();
+
+            //    break;
+            default:
+                break;
+        }
+    }
+    public bool CheckData()
+    {
+        if (txtMaBS.Text.Trim().Length == 0)
+        {
+            ShowMessage("Nhập mã liên thông của bác sĩ!");
+            txtMaBS.Focus();
+            return false;
+        }
+        else if (cboBacSy.SelectedValue == "")
+        {
+            ShowMessage("Nhập họ tên của bác sĩ!");
+            cboBacSy.Focus();
+            return false;
+        }
+        else if (txtpass.Text.Trim().Length == 0)
+        {
+            ShowMessage("Nhập mật khẩu liên thông đơn thuốc của bác sĩ!");
+            txtpass.Focus();
+            return false;
+        }
+        else return true;
+    }
+    //ham lay url cua API lien thong DTDT
+    public DataTable GetPort(string loai)
+    {
+        DataTable dr = new DataTable();
+        string tenStore = "PACS_Port_Get";
+        string StrConection = ConfigurationManager.ConnectionStrings["SqlDataProvider"].ConnectionString + "; connection timeout=600; pooling=true; Max Pool Size=6000;Timeout=600;MultipleActiveResultSets=True";
+        using (SqlConnection Conection = new SqlConnection(StrConection))
+        {
+            Conection.Open();
+            using (SqlCommand Command = new SqlCommand(tenStore, Conection))
+            {
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.Parameters.Add(new SqlParameter("@Loai", loai));
+                SqlDataAdapter dp = new SqlDataAdapter(Command);
+                dp.Fill(dr);
+            }
+            //if (dr.Rows.Count > 0)
+            return dr;
+            //else
+            //    return "";
+        }
+    }
+    //ham ghi log
+    public static void WriteLog(string log)
+    {
+        string logname = "DTDT_Log_" + DateTime.Now.ToString("ddMMyyyy") + ".txt";
+        //string fileName = HttpContext.Current.Request.MapPath("MyLogs.txt");
+        string fileName = HttpContext.Current.Request.MapPath(logname);
+        if (!File.Exists(fileName))
+        {
+            using (StreamWriter sw = File.CreateText(fileName))
+            {
+                sw.WriteLine(DateTime.Now.ToString() + " " + log);
+                sw.Close();
+            }
+        }
+        else
+        {
+            using (StreamWriter sw = File.AppendText(fileName))
+            {
+                sw.WriteLine(DateTime.Now.ToString() + " " + log);
+                sw.Close();
+            }
+        }
+    }
+    //Ham de ghi magiaodich vao bang hososuckhoe_lichsu 
+    public void UpdateMaLTDT(string manv, string maltdt, string pass)
+    {
+        DataTable dr = new DataTable();
+        string tenStore = "spAccount_Update_LTDTID";
+        string StrConection = ConfigurationManager.ConnectionStrings["SqlDataProvider"].ConnectionString + "; connection timeout=600; pooling=true; Max Pool Size=6000;Timeout=600;MultipleActiveResultSets=True";
+        using (SqlConnection Conection = new SqlConnection(StrConection))
+        {
+            Conection.Open();
+            using (SqlCommand Command = new SqlCommand(tenStore, Conection))
+            {
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.Parameters.Add(new SqlParameter("@manv", manv));
+                Command.Parameters.Add(new SqlParameter("@maltdt", maltdt));
+                Command.Parameters.Add(new SqlParameter("@passltdt", pass));
+                SqlDataAdapter dp = new SqlDataAdapter(Command);
+                dp.Fill(dr);
+            }
+        }
+    }
+
+    #region object RESTful
+    //object phan API đăng nhập lấy phiên làm việc
+    //object gui username, pass
+    [Serializable()]
+    public class dangnhapcosokhamchuabenh
+    {
+        private string Ma_lien_thong_co_so_kham_chua_benh = string.Empty;
+        public string ma_lien_thong_co_so_kham_chua_benh
+        {
+            get
+            {
+                return Ma_lien_thong_co_so_kham_chua_benh;
+            }
+            set
+            {
+                Ma_lien_thong_co_so_kham_chua_benh = value;
+            }
+        }
+        private string Password = string.Empty;
+        public string password
+        {
+            get
+            {
+                return Password;
+            }
+            set
+            {
+                Password = value;
+            }
+        }
+    }
+    //object lay token tra ve
+    [Serializable()]
+    public class dangnhapbacsi_return_data
+    {
+        private string Token = string.Empty;
+        public string token
+        {
+            get
+            {
+                return Token;
+            }
+            set
+            {
+                Token = value;
+            }
+        }
+        private string Token_type = string.Empty;
+        public string token_type
+        {
+            get
+            {
+                return Token_type;
+            }
+            set
+            {
+                Token_type = value;
+            }
+        }
+    }
+    [Serializable()]
+    public class dangnhapbacsi
+    {
+        private string Ma_lien_thong_bac_si = string.Empty;
+        public string ma_lien_thong_bac_si
+        {
+            get
+            {
+                return Ma_lien_thong_bac_si;
+            }
+            set
+            {
+                Ma_lien_thong_bac_si = value;
+            }
+        }
+        private string Ma_lien_thong_co_so_kham_chua_benh = string.Empty;
+        public string ma_lien_thong_co_so_kham_chua_benh
+        {
+            get
+            {
+                return Ma_lien_thong_co_so_kham_chua_benh;
+            }
+            set
+            {
+                Ma_lien_thong_co_so_kham_chua_benh = value;
+            }
+        }
+        private string Password = string.Empty;
+        public string password
+        {
+            get
+            {
+                return Password;
+            }
+            set
+            {
+                Password = value;
+            }
+        }
+    }
+    
+   
+    //object phan Tạo đơn thuốc từ cơ sở khám chữa bệnh
+    [Serializable()]
+    public class donthuoc
+    {
+        private string Loai_don_thuoc = string.Empty;
+        public string loai_don_thuoc
+        {
+            get
+            {
+                return Loai_don_thuoc;
+            }
+            set
+            {
+                Loai_don_thuoc = value;
+            }
+        }
+        private string Ma_don_thuoc = string.Empty;
+        public string ma_don_thuoc
+        {
+            get
+            {
+                return Ma_don_thuoc;
+            }
+            set
+            {
+                Ma_don_thuoc = value;
+            }
+        }
+        private string Ten_benh_nhan = string.Empty;
+        public string ten_benh_nhan
+        {
+            get
+            {
+                return Ten_benh_nhan;
+            }
+            set
+            {
+                Ten_benh_nhan = value;
+            }
+        }
+        private int Tuoi_benh_nhan = 0;
+        public int tuoi_benh_nhan
+        {
+            get
+            {
+                return Tuoi_benh_nhan;
+            }
+            set
+            {
+                Tuoi_benh_nhan = value;
+            }
+        }
+        private decimal Can_nang = 0;
+        public decimal can_nang
+        {
+            get
+            {
+                return Can_nang;
+            }
+            set
+            {
+                Can_nang = value;
+            }
+        }
+        private string Gioi_tinh = string.Empty;
+        public string gioi_tinh
+        {
+            get
+            {
+                return Gioi_tinh;
+            }
+            set
+            {
+                Gioi_tinh = value;
+            }
+        }
+        private string Ma_so_bao_hiem_y_te = string.Empty;
+        public string ma_so_bao_hiem_y_te
+        {
+            get
+            {
+                return Ma_so_bao_hiem_y_te;
+            }
+            set
+            {
+                Ma_so_bao_hiem_y_te = value;
+            }
+        }
+        private string Thong_tin_nguoi_giam_ho = string.Empty;
+        public string thong_tin_nguoi_giam_ho
+        {
+            get
+            {
+                return Thong_tin_nguoi_giam_ho;
+            }
+            set
+            {
+                Thong_tin_nguoi_giam_ho = value;
+            }
+        }
+        private string Dia_chi = string.Empty;
+        public string dia_chi
+        {
+            get
+            {
+                return Dia_chi;
+            }
+            set
+            {
+                Dia_chi = value;
+            }
+        }
+        private List<string> Chuan_doan;
+        public List<string> chuan_doan
+        {
+            get
+            {
+                if (Chuan_doan == null)
+                    Chuan_doan = new List<string>();
+                return Chuan_doan;
+            }
+            set
+            {
+                Chuan_doan = value;
+            }
+        }
+        private string Luu_y = string.Empty;
+        public string luu_y
+        {
+            get
+            {
+                return Luu_y;
+            }
+            set
+            {
+                Luu_y = value;
+            }
+        }
+        private string Hinh_thuc_dieu_tri = string.Empty;
+        public string hinh_thuc_dieu_tri
+        {
+            get
+            {
+                return Hinh_thuc_dieu_tri;
+            }
+            set
+            {
+                Hinh_thuc_dieu_tri = value;
+            }
+        }
+        private List<dot_dung_thuoc> Dot_dung_thuoc;
+        public List<dot_dung_thuoc> dot_dung_thuoc
+        {
+            get
+            {
+                if (Dot_dung_thuoc == null)
+                    Dot_dung_thuoc = new List<dot_dung_thuoc>();
+                return Dot_dung_thuoc;
+            }
+            set
+            {
+                Dot_dung_thuoc = value;
+            }
+        }
+        private List<thong_tin_don_thuoc> Thong_tin_don_thuoc;
+        public List<thong_tin_don_thuoc> thong_tin_don_thuoc
+        {
+            get
+            {
+                if (Thong_tin_don_thuoc == null)
+                    Thong_tin_don_thuoc = new List<thong_tin_don_thuoc>();
+                return Thong_tin_don_thuoc;
+            }
+            set
+            {
+                Thong_tin_don_thuoc = value;
+            }
+        }
+        private string Loi_dan = string.Empty;
+        public string loi_dan
+        {
+            get
+            {
+                return Loi_dan;
+            }
+            set
+            {
+                Loi_dan = value;
+            }
+        }
+        private string So_dien_thoai_nguoi_kham_benh = string.Empty;
+        public string so_dien_thoai_nguoi_kham_benh
+        {
+            get
+            {
+                return So_dien_thoai_nguoi_kham_benh;
+            }
+            set
+            {
+                So_dien_thoai_nguoi_kham_benh = value;
+            }
+        }
+        private int Ngay_tai_kham;
+        public int ngay_tai_kham
+        {
+            get
+            {
+                return Ngay_tai_kham;
+            }
+            set
+            {
+                Ngay_tai_kham = value;
+            }
+        }
+    }
+    [Serializable()]
+    public class dot_dung_thuoc
+    {
+        private int Dot = 0;
+        public int dot
+        {
+            get
+            {
+                return Dot;
+            }
+            set
+            {
+                Dot = value;
+            }
+        }
+        private string Tu_ngay = string.Empty;
+        public string tu_ngay
+        {
+            get
+            {
+                return Tu_ngay;
+            }
+            set
+            {
+                Tu_ngay = value;
+            }
+        }
+        private string Den_ngay = string.Empty;
+        public string den_ngay
+        {
+            get
+            {
+                return Den_ngay;
+            }
+            set
+            {
+                Den_ngay = value;
+            }
+        }
+    }
+    [Serializable()]
+    public class thong_tin_don_thuoc
+    {
+        private string Biet_duoc = string.Empty;
+        public string biet_duoc
+        {
+            get
+            {
+                return Biet_duoc;
+            }
+            set
+            {
+                Biet_duoc = value;
+            }
+        }
+        private string Ten_thuoc = string.Empty;
+        public string ten_thuoc
+        {
+            get
+            {
+                return Ten_thuoc;
+            }
+            set
+            {
+                Ten_thuoc = value;
+            }
+        }
+        private string Don_vi_tinh = string.Empty;
+        public string don_vi_tinh
+        {
+            get
+            {
+                return Don_vi_tinh;
+            }
+            set
+            {
+                Don_vi_tinh = value;
+            }
+        }
+        private decimal So_luong = 0;
+        public decimal so_luong
+        {
+            get
+            {
+                return So_luong;
+            }
+            set
+            {
+                So_luong = value;
+            }
+        }
+        private string Cach_dung = string.Empty;
+        public string cach_dung
+        {
+            get
+            {
+                return Cach_dung;
+            }
+            set
+            {
+                Cach_dung = value;
+            }
+        }
+    }
+    [Serializable()]
+    public class dangkybacsi
+    {
+        private string Ho_ten = string.Empty;
+        public string ho_ten
+        {
+            get
+            {
+                return Ho_ten;
+            }
+            set
+            {
+                Ho_ten = value;
+            }
+        }
+        private string Ngay_sinh = string.Empty;
+        public string ngay_sinh
+        {
+            get
+            {
+                return Ngay_sinh;
+            }
+            set
+            {
+                Ngay_sinh = value;
+            }
+        }
+        private string So_chung_chi_hanh_nghe = string.Empty;
+        public string so_chung_chi_hanh_nghe
+        {
+            get
+            {
+                return So_chung_chi_hanh_nghe;
+            }
+            set
+            {
+                So_chung_chi_hanh_nghe = value;
+            }
+        }
+        private string Ngay_cap_chung_chi_hanh_nghe = string.Empty;
+        public string ngay_cap_chung_chi_hanh_nghe
+        {
+            get
+            {
+                return Ngay_cap_chung_chi_hanh_nghe;
+            }
+            set
+            {
+                Ngay_cap_chung_chi_hanh_nghe = value;
+            }
+        }
+        private string Noi_cap_chung_chi_hanh_nghe = string.Empty;
+        public string noi_cap_chung_chi_hanh_nghe
+        {
+            get
+            {
+                return Noi_cap_chung_chi_hanh_nghe;
+            }
+            set
+            {
+                Noi_cap_chung_chi_hanh_nghe = value;
+            }
+        }
+        private string So_chung_minh_thu = string.Empty;
+        public string so_chung_minh_thu
+        {
+            get
+            {
+                return So_chung_minh_thu;
+            }
+            set
+            {
+                So_chung_minh_thu = value;
+            }
+        }
+        private string Ngay_cap_chung_minh_thu = string.Empty;
+        public string ngay_cap_chung_minh_thu
+        {
+            get
+            {
+                return Ngay_cap_chung_minh_thu;
+            }
+            set
+            {
+                Ngay_cap_chung_minh_thu = value;
+            }
+        }
+        private string Noi_cap_chung_minh_thu = string.Empty;
+        public string noi_cap_chung_minh_thu
+        {
+            get
+            {
+                return Noi_cap_chung_minh_thu;
+            }
+            set
+            {
+                Noi_cap_chung_minh_thu = value;
+            }
+        }
+        private string Dia_chi_thanh_pho = string.Empty;
+        public string dia_chi_thanh_pho
+        {
+            get
+            {
+                return Dia_chi_thanh_pho;
+            }
+            set
+            {
+                Dia_chi_thanh_pho = value;
+            }
+        }
+        private string Dia_chi_quan_huyen = string.Empty;
+        public string dia_chi_quan_huyen
+        {
+            get
+            {
+                return Dia_chi_quan_huyen;
+            }
+            set
+            {
+                Dia_chi_quan_huyen = value;
+            }
+        }
+        private string Dia_chi_phuong_xa = string.Empty;
+        public string dia_chi_phuong_xa
+        {
+            get
+            {
+                return Dia_chi_phuong_xa;
+            }
+            set
+            {
+                Dia_chi_phuong_xa = value;
+            }
+        }
+        private string Dia_chi_chi_tiet = string.Empty;
+        public string dia_chi_chi_tiet
+        {
+            get
+            {
+                return Dia_chi_chi_tiet;
+            }
+            set
+            {
+                Dia_chi_chi_tiet = value;
+            }
+        }
+        private string Email = string.Empty;
+        public string email
+        {
+            get
+            {
+                return Email;
+            }
+            set
+            {
+                Email = value;
+            }
+        }
+        private string Dien_thoai = string.Empty;
+        public string dien_thoai
+        {
+            get
+            {
+                return Dien_thoai;
+            }
+            set
+            {
+                Dien_thoai = value;
+            }
+        }
+        private string Van_bang_chuyen_mon = string.Empty;
+        public string van_bang_chuyen_mon
+        {
+            get
+            {
+                return Van_bang_chuyen_mon;
+            }
+            set
+            {
+                Van_bang_chuyen_mon = value;
+            }
+        }
+        private List<thoi_gian_lam_viec> Thoi_gian_lam_viec;
+        public List<thoi_gian_lam_viec> thoi_gian_lam_viec
+        {
+            get
+            {
+                if (Thoi_gian_lam_viec == null)
+                    Thoi_gian_lam_viec = new List<thoi_gian_lam_viec>();
+                return Thoi_gian_lam_viec;
+            }
+            set
+            {
+                Thoi_gian_lam_viec = value;
+            }
+        }
+        private List<string> File_giay_chung_nhan_hanh_nghe;
+        public List<string> file_giay_chung_nhan_hanh_nghe
+        {
+            get
+            {
+                if (File_giay_chung_nhan_hanh_nghe == null)
+                    File_giay_chung_nhan_hanh_nghe = new List<string>();
+                return File_giay_chung_nhan_hanh_nghe;
+            }
+            set
+            {
+                File_giay_chung_nhan_hanh_nghe = value;
+            }
+        }
+        private string File_anh_dai_dien = string.Empty;
+        public string file_anh_dai_dien
+        {
+            get
+            {
+                return File_anh_dai_dien;
+            }
+            set
+            {
+                File_anh_dai_dien = value;
+            }
+        }
+        private List<string> Linh_vuc;
+        public List<string> linh_vuc
+        {
+            get
+            {
+                if (Linh_vuc == null)
+                    Linh_vuc = new List<string>();
+                return Linh_vuc;
+            }
+            set
+            {
+                Linh_vuc = value;
+            }
+        }
+        private string Don_vi_khai_bao = string.Empty;
+        public string don_vi_khai_bao
+        {
+            get
+            {
+                return Don_vi_khai_bao;
+            }
+            set
+            {
+                Don_vi_khai_bao = value;
+            }
+        }
+    }
+    [Serializable()]
+    public class thoi_gian_lam_viec
+    {
+        private string Ten_don_vi = string.Empty;
+        public string ten_don_vi
+        {
+            get
+            {
+                return Ten_don_vi;
+            }
+            set
+            {
+                Ten_don_vi = value;
+            }
+        }
+        private string Dia_chi_don_vi = string.Empty;
+        public string dia_chi_don_vi
+        {
+            get
+            {
+                return Dia_chi_don_vi;
+            }
+            set
+            {
+                Dia_chi_don_vi = value;
+            }
+        }
+        private string _thoi_gian_lam_viec = string.Empty;
+        public string Thoi_gian_lam_viec
+        {
+            get
+            {
+                return _thoi_gian_lam_viec;
+            }
+            set
+            {
+                _thoi_gian_lam_viec = value;
+            }
+        }
+    }
+    [Serializable()]
+    public class doitacmalienthongbacsi
+    {
+        private string So_chung_chi_hanh_nghe_bac_si = string.Empty;
+        public string so_chung_chi_hanh_nghe_bac_si
+        {
+            get
+            {
+                return So_chung_chi_hanh_nghe_bac_si;
+            }
+            set
+            {
+                So_chung_chi_hanh_nghe_bac_si = value;
+            }
+        }
+        private string Ma_lien_thong_bac_si = string.Empty;
+        public string ma_lien_thong_bac_si
+        {
+            get
+            {
+                return Ma_lien_thong_bac_si;
+            }
+            set
+            {
+                Ma_lien_thong_bac_si = value;
+            }
+        }
+    }
+    [Serializable()]
+    public class doitacmalienthongbacsi_return_data
+    {
+        private string Ma_lien_thong_bac_si = string.Empty;
+        public string ma_lien_thong_bac_si
+        {
+            get
+            {
+                return Ma_lien_thong_bac_si;
+            }
+            set
+            {
+                Ma_lien_thong_bac_si = value;
+            }
+        }
+        private string Message = string.Empty;
+        public string message
+        {
+            get
+            {
+                return Message;
+            }
+            set
+            {
+                Message = value;
+            }
+        }
+    }
+    //object nhan ket qua tra ve khi thao tac voi don thuoc
+    [Serializable()]
+    public class dangkycosokhamchuabenh
+    {
+        private string So_giay_phep = string.Empty;
+        public string so_giay_phep
+        {
+            get
+            {
+                return So_giay_phep;
+            }
+            set
+            {
+                So_giay_phep = value;
+            }
+        }
+        private string Ngay_cap_giay_phep = string.Empty;
+        public string ngay_cap_giay_phep
+        {
+            get
+            {
+                return Ngay_cap_giay_phep;
+            }
+            set
+            {
+                Ngay_cap_giay_phep = value;
+            }
+        }
+        private string Noi_cap_giay_phep = string.Empty;
+        public string noi_cap_giay_phep
+        {
+            get
+            {
+                return Noi_cap_giay_phep;
+            }
+            set
+            {
+                Noi_cap_giay_phep = value;
+            }
+        }
+        private string Ten_co_so = string.Empty;
+        public string ten_co_so
+        {
+            get
+            {
+                return Ten_co_so;
+            }
+            set
+            {
+                Ten_co_so = value;
+            }
+        }
+        private string Ten_nguoi_dai_dien = string.Empty;
+        public string ten_nguoi_dai_dien
+        {
+            get
+            {
+                return Ten_nguoi_dai_dien;
+            }
+            set
+            {
+                Ten_nguoi_dai_dien = value;
+            }
+        }
+        private string So_chung_chi_hanh_nghe = string.Empty;
+        public string so_chung_chi_hanh_nghe
+        {
+            get
+            {
+                return So_chung_chi_hanh_nghe;
+            }
+            set
+            {
+                So_chung_chi_hanh_nghe = value;
+            }
+        }
+        private string Noi_cap_chung_chi_hanh_nghe = string.Empty;
+        public string noi_cap_chung_chi_hanh_nghe
+        {
+            get
+            {
+                return Noi_cap_chung_chi_hanh_nghe;
+            }
+            set
+            {
+                Noi_cap_chung_chi_hanh_nghe = value;
+            }
+        }
+        private string Dia_chi_hanh_nghe_thanh_pho = string.Empty;
+        public string dia_chi_hanh_nghe_thanh_pho
+        {
+            get
+            {
+                return Dia_chi_hanh_nghe_thanh_pho;
+            }
+            set
+            {
+                Dia_chi_hanh_nghe_thanh_pho = value;
+            }
+        }
+        private string Dia_chi_hanh_nghe_quan_huyen = string.Empty;
+        public string dia_chi_hanh_nghe_quan_huyen
+        {
+            get
+            {
+                return Dia_chi_hanh_nghe_quan_huyen;
+            }
+            set
+            {
+                Dia_chi_hanh_nghe_quan_huyen = value;
+            }
+        }
+        private string Dia_chi_hanh_nghe_phuong_xa = string.Empty;
+        public string dia_chi_hanh_nghe_phuong_xa
+        {
+            get
+            {
+                return Dia_chi_hanh_nghe_phuong_xa;
+            }
+            set
+            {
+                Dia_chi_hanh_nghe_phuong_xa = value;
+            }
+        }
+        private string Dia_chi_hanh_nghe_chi_tiet = string.Empty;
+        public string dia_chi_hanh_nghe_chi_tiet
+        {
+            get
+            {
+                return Dia_chi_hanh_nghe_chi_tiet;
+            }
+            set
+            {
+                Dia_chi_hanh_nghe_chi_tiet = value;
+            }
+        }
+        private string Email = string.Empty;
+        public string email
+        {
+            get
+            {
+                return Email;
+            }
+            set
+            {
+                Email = value;
+            }
+        }
+        private string Dien_thoai = string.Empty;
+        public string dien_thoai
+        {
+            get
+            {
+                return Dien_thoai;
+            }
+            set
+            {
+                Dien_thoai = value;
+            }
+        }
+        private List<thoi_gian_hoat_dong> Thoi_gian_hoat_dong;
+        public List<thoi_gian_hoat_dong> thoi_gian_hoat_dong
+        {
+            get
+            {
+                if (Thoi_gian_hoat_dong == null)
+                    Thoi_gian_hoat_dong = new List<thoi_gian_hoat_dong>();
+                return Thoi_gian_hoat_dong;
+            }
+            set
+            {
+                Thoi_gian_hoat_dong = value;
+            }
+        }
+        private List<string> Pham_vi_hoat_dong_chuyen_mon;
+        public List<string> pham_vi_hoat_dong_chuyen_mon
+        {
+            get
+            {
+                if (Pham_vi_hoat_dong_chuyen_mon == null)
+                    Pham_vi_hoat_dong_chuyen_mon = new List<string>();
+                return Pham_vi_hoat_dong_chuyen_mon;
+            }
+            set
+            {
+                Pham_vi_hoat_dong_chuyen_mon = value;
+            }
+        }
+        private string Hinh_thuc_to_chuc = string.Empty;
+        public string hinh_thuc_to_chuc
+        {
+            get
+            {
+                return Hinh_thuc_to_chuc;
+            }
+            set
+            {
+                Hinh_thuc_to_chuc = value;
+            }
+        }
+        private string File_giay_phep = string.Empty;
+        public string file_giay_phep
+        {
+            get
+            {
+                return File_giay_phep;
+            }
+            set
+            {
+                File_giay_phep = value;
+            }
+        }
+        private string File_danh_muc_ky_thuat = string.Empty;
+        public string file_danh_muc_ky_thuat
+        {
+            get
+            {
+                return File_danh_muc_ky_thuat;
+            }
+            set
+            {
+                File_danh_muc_ky_thuat = value;
+            }
+        }
+        private string File_nhan_su_dang_ky = string.Empty;
+        public string file_nhan_su_dang_ky
+        {
+            get
+            {
+                return File_nhan_su_dang_ky;
+            }
+            set
+            {
+                File_nhan_su_dang_ky = value;
+            }
+        }
+        private string File_trang_thiet_bi_dang_ky = string.Empty;
+        public string file_trang_thiet_bi_dang_ky
+        {
+            get
+            {
+                return File_trang_thiet_bi_dang_ky;
+            }
+            set
+            {
+                File_trang_thiet_bi_dang_ky = value;
+            }
+        }
+        private string Mo_hinh_to_chuc = string.Empty;
+        public string mo_hinh_to_chuc
+        {
+            get
+            {
+                return Mo_hinh_to_chuc;
+            }
+            set
+            {
+                Mo_hinh_to_chuc = value;
+            }
+        }
+        private string Tuyen_ky_thuat = string.Empty;
+        public string tuyen_ky_thuat
+        {
+            get
+            {
+                return Tuyen_ky_thuat;
+            }
+            set
+            {
+                Tuyen_ky_thuat = value;
+            }
+        }
+        private string Loai_hinh_quan_ly = string.Empty;
+        public string loai_hinh_quan_ly
+        {
+            get
+            {
+                return Loai_hinh_quan_ly;
+            }
+            set
+            {
+                Loai_hinh_quan_ly = value;
+            }
+        }
+    }
+    [Serializable()]
+    public class thoi_gian_hoat_dong
+    {
+        private string Loai_thoi_gian_hoat_dong = string.Empty;
+        public string loai_thoi_gian_hoat_dong
+        {
+            get
+            {
+                return Loai_thoi_gian_hoat_dong;
+            }
+            set
+            {
+                Loai_thoi_gian_hoat_dong = value;
+            }
+        }
+        private string ma_hoa_don = string.Empty;
+        public string Ma_hoa_don
+        {
+            get
+            {
+                return ma_hoa_don;
+            }
+            set
+            {
+                ma_hoa_don = value;
+            }
+        }
+        private List<tuy_chon> Tuy_chon;
+        public List<tuy_chon> tuy_chon
+        {
+            get
+            {
+                if (Tuy_chon == null)
+                    Tuy_chon = new List<tuy_chon>();
+                return Tuy_chon;
+            }
+            set
+            {
+                Tuy_chon = value;
+            }
+        }
+    }
+    [Serializable()]
+    public class tuy_chon
+    {
+        private string Type = string.Empty;
+        public string type
+        {
+            get
+            {
+                return Type;
+            }
+            set
+            {
+                Type = value;
+            }
+        }
+        private string Gio_tu = string.Empty;
+        public string gio_tu
+        {
+            get
+            {
+                return Gio_tu;
+            }
+            set
+            {
+                Gio_tu = value;
+            }
+        }
+        private string Gio_den = string.Empty;
+        public string gio_den
+        {
+            get
+            {
+                return Gio_den;
+            }
+            set
+            {
+                Gio_den = value;
+            }
+        }
+    }
+    [Serializable()]
+    public class doitacmalienthongcosokhamchuabenh
+    {
+        private string Ma_bao_hiem_co_so_kham_chua_benh = string.Empty;
+        public string ma_bao_hiem_co_so_kham_chua_benh
+        {
+            get
+            {
+                return Ma_bao_hiem_co_so_kham_chua_benh;
+            }
+            set
+            {
+                Ma_bao_hiem_co_so_kham_chua_benh = value;
+            }
+        }
+        private string Ma_lien_thong_co_so_kham_chua_benh = string.Empty;
+        public string ma_lien_thong_co_so_kham_chua_benh
+        {
+            get
+            {
+                return Ma_lien_thong_co_so_kham_chua_benh;
+            }
+            set
+            {
+                Ma_lien_thong_co_so_kham_chua_benh = value;
+            }
+        }
+    }
+    [Serializable()]
+    public class doitacmalienthongcosokhamchuabenh_return_data
+    {
+        private string Ma_lien_thong_co_so_kham_chua_benh = string.Empty;
+        public string ma_lien_thong_co_so_kham_chua_benh
+        {
+            get
+            {
+                return Ma_lien_thong_co_so_kham_chua_benh;
+            }
+            set
+            {
+                Ma_lien_thong_co_so_kham_chua_benh = value;
+            }
+        }
+        private string Message = string.Empty;
+        public string message
+        {
+            get
+            {
+                return Message;
+            }
+            set
+            {
+                Message = value;
+            }
+        }
+    }
+    #endregion
+    // ham dung de trao doi du lieu voi API RESTfull
+    public class DTDTAPI
+    {
+        public string PostURL(string url, string username, string password, string jsondata)
+        {
+            Uri myUri = new Uri(url);
+            WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+            myWebRequest.ContentType = "application/json";
+            myWebRequest.Method = "POST";
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+            NetworkCredential myNetworkCredential = new NetworkCredential(username, password);
+            CredentialCache myCredentialCache = new CredentialCache();
+            myCredentialCache.Add(myUri, "Basic", myNetworkCredential);
+            myHttpWebRequest.PreAuthenticate = true;
+            myHttpWebRequest.Credentials = myCredentialCache;
+            using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(jsondata);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            WebResponse myWebResponse = myWebRequest.GetResponse();
+            Stream responseStream = myWebResponse.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+            string pageContent = myStreamReader.ReadToEnd();
+            responseStream.Close();
+            myWebResponse.Close();
+            return pageContent;
+        }
+        public string PutURLtoken(string url, string token, string jsondata)
+        {
+            Uri myUri = new Uri(url);
+            WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+            myWebRequest.ContentType = "application/json";
+            myWebRequest.Method = "PUT";
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+            myHttpWebRequest.PreAuthenticate = true;
+            myHttpWebRequest.Headers.Add("Authorization", "Bearer " + token);
+            using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(jsondata);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            WebResponse myWebResponse = myWebRequest.GetResponse();
+            Stream responseStream = myWebResponse.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+            string pageContent = myStreamReader.ReadToEnd();
+            responseStream.Close();
+            myWebResponse.Close();
+            return pageContent;
+        }
+        public string PostURLtoken(string url, string token, string jsondata)
+        {
+            Uri myUri = new Uri(url);
+            WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+            myWebRequest.ContentType = "application/json";
+            myWebRequest.Method = "POST";
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+            myHttpWebRequest.PreAuthenticate = true;
+            myHttpWebRequest.Headers.Add("Authorization", "Bearer " + token);
+            using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(jsondata);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            WebResponse myWebResponse = myWebRequest.GetResponse();
+            Stream responseStream = myWebResponse.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+            string pageContent = myStreamReader.ReadToEnd();
+            responseStream.Close();
+            myWebResponse.Close();
+            return pageContent;
+        }
+        public string DeleteURLtoken(string url, string token)
+        {
+            Uri myUri = new Uri(url);
+            WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+            myWebRequest.ContentType = "application/json";
+            myWebRequest.Method = "DELETE";
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+            myHttpWebRequest.PreAuthenticate = true;
+            myHttpWebRequest.Headers.Add("Authorization", "Bearer " + token);
+            using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+            {
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            WebResponse myWebResponse = myWebRequest.GetResponse();
+            Stream responseStream = myWebResponse.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+            string pageContent = myStreamReader.ReadToEnd();
+            responseStream.Close();
+            myWebResponse.Close();
+            return pageContent;
+        }
+        public string PostURLNoAuth(string url, string jsondata)
+        {
+            Uri myUri = new Uri(url);
+            WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+            myWebRequest.ContentType = "application/json";
+            myWebRequest.Method = "POST";
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+            myHttpWebRequest.PreAuthenticate = true;
+            //myHttpWebRequest.Headers.Add("Authorization", "Bearer " + token);
+            using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(jsondata);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            WebResponse myWebResponse = myWebRequest.GetResponse();
+            Stream responseStream = myWebResponse.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+            string pageContent = myStreamReader.ReadToEnd();
+            responseStream.Close();
+            myWebResponse.Close();
+            return pageContent;
+        }
+        #region RESTfulAPI
+        //ham giai ma chuoi UTF-8
+        public string DecodeFromUtf8(string utf8String)
+        {
+            return Regex.Replace(
+              utf8String,
+              @"\\u(?<Value>[a-fA-F0-9]{4})",
+              m =>
+              {
+                  return ((char)int.Parse(m.Groups["Value"].Value, NumberStyles.HexNumber)).ToString();
+              });
+        }
+        //ham dang nhap co so kham chua benh de lay to_ken them bac si
+        public string dangnhapCoSoKCB(string port, string user, string pass)
+        {
+            string url = port + "/auth/dang-nhap-co-so-kham-chua-benh";
+            dangnhapcosokhamchuabenh dn = new dangnhapcosokhamchuabenh();
+            //RESTful rf = new RESTful();
+            dn.ma_lien_thong_co_so_kham_chua_benh = user;
+            dn.password = pass;
+            var serializer = new JavaScriptSerializer();
+            string serializedResult = serializer.Serialize(dn);
+            string returndata = PostURLNoAuth(url, serializedResult);
+            var data = serializer.Deserialize<dangnhapbacsi_return_data>(returndata);
+            if (data != null && data.token_type == "bearer" && !string.IsNullOrEmpty(data.token))
+                return data.token;
+            else return "";
+            //return serializedResult;
+            //return returndata;
+        }
+        //ham dang nhap bac si de lay to_ken day don thuoc
+        public string dangnhapBS(string port, string user, string pass, string macskcb)
+        {
+            string url = port + "/auth/dang-nhap-bac-si";
+            dangnhapbacsi dn = new dangnhapbacsi();
+            dn.ma_lien_thong_bac_si = user;
+            dn.ma_lien_thong_co_so_kham_chua_benh = macskcb;
+            dn.password = pass;
+            var serializer = new JavaScriptSerializer();
+            string serializedResult = serializer.Serialize(dn);
+            string returndata = PostURLNoAuth(url, serializedResult);
+            var data = serializer.Deserialize<dangnhapbacsi_return_data>(returndata);
+            if (data != null && data.token_type == "bearer" && !string.IsNullOrEmpty(data.token))
+                return data.token;
+            else return "";
+            //return serializedResult;
+            //return returndata;
+        }
+        //ham them ma lien thong bac si vao co so kcb
+        public string themBS(string port, string user, string token)
+        {
+            string url = port + "/v1/them-bac-si";
+            var serializer = new JavaScriptSerializer();
+            string serializedResult = "{\"ma_lien_thong_bac_si\" : \"" + user + "\"}";
+            string returndata = PostURLtoken(url, token, serializedResult);
+            //var data = serializer.Deserialize<dangnhapbacsi_return_data>(returndata);
+            //if (data != null && data.token_type == "bearer" && !string.IsNullOrEmpty(data.token))
+            //    return data.token;
+            //else return "";
+            //return serializedResult;
+            //return returndata;
+            string output = DecodeFromUtf8(returndata);
+            return output;
+        }
+        //ham gui don thuoc
+        public string Gui_don_thuoc(string port, string token, donthuoc dt)
+        {
+            string url = port + "/v1/gui-don-thuoc";
+            var serializer = new JavaScriptSerializer();
+            string serializedResult = serializer.Serialize(dt);
+            string returndata = PostURLtoken(url, token, serializedResult);
+            //var data = serializer.Deserialize<kq_don_thuoc_return>(returndata);
+            //if (data != null && data.Code == 200 && data.Ma_don_thuoc_quoc_gia != "")
+            //    return data.Ma_don_thuoc_quoc_gia;
+            //else return "";
+            //var output = System.Net.WebUtility.HtmlDecode(returndata);
+            string output = DecodeFromUtf8(returndata);
+            return output;
+        }
+        #endregion
+    }
+}

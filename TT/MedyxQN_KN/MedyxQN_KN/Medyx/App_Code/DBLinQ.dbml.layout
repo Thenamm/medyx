@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 9.625" name="DBLinQ">
+  <DataContextMoniker Name="/DBLinQDataContext" />
+  <nestedChildShapes>
+    <classShape Id="759f59a5-23af-4cd9-aead-6b832fafb947" isExpanded="false" absoluteBounds="1, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/DBLinQDataContext/DMKHBaoTri" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d5700c67-233b-47b7-8bad-cf53e7995967" absoluteBounds="1.0150000000000001, 0.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="30a1d83b-3bec-49fa-82de-a0cc43f652e7" isExpanded="false" absoluteBounds="1, 1.75, 2, 0.45">
+      <DataClassMoniker Name="/DBLinQDataContext/TBLinhkiendikem" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3816165b-1054-47ca-95ac-e96754f8ab2a" absoluteBounds="1.0149999999999997, 2.21, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ae9f4c1d-6c23-45a9-b1ab-c338a1a56485" absoluteBounds="1, 1.125, 2, 8.3091455078125">
+      <DataClassMoniker Name="/DBLinQDataContext/DMThietBiYTe" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6319e290-f172-46ed-bee8-59d1ac0b59ef" absoluteBounds="1.0150000000000001, 1.585, 1.9700000000000002, 7.7491455078125009" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2 : 0.95); (2 : 1.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DBLinQDataContext/DMKHBaoTri/DMKHBaoTri_DMThietBiYTe" />
+      <nodes>
+        <classShapeMoniker Id="759f59a5-23af-4cd9-aead-6b832fafb947" />
+        <classShapeMoniker Id="ae9f4c1d-6c23-45a9-b1ab-c338a1a56485" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

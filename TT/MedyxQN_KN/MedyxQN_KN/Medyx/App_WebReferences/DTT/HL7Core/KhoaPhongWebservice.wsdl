@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://webservice.web.emr.dtt.vn/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="KhoaPhongWebservice" targetNamespace="http://webservice.web.emr.dtt.vn/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema targetNamespace="param.webservice.hanoi.dtt.vn" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="OpenmrsResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errormessage" type="xs:string" />
+          <xs:element minOccurs="0" name="status" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns:ns1="param.webservice.hanoi.dtt.vn" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://webservice.web.emr.dtt.vn/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="param.webservice.hanoi.dtt.vn" />
+      <xs:element name="chuyenDsKhoaPhong" type="tns:chuyenDsKhoaPhong" />
+      <xs:element name="chuyenDsKhoaPhongResponse" type="tns:chuyenDsKhoaPhongResponse" />
+      <xs:complexType name="chuyenDsKhoaPhong">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="dsKhoaPhong" type="tns:emrDmKhoaDieuTri" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrDmKhoaDieuTri">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="codecda" type="xs:string" />
+          <xs:element minOccurs="0" name="daxoa" type="xs:string" />
+          <xs:element minOccurs="0" name="emrDmKhoaDieuTri" type="tns:emrDmKhoaDieuTri" />
+          <xs:element name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="lancuoi" type="xs:int" />
+          <xs:element minOccurs="0" name="landau" type="xs:int" />
+          <xs:element minOccurs="0" name="ma" type="xs:string" />
+          <xs:element minOccurs="0" name="soguongbenh" type="xs:int" />
+          <xs:element minOccurs="0" name="ten" type="xs:string" />
+          <xs:element minOccurs="0" name="tenta" type="xs:string" />
+          <xs:element minOccurs="0" name="truongkhoa" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="chuyenDsKhoaPhongResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="ns1:OpenmrsResponse" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="chuyenDsKhoaPhong">
+    <wsdl:part name="parameters" element="tns:chuyenDsKhoaPhong" />
+  </wsdl:message>
+  <wsdl:message name="chuyenDsKhoaPhongResponse">
+    <wsdl:part name="parameters" element="tns:chuyenDsKhoaPhongResponse" />
+  </wsdl:message>
+  <wsdl:portType name="KhoaPhongServiceImpl">
+    <wsdl:operation name="chuyenDsKhoaPhong">
+      <wsdl:input name="chuyenDsKhoaPhong" message="tns:chuyenDsKhoaPhong" />
+      <wsdl:output name="chuyenDsKhoaPhongResponse" message="tns:chuyenDsKhoaPhongResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="KhoaPhongWebserviceSoapBinding" type="tns:KhoaPhongServiceImpl">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="chuyenDsKhoaPhong">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input name="chuyenDsKhoaPhong">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="chuyenDsKhoaPhongResponse">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="KhoaPhongWebservice">
+    <wsdl:port name="KhoaPhongServiceImplPort" binding="tns:KhoaPhongWebserviceSoapBinding">
+      <soap12:address location="http://192.168.60.30:80/qlhsba/KhoaPhongWebservice" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

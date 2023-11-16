@@ -1,0 +1,60 @@
+{
+  "DBServer": {
+    "ConnectionString": "Data Source=(local);Initial Catalog=Medyx_QN;Integrated Security=true;MultipleActiveResultSets=true;"
+  },
+  "CommandParameters": {
+    "DMThuoc": {
+      "ChungLoai": {
+        "Map_Object_Field": {
+          "maChungLoai": "MaChungLoai",
+          "tenChungLoai": "TenChungLoai",
+          "maMay": "MaMay",
+          "huy": "Huy",
+          "ngaySD": "NgaySD",
+          "nguoiSD": "NguoiSD"
+        },
+        "GetAll": {
+          "Command": "exec dbo.spDMThuoc_ChungLoai_GetAll",
+          "Parameters": [],
+          "CommandTimeout": 30
+        }
+      },
+      "DangBaoChe": {
+        "Map_Object_Field": {
+          "maDangBaoChe": "MaDVT",
+          "tenDangBaoChe": "TenDVT",
+          "tenTA": "TenTA",
+          "ghiChu": "Ghichu",
+          "maMay": "MaMay",
+          "huy": "Huy",
+          "ngaySD": "NgaySD",
+          "nguoiSD": "NguoiSD",
+          "loaiPL": "LoaiPL"
+        },
+        "GetAll": {
+          "Command": "exec dbo.spDMThuoc_DangBaoChe_GetAll",
+          "Parameters": [],
+          "CommandTimeout": 30
+        }
+      },
+      "DonViTinh": {
+        "Map_Object_Field": {
+          "maDangBaoChe": "MaDVT",
+          "tenDangBaoChe": "TenDVT",
+          "tenTA": "TenTA",
+          "ghiChu": "Ghichu",
+          "maMay": "MaMay",
+          "huy": "Huy",
+          "ngaySD": "NgaySD",
+          "nguoiSD": "NguoiSD",
+          "loaiPL": "LoaiPL"
+        },
+        "GetAll": {
+          "Command": "exec dbo.spDMThuoc_DonViTinh_GetAll",
+          "Parameters": [],
+          "CommandTimeout": 30
+        }
+      }
+    }
+  }
+}

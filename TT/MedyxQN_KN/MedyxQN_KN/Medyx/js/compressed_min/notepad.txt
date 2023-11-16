@@ -1,0 +1,10 @@
+
+///-------			 JAVASCRIPT
+<script src="<%: ResolveUrl("js/JQuery.js") %>"  type="text/javascript"></script>
+<script type="text/javascript" src="<%: ResolveUrl("~/js/maskinput/jquery.maskedinput.js") %>"></script>                
+
+
+///-------			 CSS
+    <link href="<%: ResolveUrl("~/css/reset.css") %>" rel="stylesheet" type="text/css" />            
+    <link href="<%: ResolveUrl("~/css/grid.css") %>" rel="stylesheet" type="text/css" />         
+    <link href="<%: ResolveUrl("~/css/layout.css") %>" rel="stylesheet" type="text/css" />

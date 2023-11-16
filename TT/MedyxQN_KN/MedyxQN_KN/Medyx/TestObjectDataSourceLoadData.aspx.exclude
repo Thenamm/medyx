@@ -1,0 +1,87 @@
+﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" CodeFile="TestObjectDataSourceLoadData.aspx.cs" Inherits="TestObjectDataSourceLoadData" %>
+
+<%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <title>Drag-and-drop images functionality in ASP.NET Rich Text Editor </title>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <telerik:RadScriptManager ID="RadScriptManager1" runat="server"  CdnSettings-TelerikCdn="Disabled">
+        <Scripts>
+                <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.Core.js" />
+                <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQuery.js" />                        
+            </Scripts>
+        </telerik:RadScriptManager>
+
+        <telerik:RadAjaxLoadingPanel runat="server" ID="LoadingPanel1" Skin="MetroTouch">
+        </telerik:RadAjaxLoadingPanel>
+
+        <telerik:RadSkinManager ID="QsfSkinManager" runat="server" ShowChooser="false"    />
+
+        <telerik:RadComboBox   OnClientKeyPressing="HandlekeyPressEnter"               ID="cboNguoiNhap"  TabIndex="1" CssClass="span-all" Width="100%"
+            runat="server" DataSourceID="obsDMNhanVien"
+            AutoPostBack="false"
+            DataTextField="HoTen" DataValueField="MaNV" DropDownWidth="470px"
+            EnableVirtualScrolling="true"
+            EnableLoadOnDemand="true"  CaseSensitive ="false"
+            EnableAutomaticLoadOnDemand="true"
+            ItemsPerRequest="20"
+            ShowMoreResultsBox="true"
+            ShowDropDownOnTextboxClick="true"
+            MarkFirstMatch="true"
+            Filter="Contains"
+            HighlightTemplatedItems="true">
+            <HeaderTemplate>
+                <table class="NHTC_table_layout">
+                    <tr>
+                        <td width="200px">Họ tên</td>
+                        <td width="200px">Khoa</td>
+                        <td width="70px">Mã NV</td>
+                    </tr>
+                </table>
+            </HeaderTemplate>
+            <Items>
+                <telerik:RadComboBoxItem runat="server" Text="" Value="" />
+            </Items>
+            <ItemTemplate>
+                <table>
+                   
+                    <tr>
+
+                        <td width="200px">
+                            <%# DataBinder.Eval(Container.DataItem, "HoTen") %>
+                        </td>
+                        <td width="200px">
+                            <%# DataBinder.Eval(Container.DataItem, "TenKhoa") %>
+                        </td>
+                        <td width="70px">
+                            <%# DataBinder.Eval(Container.DataItem, "MaNV") %>
+                        </td>
+                    </tr>
+                </table>
+            </ItemTemplate>
+        </telerik:RadComboBox>
+
+        <asp:DropDownList ID="cboDMNhanVien" DataSourceID="obsDMNhanVien" DataTextField="HoTen" DataValueField="MaNV" runat="server" >
+        </asp:DropDownList>
+
+        <asp:ObjectDataSource ID="obsDMNhanVien" runat="server" SelectMethod="FindDMNhanVienByMa" TypeName="HTC.Business.CategoryList.DMNhanVienList" 
+             OnSelecting="ObjectDanhMucNV_Selecting"
+            
+            EnableCaching="false" CacheDuration="180" CacheExpirationPolicy="Absolute"
+            ViewStateMode="Enabled" EnableViewState="true"
+            >
+            <SelectParameters>
+                <asp:Parameter Name="ma" Type="String" DefaultValue="" />
+            </SelectParameters>
+        </asp:ObjectDataSource>
+
+
+        <asp:Button runat="server" ID="btnClick" Text="CLick Here" OnClick="btnClick_Click" />
+
+    </form>
+</body>
+</html>

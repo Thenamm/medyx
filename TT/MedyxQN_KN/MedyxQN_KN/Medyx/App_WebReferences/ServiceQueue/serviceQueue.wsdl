@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://main.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" name="serviceQueue" targetNamespace="http://main.com/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://101.99.17.230:5719/serviceQueue/serviceQueue?xsd=1" namespace="http://main.com/" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://101.99.17.230:5719/serviceQueue/serviceQueue?xsd=2" namespace="http://jaxb.dev.java.net/array" />
+    </xsd:schema>
+  </types>
+  <message name="createNewQueue">
+    <part name="parameters" element="tns:createNewQueue" />
+  </message>
+  <message name="createNewQueueResponse">
+    <part name="parameters" element="tns:createNewQueueResponse" />
+  </message>
+  <message name="printerTeckket">
+    <part name="parameters" element="tns:printerTeckket" />
+  </message>
+  <message name="printerTeckketResponse">
+    <part name="parameters" element="tns:printerTeckketResponse" />
+  </message>
+  <message name="endQueuePatient">
+    <part name="parameters" element="tns:endQueuePatient" />
+  </message>
+  <message name="endQueuePatientResponse">
+    <part name="parameters" element="tns:endQueuePatientResponse" />
+  </message>
+  <message name="GetNumber">
+    <part name="parameters" element="tns:GetNumber" />
+  </message>
+  <message name="GetNumberResponse">
+    <part name="parameters" element="tns:GetNumberResponse" />
+  </message>
+  <message name="setMissQueue">
+    <part name="parameters" element="tns:setMissQueue" />
+  </message>
+  <message name="setMissQueueResponse">
+    <part name="parameters" element="tns:setMissQueueResponse" />
+  </message>
+  <message name="endQueueAndCreateQueueServiceTranfer">
+    <part name="parameters" element="tns:endQueueAndCreateQueueServiceTranfer" />
+  </message>
+  <message name="endQueueAndCreateQueueServiceTranferResponse">
+    <part name="parameters" element="tns:endQueueAndCreateQueueServiceTranferResponse" />
+  </message>
+  <message name="emdQueue">
+    <part name="parameters" element="tns:emdQueue" />
+  </message>
+  <message name="emdQueueResponse">
+    <part name="parameters" element="tns:emdQueueResponse" />
+  </message>
+  <message name="callQueueNumber">
+    <part name="parameters" element="tns:callQueueNumber" />
+  </message>
+  <message name="callQueueNumberResponse">
+    <part name="parameters" element="tns:callQueueNumberResponse" />
+  </message>
+  <message name="freshQueueCall">
+    <part name="parameters" element="tns:freshQueueCall" />
+  </message>
+  <message name="freshQueueCallResponse">
+    <part name="parameters" element="tns:freshQueueCallResponse" />
+  </message>
+  <message name="createQueueNumber">
+    <part name="parameters" element="tns:createQueueNumber" />
+  </message>
+  <message name="createQueueNumberResponse">
+    <part name="parameters" element="tns:createQueueNumberResponse" />
+  </message>
+  <message name="addServiceTranferRoom">
+    <part name="parameters" element="tns:addServiceTranferRoom" />
+  </message>
+  <message name="addServiceTranferRoomResponse">
+    <part name="parameters" element="tns:addServiceTranferRoomResponse" />
+  </message>
+  <message name="createQueueByRoom">
+    <part name="parameters" element="tns:createQueueByRoom" />
+  </message>
+  <message name="createQueueByRoomResponse">
+    <part name="parameters" element="tns:createQueueByRoomResponse" />
+  </message>
+  <message name="sendTerminalQueue">
+    <part name="parameters" element="tns:sendTerminalQueue" />
+  </message>
+  <message name="sendTerminalQueueResponse">
+    <part name="parameters" element="tns:sendTerminalQueueResponse" />
+  </message>
+  <message name="sendTerminalMissQueue">
+    <part name="parameters" element="tns:sendTerminalMissQueue" />
+  </message>
+  <message name="sendTerminalMissQueueResponse">
+    <part name="parameters" element="tns:sendTerminalMissQueueResponse" />
+  </message>
+  <message name="getAllQueueOfBrank">
+    <part name="parameters" element="tns:getAllQueueOfBrank" />
+  </message>
+  <message name="getAllQueueOfBrankResponse">
+    <part name="parameters" element="tns:getAllQueueOfBrankResponse" />
+  </message>
+  <message name="getAllUserOfBrank">
+    <part name="parameters" element="tns:getAllUserOfBrank" />
+  </message>
+  <message name="getAllUserOfBrankResponse">
+    <part name="parameters" element="tns:getAllUserOfBrankResponse" />
+  </message>
+  <message name="getAllDepartmentOfBrank">
+    <part name="parameters" element="tns:getAllDepartmentOfBrank" />
+  </message>
+  <message name="getAllDepartmentOfBrankResponse">
+    <part name="parameters" element="tns:getAllDepartmentOfBrankResponse" />
+  </message>
+  <message name="getAllSignOfBrank">
+    <part name="parameters" element="tns:getAllSignOfBrank" />
+  </message>
+  <message name="getAllSignOfBrankResponse">
+    <part name="parameters" element="tns:getAllSignOfBrankResponse" />
+  </message>
+  <message name="getAllServiceOfBrank">
+    <part name="parameters" element="tns:getAllServiceOfBrank" />
+  </message>
+  <message name="getAllServiceOfBrankResponse">
+    <part name="parameters" element="tns:getAllServiceOfBrankResponse" />
+  </message>
+  <message name="getAllTerminalOfBrank">
+    <part name="parameters" element="tns:getAllTerminalOfBrank" />
+  </message>
+  <message name="getAllTerminalOfBrankResponse">
+    <part name="parameters" element="tns:getAllTerminalOfBrankResponse" />
+  </message>
+  <message name="addServiceTranfer">
+    <part name="parameters" element="tns:addServiceTranfer" />
+  </message>
+  <message name="addServiceTranferResponse">
+    <part name="parameters" element="tns:addServiceTranferResponse" />
+  </message>
+  <portType name="serviceQueue">
+    <operation name="createNewQueue">
+      <input wsam:Action="http://main.com/serviceQueue/createNewQueueRequest" message="tns:createNewQueue" />
+      <output wsam:Action="http://main.com/serviceQueue/createNewQueueResponse" message="tns:createNewQueueResponse" />
+    </operation>
+    <operation name="printerTeckket">
+      <input wsam:Action="http://main.com/serviceQueue/printerTeckketRequest" message="tns:printerTeckket" />
+      <output wsam:Action="http://main.com/serviceQueue/printerTeckketResponse" message="tns:printerTeckketResponse" />
+    </operation>
+    <operation name="endQueuePatient">
+      <input wsam:Action="http://main.com/serviceQueue/endQueuePatientRequest" message="tns:endQueuePatient" />
+      <output wsam:Action="http://main.com/serviceQueue/endQueuePatientResponse" message="tns:endQueuePatientResponse" />
+    </operation>
+    <operation name="GetNumber">
+      <input wsam:Action="http://main.com/serviceQueue/GetNumberRequest" message="tns:GetNumber" />
+      <output wsam:Action="http://main.com/serviceQueue/GetNumberResponse" message="tns:GetNumberResponse" />
+    </operation>
+    <operation name="setMissQueue">
+      <input wsam:Action="http://main.com/serviceQueue/setMissQueueRequest" message="tns:setMissQueue" />
+      <output wsam:Action="http://main.com/serviceQueue/setMissQueueResponse" message="tns:setMissQueueResponse" />
+    </operation>
+    <operation name="endQueueAndCreateQueueServiceTranfer">
+      <input wsam:Action="http://main.com/serviceQueue/endQueueAndCreateQueueServiceTranferRequest" message="tns:endQueueAndCreateQueueServiceTranfer" />
+      <output wsam:Action="http://main.com/serviceQueue/endQueueAndCreateQueueServiceTranferResponse" message="tns:endQueueAndCreateQueueServiceTranferResponse" />
+    </operation>
+    <operation name="emdQueue">
+      <input wsam:Action="http://main.com/serviceQueue/emdQueueRequest" message="tns:emdQueue" />
+      <output wsam:Action="http://main.com/serviceQueue/emdQueueResponse" message="tns:emdQueueResponse" />
+    </operation>
+    <operation name="callQueueNumber">
+      <input wsam:Action="http://main.com/serviceQueue/callQueueNumberRequest" message="tns:callQueueNumber" />
+      <output wsam:Action="http://main.com/serviceQueue/callQueueNumberResponse" message="tns:callQueueNumberResponse" />
+    </operation>
+    <operation name="freshQueueCall">
+      <input wsam:Action="http://main.com/serviceQueue/freshQueueCallRequest" message="tns:freshQueueCall" />
+      <output wsam:Action="http://main.com/serviceQueue/freshQueueCallResponse" message="tns:freshQueueCallResponse" />
+    </operation>
+    <operation name="createQueueNumber">
+      <input wsam:Action="http://main.com/serviceQueue/createQueueNumberRequest" message="tns:createQueueNumber" />
+      <output wsam:Action="http://main.com/serviceQueue/createQueueNumberResponse" message="tns:createQueueNumberResponse" />
+    </operation>
+    <operation name="addServiceTranferRoom">
+      <input wsam:Action="http://main.com/serviceQueue/addServiceTranferRoomRequest" message="tns:addServiceTranferRoom" />
+      <output wsam:Action="http://main.com/serviceQueue/addServiceTranferRoomResponse" message="tns:addServiceTranferRoomResponse" />
+    </operation>
+    <operation name="createQueueByRoom">
+      <input wsam:Action="http://main.com/serviceQueue/createQueueByRoomRequest" message="tns:createQueueByRoom" />
+      <output wsam:Action="http://main.com/serviceQueue/createQueueByRoomResponse" message="tns:createQueueByRoomResponse" />
+    </operation>
+    <operation name="sendTerminalQueue">
+      <input wsam:Action="http://main.com/serviceQueue/sendTerminalQueueRequest" message="tns:sendTerminalQueue" />
+      <output wsam:Action="http://main.com/serviceQueue/sendTerminalQueueResponse" message="tns:sendTerminalQueueResponse" />
+    </operation>
+    <operation name="sendTerminalMissQueue">
+      <input wsam:Action="http://main.com/serviceQueue/sendTerminalMissQueueRequest" message="tns:sendTerminalMissQueue" />
+      <output wsam:Action="http://main.com/serviceQueue/sendTerminalMissQueueResponse" message="tns:sendTerminalMissQueueResponse" />
+    </operation>
+    <operation name="getAllQueueOfBrank">
+      <input wsam:Action="http://main.com/serviceQueue/getAllQueueOfBrankRequest" message="tns:getAllQueueOfBrank" />
+      <output wsam:Action="http://main.com/serviceQueue/getAllQueueOfBrankResponse" message="tns:getAllQueueOfBrankResponse" />
+    </operation>
+    <operation name="getAllUserOfBrank">
+      <input wsam:Action="http://main.com/serviceQueue/getAllUserOfBrankRequest" message="tns:getAllUserOfBrank" />
+      <output wsam:Action="http://main.com/serviceQueue/getAllUserOfBrankResponse" message="tns:getAllUserOfBrankResponse" />
+    </operation>
+    <operation name="getAllDepartmentOfBrank">
+      <input wsam:Action="http://main.com/serviceQueue/getAllDepartmentOfBrankRequest" message="tns:getAllDepartmentOfBrank" />
+      <output wsam:Action="http://main.com/serviceQueue/getAllDepartmentOfBrankResponse" message="tns:getAllDepartmentOfBrankResponse" />
+    </operation>
+    <operation name="getAllSignOfBrank">
+      <input wsam:Action="http://main.com/serviceQueue/getAllSignOfBrankRequest" message="tns:getAllSignOfBrank" />
+      <output wsam:Action="http://main.com/serviceQueue/getAllSignOfBrankResponse" message="tns:getAllSignOfBrankResponse" />
+    </operation>
+    <operation name="getAllServiceOfBrank">
+      <input wsam:Action="http://main.com/serviceQueue/getAllServiceOfBrankRequest" message="tns:getAllServiceOfBrank" />
+      <output wsam:Action="http://main.com/serviceQueue/getAllServiceOfBrankResponse" message="tns:getAllServiceOfBrankResponse" />
+    </operation>
+    <operation name="getAllTerminalOfBrank">
+      <input wsam:Action="http://main.com/serviceQueue/getAllTerminalOfBrankRequest" message="tns:getAllTerminalOfBrank" />
+      <output wsam:Action="http://main.com/serviceQueue/getAllTerminalOfBrankResponse" message="tns:getAllTerminalOfBrankResponse" />
+    </operation>
+    <operation name="addServiceTranfer">
+      <input wsam:Action="http://main.com/serviceQueue/addServiceTranferRequest" message="tns:addServiceTranfer" />
+      <output wsam:Action="http://main.com/serviceQueue/addServiceTranferResponse" message="tns:addServiceTranferResponse" />
+    </operation>
+  </portType>
+  <binding name="serviceQueuePortBinding" type="tns:serviceQueue">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="createNewQueue">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="printerTeckket">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="endQueuePatient">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetNumber">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="setMissQueue">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="endQueueAndCreateQueueServiceTranfer">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="emdQueue">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="callQueueNumber">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="freshQueueCall">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="createQueueNumber">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="addServiceTranferRoom">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="createQueueByRoom">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="sendTerminalQueue">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="sendTerminalMissQueue">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getAllQueueOfBrank">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getAllUserOfBrank">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getAllDepartmentOfBrank">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getAllSignOfBrank">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getAllServiceOfBrank">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getAllTerminalOfBrank">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="addServiceTranfer">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="serviceQueue">
+    <port name="serviceQueuePort" binding="tns:serviceQueuePortBinding">
+      <soap:address location="http://101.99.17.230:5719/serviceQueue/serviceQueue" />
+    </port>
+  </service>
+</definitions>

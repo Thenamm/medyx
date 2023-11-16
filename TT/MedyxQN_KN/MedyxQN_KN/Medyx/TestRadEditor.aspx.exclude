@@ -1,0 +1,153 @@
+﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" CodeFile="TestRadEditor.aspx.cs" Inherits="TestRadEditor" %>
+<%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <title>Drag-and-drop images functionality in ASP.NET Rich Text Editor </title>     
+    
+    <script type="text/javascript">
+
+        function OnClientNodeDragStart() {
+            setOverlayVisible(true);
+        }
+
+        function OnClientNodeDropping(sender, args) {
+            var event = args.get_domEvent();
+            var result = isMouseOverEditor(editor, event);
+            if (result) {
+                var imageSrc = args.get_sourceNode().get_value();
+                if (imageSrc && (imageSrc.indexOf(".gif") != -1 || imageSrc.indexOf(".jpg") != -1)) {
+                    var imageSrc = "<img src='" + imageSrc + "'>";
+                    editor.setFocus();
+                    editor.pasteHtml(imageSrc);
+                }
+            }
+            setOverlayVisible(false);
+        }
+
+        function OnClientNodeDragging(sender, args) {
+            var event = args.get_domEvent();
+            if (shimId && shimId._backgroundElement) {
+                if (isMouseOverEditor(editor, event)) {
+                    shimId._backgroundElement.style.cursor = "alias";
+                }
+                else {
+                    shimId._backgroundElement.style.cursor = "no-drop";
+                }
+            }
+        }
+
+        /* ================== Utility methods needed for the Drag/Drop ===============================*/
+
+        //Make all treeview nodes unselectable to prevent selection in editor being lost
+        function makeUnselectable(element) {
+            var nodes = element.getElementsByTagName("*");
+            for (var index = 0; index < nodes.length; index++) {
+                var elem = nodes[index];
+                elem.setAttribute("unselectable", "on");
+            }
+        }
+
+        //Create and display an overlay to prevent the editor content area from capturing mouse events
+        var shimId = null;
+
+        function setOverlayVisible(toShow) {
+            if (!shimId) {
+                var div = document.createElement("DIV");
+                document.body.appendChild(div);
+                shimId = new Telerik.Web.UI.ModalExtender(div);
+            }
+
+            if (toShow)
+                shimId.show();
+            else
+                shimId.hide();
+        }
+
+        //Check if the image is over the editor or not
+        function isMouseOverEditor(editor, event) {
+            return $telerik.isMouseOverElementEx(editor.get_contentAreaElement(), event);
+        }
+
+        /* ================== These two methods are not related to the drag/drop functionality, but to the preview functionality =======*/
+
+        function Scale(img, width, height) {
+            var hRatio = img.height / height;
+            var wRatio = img.width / width;
+
+            if (img.width > width && img.height > height) {
+                var ratio = (hRatio >= wRatio ? hRatio : wRatio);
+                img.width = (img.width / ratio);
+                img.height = (img.height / ratio);
+            }
+            else {
+                if (img.width > width) {
+                    img.width = (img.width / wRatio);
+                    img.height = (img.height / wRatio);
+                }
+                else {
+                    if (img.height > height) {
+                        img.width = (img.width / hRatio);
+                        img.height = (img.height / hRatio);
+                    }
+                }
+            }
+        }
+
+        function BeforeClick(sender, args) {
+            var node = args.get_node();
+            var object = document.createElement("IMG");
+            object.src = node.get_value();
+            if (node.get_attributes().getAttribute("Category") == "Folder") {
+                return;
+            }
+
+            var previewPane = document.getElementById("previewPane");
+
+            if (object.complete) {
+                Scale(object, 100, 100);
+                previewPane.innerHTML = "";
+                previewPane.appendChild(object);
+            }
+            else {
+                previewPane.innerHTML = "Loading image...";
+                object.onload = function () {
+                    Scale(object, 100, 100);
+                    previewPane.innerHTML = "";
+                    previewPane.appendChild(object);
+                    object.onload = null;
+                }
+            }
+        }
+
+    </script>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+
+            <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />            
+
+            <telerik:RadFormDecorator ID="QsfFromDecorator" runat="server" DecoratedControls="All" EnableRoundedCorners="false" />           
+    
+            <telerik:RadEditor SkinID="BasicSetOfTools" Width="500" Height="500" ID="RadEditor1" runat="server">
+                    <Content>
+                            Some sample content.... Some sample content...
+                            &nbsp;
+                    </Content>
+            </telerik:RadEditor>
+    
+             <script type="text/javascript">
+                 //<![CDATA[
+                 var editor = null;
+                 var tree = null;
+                 function storeReferences() {
+                          editor = $find("<%=RadEditor1.ClientID%>");                      
+                  }
+                 Sys.Application.add_load(storeReferences);                 
+                  //]]>
+             </script>
+
+    </form>
+</body>
+</html>

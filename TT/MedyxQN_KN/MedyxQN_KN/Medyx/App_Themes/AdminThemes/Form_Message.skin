@@ -1,0 +1,3 @@
+﻿
+
+<asp:Label SkinID="lblMessage" runat="server" Style="color: #00ffcc; font-size: 18px; font-family: tahoma; text-align: center;" Width="795px" />

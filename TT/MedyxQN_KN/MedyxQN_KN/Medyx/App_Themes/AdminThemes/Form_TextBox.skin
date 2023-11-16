@@ -1,0 +1,30 @@
+﻿<%--
+Default skin template. The following skins are provided as examples only.
+
+1. Named control skin. The SkinId should be uniquely defined because
+   duplicate SkinId's per control type are not allowed in the same theme.
+
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" >
+   <AlternatingRowStyle BackColor="Blue" />
+</asp:GridView>
+
+2. Default skin. The SkinId is not defined. Only one default 
+   control skin per control type is allowed in the same theme.
+
+<asp:Image runat="server" ImageUrl="~/images/image1.jpg" />
+--%>
+
+<asp:TextBox   
+            runat="server" 
+            Style="padding-right: 3px; padding-left: 3px;padding-bottom: 3px; padding-top: 3px; border-right: #ffcccc thin solid; border-top: #ffcccc thin solid; border-left: #ffcccc thin solid; border-bottom: #ffcccc thin solid;" 
+            Height="15px"
+            Width="200px"
+             />
+            
+            
+<asp:TextBox 
+        SkinID="txt_MultiLine"
+        runat="server" 
+        style="border-right: #a1a5b0 1px solid; border-top: #a1a5b0 1px solid; font-size: 12px; padding-bottom: 2px; vertical-align: micboe; border-left: #a1a5b0 1px solid; padding-top: 5px; border-bottom: #a1a5b0 1px solid; font-family: tahoma;" 
+        
+        />       

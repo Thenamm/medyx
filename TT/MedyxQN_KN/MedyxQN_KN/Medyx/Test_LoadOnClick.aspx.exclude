@@ -1,0 +1,138 @@
+﻿<%@ Page Title="" Language="C#"  MasterPageFile="~/AdminCode.master" AutoEventWireup="true" CodeFile="Test_LoadOnClick.aspx.cs" Inherits="Test_LoadOnClick" %>
+
+<%@ Import Namespace="HTC.Business.NoiTru" %>
+<%@ Import Namespace="HTC.Business.CategoryList" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+
+    <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
+        <script type="text/javascript">
+            $(document).ready(function () {            
+            });
+
+            function test()
+            {                                                                                
+                __doPostBack('ctl00_ContentPlaceHolder1_cboBenhDiKem_Input', '');
+
+                //combo.trackChanges();                
+                //combo.get_items().add(comboItem);                
+                //combo.commitChanges();
+            }
+        </script>
+    </telerik:RadCodeBlock>                     
+
+    <telerik:RadComboBox   OnClientKeyPressing="HandlekeyPressEnter"               ID="cmdBenhKhiVao" runat="server"
+
+        DataSourceID="odsBenhKhiVao"
+
+        AppendDataBoundItems="True" CssClass="span-all"
+        
+        AutoPostBack="false"
+         DataTextField="MaICDTen"  Filter="Contains" DataValueField="MaBenhID"              
+        
+        EnableVirtualScrolling="true"
+        EnableLoadOnDemand="true"
+        ItemsPerRequest="50"
+        ShowMoreResultsBox="true"
+        ShowDropDownOnTextboxClick="true"
+        EnableAutomaticLoadOnDemand="true"                
+
+        MarkFirstMatch="true"
+        
+        ExpandDirection="Down" Filter="Contains"
+        HighlightTemplatedItems="true"
+        Width="600px"
+        >
+        <HeaderTemplate>
+            <table class="NHTC_table_layout">
+                <tr>
+                    <td>STT<td>
+                        <td>Mã ICD</td>
+                        <td>Tên bệnh</td>
+                </tr>
+            </table>
+        </HeaderTemplate>
+        <Items>
+            <telerik:RadComboBoxItem runat="server" Text="" Value="" />
+        </Items>
+        <ItemTemplate>
+            <table>
+                <tr>
+                    <td width="100px">
+                        <%# DataBinder.Eval(Container.DataItem, "OrderNumber") %>
+                    </td>
+                    <td align="right" width="100px">
+                        <%# DataBinder.Eval(Container.DataItem, "MaICD")%>
+                    </td>
+                    <td width="400px">
+                        <%# DataBinder.Eval(Container.DataItem, "TenBenh") %>
+                    </td>
+                </tr>
+            </table>
+        </ItemTemplate>
+    </telerik:RadComboBox>
+
+
+
+    <telerik:RadComboBox   OnClientKeyPressing="HandlekeyPressEnter"               ID="cmdBenhKhiVao2" runat="server"        
+        CssClass="span-all"        
+        AutoPostBack="true"
+         DataTextField="MaICDTen"  Filter="Contains" DataValueField="MaBenhID"                              
+
+        MarkFirstMatch="true"
+
+        EnableLoadOnDemand="true"
+        OnItemsRequested="cmdBenhKhiVao2_ItemsRequested"
+        ItemsPerRequest="-1"
+        ShowMoreResultsBox="true"
+        
+        Filter="Contains"
+        HighlightTemplatedItems="true"
+        Width="600px"
+        >
+        <HeaderTemplate>
+            <table class="NHTC_table_layout">
+                <tr>
+                    <td>STT<td>
+                        <td>Mã ICD</td>
+                        <td>Tên bệnh</td>
+                </tr>
+            </table>
+        </HeaderTemplate>
+        <Items>
+            <telerik:RadComboBoxItem runat="server" Text="" Value="" />
+        </Items>
+        <ItemTemplate>
+            <table>
+                <tr>
+                    <td width="100px">
+                        <%# DataBinder.Eval(Container.DataItem, "OrderNumber") %>
+                    </td>
+                    <td align="right" width="100px">
+                        <%# DataBinder.Eval(Container.DataItem, "MaICD")%>
+                    </td>
+                    <td width="400px">
+                        <%# DataBinder.Eval(Container.DataItem, "TenBenh") %>
+                    </td>
+                </tr>
+            </table>
+        </ItemTemplate>
+    </telerik:RadComboBox>
+
+
+
+    <asp:ObjectDataSource  ID="odsBenhKhiVao" runat="server" SelectMethod="FindDMBenhTatByMa" TypeName="HTC.Business.CategoryList.DMBenhTatList" EnableViewState="true"        
+        ViewStateMode="Enabled"
+        
+        >
+        <SelectParameters>
+            <asp:Parameter Name="MaDV" Type="String" DefaultValue="" />
+        </SelectParameters>
+    </asp:ObjectDataSource>
+
+
+
+</asp:Content>
+

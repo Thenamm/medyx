@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://webservice.web.emr.dtt.vn/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="BaoCaoThongKeWebservice" targetNamespace="http://webservice.web.emr.dtt.vn/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema targetNamespace="param.webservice.hanoi.dtt.vn" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="OpenmrsResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errormessage" type="xs:string" />
+          <xs:element minOccurs="0" name="status" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns:ns1="param.webservice.hanoi.dtt.vn" elementFormDefault="unqualified" targetNamespace="http://webservice.web.emr.dtt.vn/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="param.webservice.hanoi.dtt.vn" />
+      <xs:element name="sBTTV" type="tns:sBTTV" />
+      <xs:element name="sBTTVResponse" type="tns:sBTTVResponse" />
+      <xs:element name="sCCVC" type="tns:sCCVC" />
+      <xs:element name="sCCVCResponse" type="tns:sCCVCResponse" />
+      <xs:element name="sDuocBV" type="tns:sDuocBV" />
+      <xs:element name="sDuocBVResponse" type="tns:sDuocBVResponse" />
+      <xs:element name="sHDCLS" type="tns:sHDCLS" />
+      <xs:element name="sHDCLSResponse" type="tns:sHDCLSResponse" />
+      <xs:element name="sHDDT" type="tns:sHDDT" />
+      <xs:element name="sHDDTResponse" type="tns:sHDDTResponse" />
+      <xs:element name="sHDKB" type="tns:sHDKB" />
+      <xs:element name="sHDKBResponse" type="tns:sHDKBResponse" />
+      <xs:element name="sHDPT" type="tns:sHDPT" />
+      <xs:element name="sHDPTResponse" type="tns:sHDPTResponse" />
+      <xs:element name="sHDTCC" type="tns:sHDTCC" />
+      <xs:element name="sHDTCCResponse" type="tns:sHDTCCResponse" />
+      <xs:element name="sHDTCVP" type="tns:sHDTCVP" />
+      <xs:element name="sHDTCVPResponse" type="tns:sHDTCVPResponse" />
+      <xs:element name="sHDTTVP" type="tns:sHDTTVP" />
+      <xs:element name="sHDTTVPResponse" type="tns:sHDTTVPResponse" />
+      <xs:element name="sSKSS" type="tns:sSKSS" />
+      <xs:element name="sSKSSResponse" type="tns:sSKSSResponse" />
+      <xs:complexType name="sHDTCC">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sBaoCaoHDTCC" type="tns:emrSdmxHoatDongTCC" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxHoatDongTCC">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="c100TienLuong" type="xs:string" />
+          <xs:element minOccurs="0" name="c101TienCong" type="xs:string" />
+          <xs:element minOccurs="0" name="c102PhuCapLuong" type="xs:string" />
+          <xs:element minOccurs="0" name="c104Thuong" type="xs:string" />
+          <xs:element minOccurs="0" name="c105PhucLoiTapThe" type="xs:string" />
+          <xs:element minOccurs="0" name="c106DongGop" type="xs:string" />
+          <xs:element minOccurs="0" name="c108TroCapDiHoc" type="xs:string" />
+          <xs:element minOccurs="0" name="c109DichVuCongCong" type="xs:string" />
+          <xs:element minOccurs="0" name="c110VatTuVanPhong" type="xs:string" />
+          <xs:element minOccurs="0" name="c111TTTuyenTruyen" type="xs:string" />
+          <xs:element minOccurs="0" name="c112HoiNghi" type="xs:string" />
+          <xs:element minOccurs="0" name="c113CongTac" type="xs:string" />
+          <xs:element minOccurs="0" name="c114ThueMuon" type="xs:string" />
+          <xs:element minOccurs="0" name="c115ChiDoanRa" type="xs:string" />
+          <xs:element minOccurs="0" name="c116ChiDoanVao" type="xs:string" />
+          <xs:element minOccurs="0" name="c117BaoDuongCSHT" type="xs:string" />
+          <xs:element minOccurs="0" name="c118SuaChuaTSCD" type="xs:string" />
+          <xs:element minOccurs="0" name="c119NghiepVuChuyenMon" type="xs:string" />
+          <xs:element minOccurs="0" name="c134Khac" type="xs:string" />
+          <xs:element minOccurs="0" name="c143CaiTienTSCD" type="xs:string" />
+          <xs:element minOccurs="0" name="c145MuaSamTSCD" type="xs:string" />
+          <xs:element minOccurs="0" name="daXoa" type="xs:string" />
+          <xs:element minOccurs="0" name="denNgay" type="xs:string" />
+          <xs:element name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="loaiBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="ngayKetXuat" type="xs:string" />
+          <xs:element minOccurs="0" name="thoiGianLapBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="thongChi" type="xs:string" />
+          <xs:element minOccurs="0" name="thuKhac" type="xs:string" />
+          <xs:element minOccurs="0" name="thuNganSachNhaNuoc" type="xs:string" />
+          <xs:element minOccurs="0" name="thuVienTro" type="xs:string" />
+          <xs:element minOccurs="0" name="tongThu" type="xs:string" />
+          <xs:element minOccurs="0" name="tongThuVienPhi" type="xs:string" />
+          <xs:element minOccurs="0" name="tuNgay" type="xs:string" />
+          <xs:element minOccurs="0" name="vienPhiBHYT" type="xs:string" />
+          <xs:element minOccurs="0" name="vienPhiTrucTiep" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sHDTCCResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="ns1:OpenmrsResponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sHDKB">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sBaoCaoHDKB" type="tns:emrSdmxHoatDongKB" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxHoatDongKB">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="daxoa" type="xs:string" />
+          <xs:element minOccurs="0" name="denngay" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="emrSdmxHoatDongKBInfos" nillable="true" type="tns:emrSdmxHoatDongKBInfo" />
+          <xs:element name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="loaiBaocao" type="xs:string" />
+          <xs:element minOccurs="0" name="ngayketxuat" type="xs:string" />
+          <xs:element minOccurs="0" name="thoiGianLapBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="tungay" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxHoatDongKBInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="chuyenkhoa" type="xs:string" />
+          <xs:element minOccurs="0" name="daxoa" type="xs:string" />
+          <xs:element minOccurs="0" name="emrSdmxHoatDongKB" type="tns:emrSdmxHoatDongKB" />
+          <xs:element minOccurs="0" name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="machuyenkhoa" type="xs:string" />
+          <xs:element minOccurs="0" name="slbenhnhanchuyenvien" type="xs:string" />
+          <xs:element minOccurs="0" name="slbenhnhanngoaitru" type="xs:string" />
+          <xs:element minOccurs="0" name="slbenhnhannt" type="xs:string" />
+          <xs:element minOccurs="0" name="slcc" type="xs:string" />
+          <xs:element minOccurs="0" name="slctvp" type="xs:string" />
+          <xs:element minOccurs="0" name="slktvp" type="xs:string" />
+          <xs:element minOccurs="0" name="slngaydtngoaitru" type="xs:string" />
+          <xs:element minOccurs="0" name="slttBHYT" type="xs:string" />
+          <xs:element minOccurs="0" name="totallankham" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sHDKBResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="ns1:OpenmrsResponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sDuocBV">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sBaoCaoDuocBV" type="tns:emrSdmxDuocBv" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxDuocBv">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="chungloaithuoc" type="xs:string" />
+          <xs:element minOccurs="0" name="corticoid" type="xs:string" />
+          <xs:element minOccurs="0" name="daxoa" type="xs:string" />
+          <xs:element minOccurs="0" name="denNgay" type="xs:string" />
+          <xs:element minOccurs="0" name="dichTruyen" type="xs:string" />
+          <xs:element minOccurs="0" name="dichTruyenCoDam" type="xs:string" />
+          <xs:element minOccurs="0" name="dichTruyenMua" type="xs:string" />
+          <xs:element minOccurs="0" name="dichTruyenPhaChe" type="xs:string" />
+          <xs:element minOccurs="0" name="duocTongSoTien" type="xs:string" />
+          <xs:element minOccurs="0" name="hoaChatThuocThu" type="xs:string" />
+          <xs:element name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="khac" type="xs:string" />
+          <xs:element minOccurs="0" name="khangSinh" type="xs:string" />
+          <xs:element minOccurs="0" name="loaiBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="ngayKetXuat" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienThuoc" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienThuocADR" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienThuocChuyenMon" type="xs:string" />
+          <xs:element minOccurs="0" name="thoiGianLapBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="thuocMe" type="xs:string" />
+          <xs:element minOccurs="0" name="thuocngoai" type="xs:string" />
+          <xs:element minOccurs="0" name="thuocnoi" type="xs:string" />
+          <xs:element minOccurs="0" name="tuNgay" type="xs:string" />
+          <xs:element minOccurs="0" name="vitamin" type="xs:string" />
+          <xs:element minOccurs="0" name="yhct" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sDuocBVResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="ns1:OpenmrsResponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sHDTTVP">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sBaoCaoHDTTVP" type="tns:emrSdmxHoatDongTCTTVP" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxHoatDongTCTTVP">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="daXoa" type="xs:string" />
+          <xs:element minOccurs="0" name="denNgay" type="xs:string" />
+          <xs:element name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="loaiBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="ngayKetXuat" type="xs:string" />
+          <xs:element minOccurs="0" name="snKhongThuDuoc" type="xs:string" />
+          <xs:element minOccurs="0" name="snNguoiBenhKhongNguoiNhan" type="xs:string" />
+          <xs:element minOccurs="0" name="snNguoiNgheoKhongTheNop" type="xs:string" />
+          <xs:element minOccurs="0" name="snThuocDienChinhSachUuDai" type="xs:string" />
+          <xs:element minOccurs="0" name="stKhongThuDuoc" type="xs:string" />
+          <xs:element minOccurs="0" name="stNguoiBenhKhongNguoiNhan" type="xs:string" />
+          <xs:element minOccurs="0" name="stNguoiNgheoKhongTheNop" type="xs:string" />
+          <xs:element minOccurs="0" name="stThuocDienChinhSachUuDai" type="xs:string" />
+          <xs:element minOccurs="0" name="thoiGianLapBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="tuNgay" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sHDTTVPResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="ns1:OpenmrsResponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sHDDT">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sBaoCaoHDDT" type="tns:emrSdmxHoatDongDT" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxHoatDongDT">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="daxoa" type="xs:string" />
+          <xs:element minOccurs="0" name="denngay" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="emrSdmxHoatDongDTInfos" nillable="true" type="tns:emrSdmxHoatDongDTInfo" />
+          <xs:element name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="loaiBaocao" type="xs:string" />
+          <xs:element minOccurs="0" name="ngayketxuat" type="xs:string" />
+          <xs:element minOccurs="0" name="thoiGianLapBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="tungay" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxHoatDongDTInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="chuyenkhoa" type="xs:string" />
+          <xs:element minOccurs="0" name="daxoa" type="xs:string" />
+          <xs:element minOccurs="0" name="emrSdmxHoatDongDT" type="tns:emrSdmxHoatDongDT" />
+          <xs:element minOccurs="0" name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="machuyenkhoa" type="xs:string" />
+          <xs:element minOccurs="0" name="slbnBHYT" type="xs:string" />
+          <xs:element minOccurs="0" name="slbncuoiki" type="xs:string" />
+          <xs:element minOccurs="0" name="slbndauki" type="xs:string" />
+          <xs:element minOccurs="0" name="slbnnoitrutv" type="xs:string" />
+          <xs:element minOccurs="0" name="slbnntcc" type="xs:string" />
+          <xs:element minOccurs="0" name="slbnnu" type="xs:string" />
+          <xs:element minOccurs="0" name="slbntv24h" type="xs:string" />
+          <xs:element minOccurs="0" name="slgiuong" type="xs:string" />
+          <xs:element minOccurs="0" name="slngaydtnoitru" type="xs:string" />
+          <xs:element minOccurs="0" name="slnoitru" type="xs:string" />
+          <xs:element minOccurs="0" name="slnoitrunu" type="xs:string" />
+          <xs:element minOccurs="0" name="sltreduoi15noitru" type="xs:string" />
+          <xs:element minOccurs="0" name="sltreduoi15tv" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sHDDTResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="ns1:OpenmrsResponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sHDPT">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sBaoCaoHDPTTT" type="tns:emrSdmxHoatDongPT" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxHoatDongPT">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="daxoa" type="xs:string" />
+          <xs:element minOccurs="0" name="denngay" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="emrSdmxHoatDongPTInfos" nillable="true" type="tns:emrSdmxHoatDongPTInfo" />
+          <xs:element name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="loaiBaocao" type="xs:string" />
+          <xs:element minOccurs="0" name="ngayketxuat" type="xs:string" />
+          <xs:element minOccurs="0" name="thoiGianLapBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="tungay" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxHoatDongPTInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="capcuu" type="xs:string" />
+          <xs:element minOccurs="0" name="daxoa" type="xs:string" />
+          <xs:element minOccurs="0" name="emrSdmxHoatDongPT" type="tns:emrSdmxHoatDongPT" />
+          <xs:element minOccurs="0" name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="kehoach" type="xs:string" />
+          <xs:element minOccurs="0" name="loaiPT" type="xs:string" />
+          <xs:element minOccurs="0" name="phanloai" type="xs:string" />
+          <xs:element minOccurs="0" name="taibiengayme" type="xs:string" />
+          <xs:element minOccurs="0" name="taibienkhac" type="xs:string" />
+          <xs:element minOccurs="0" name="taibiennhiemkhuan" type="xs:string" />
+          <xs:element minOccurs="0" name="taibientongso" type="xs:string" />
+          <xs:element minOccurs="0" name="total" type="xs:string" />
+          <xs:element minOccurs="0" name="tuvong24h" type="xs:string" />
+          <xs:element minOccurs="0" name="tuvongbanmo" type="xs:string" />
+          <xs:element minOccurs="0" name="tuvongtongso" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sHDPTResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="ns1:OpenmrsResponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sCCVC">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sBaoCaoCCVC" type="tns:emrSdmxCBCNVC" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxCBCNVC">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="daxoa" type="xs:string" />
+          <xs:element minOccurs="0" name="denNgay" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="emrSdmxCBCNVCInfos" nillable="true" type="tns:emrSdmxCBCNVCInfo" />
+          <xs:element name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="loaiBaocao" type="xs:string" />
+          <xs:element minOccurs="0" name="ngayketxuat" type="xs:string" />
+          <xs:element minOccurs="0" name="thoiGianLapBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="tuNgay" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxCBCNVCInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="daxoa" type="xs:string" />
+          <xs:element minOccurs="0" name="emrSdmxCBCNVC" type="tns:emrSdmxCBCNVC" />
+          <xs:element minOccurs="0" name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="maloai" type="xs:string" />
+          <xs:element minOccurs="0" name="maphongkhoa" type="xs:string" />
+          <xs:element minOccurs="0" name="phongkhoa" type="xs:string" />
+          <xs:element minOccurs="0" name="slbacsi" type="xs:string" />
+          <xs:element minOccurs="0" name="slbacsick1" type="xs:string" />
+          <xs:element minOccurs="0" name="slbacsick2" type="xs:string" />
+          <xs:element minOccurs="0" name="slcbdh" type="xs:string" />
+          <xs:element minOccurs="0" name="slcbhdn" type="xs:string" />
+          <xs:element minOccurs="0" name="slcbhdt" type="xs:string" />
+          <xs:element minOccurs="0" name="slcbsh" type="xs:string" />
+          <xs:element minOccurs="0" name="slcbth" type="xs:string" />
+          <xs:element minOccurs="0" name="sldsth" type="xs:string" />
+          <xs:element minOccurs="0" name="sldtsh" type="xs:string" />
+          <xs:element minOccurs="0" name="slduocsidh" type="xs:string" />
+          <xs:element minOccurs="0" name="slgspgd" type="xs:string" />
+          <xs:element minOccurs="0" name="slktv" type="xs:string" />
+          <xs:element minOccurs="0" name="slnhssh" type="xs:string" />
+          <xs:element minOccurs="0" name="slnhsth" type="xs:string" />
+          <xs:element minOccurs="0" name="slthacsi" type="xs:string" />
+          <xs:element minOccurs="0" name="sltspts" type="xs:string" />
+          <xs:element minOccurs="0" name="slysith" type="xs:string" />
+          <xs:element minOccurs="0" name="slytadddh" type="xs:string" />
+          <xs:element minOccurs="0" name="slytaddsh" type="xs:string" />
+          <xs:element minOccurs="0" name="slytaddth" type="xs:string" />
+          <xs:element minOccurs="0" name="total" type="xs:string" />
+          <xs:element minOccurs="0" name="totalF" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sCCVCResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="ns1:OpenmrsResponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sBTTV">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sBaoCaoBTTV" type="tns:emrSdmxTuVong" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxTuVong">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="daxoa" type="xs:string" />
+          <xs:element minOccurs="0" name="denngay" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="emrSdmxTuVongInfos" nillable="true" type="tns:emrSdmxTuVongInfo" />
+          <xs:element name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="loaiBaocao" type="xs:string" />
+          <xs:element minOccurs="0" name="ngayketxuat" type="xs:string" />
+          <xs:element minOccurs="0" name="thoiGianLapBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="tungay" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxTuVongInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="daxoa" type="xs:string" />
+          <xs:element minOccurs="0" name="emrSdmxTuVong" type="tns:emrSdmxTuVong" />
+          <xs:element minOccurs="0" name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="mabenh" type="xs:string" />
+          <xs:element minOccurs="0" name="machuong" type="xs:string" />
+          <xs:element minOccurs="0" name="manhom" type="xs:string" />
+          <xs:element minOccurs="0" name="sobenhnhanduoi15tuvong" type="xs:string" />
+          <xs:element minOccurs="0" name="sobenhnhantreduoi4" type="xs:string" />
+          <xs:element minOccurs="0" name="sobenhnhantuvongngoaitru" type="xs:string" />
+          <xs:element minOccurs="0" name="sobenhnhantuvongnoitru" type="xs:string" />
+          <xs:element minOccurs="0" name="soluotdtnoitrutreduoi15" type="xs:string" />
+          <xs:element minOccurs="0" name="soluotdttreduoi4" type="xs:string" />
+          <xs:element minOccurs="0" name="soluotthamkhamngoaitru" type="xs:string" />
+          <xs:element minOccurs="0" name="soluotthamkhamnoitru" type="xs:string" />
+          <xs:element minOccurs="0" name="soluottrethamkhamngoaitru" type="xs:string" />
+          <xs:element minOccurs="0" name="songaydieutrinoitru" type="xs:string" />
+          <xs:element minOccurs="0" name="songaydtnoitrutreduoi15" type="xs:string" />
+          <xs:element minOccurs="0" name="songaydtnoitrutreduoi4" type="xs:string" />
+          <xs:element minOccurs="0" name="tenbenh" type="xs:string" />
+          <xs:element minOccurs="0" name="tenchuong" type="xs:string" />
+          <xs:element minOccurs="0" name="tennhom" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sBTTVResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="ns1:OpenmrsResponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sHDTCVP">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sBaoCaoHDTCVP" type="tns:emrSdmxHoatDongTCTCVP" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxHoatDongTCTCVP">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="daXoa" type="xs:string" />
+          <xs:element minOccurs="0" name="denNgay" type="xs:string" />
+          <xs:element name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="loaiBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="ngayKetXuat" type="xs:string" />
+          <xs:element minOccurs="0" name="thoiGianLapBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="thuCTScanner" type="xs:string" />
+          <xs:element minOccurs="0" name="thuCongHuongTu" type="xs:string" />
+          <xs:element minOccurs="0" name="thuDienNao" type="xs:string" />
+          <xs:element minOccurs="0" name="thuDienTim" type="xs:string" />
+          <xs:element minOccurs="0" name="thuGPBDaiThe" type="xs:string" />
+          <xs:element minOccurs="0" name="thuGPBViThe" type="xs:string" />
+          <xs:element minOccurs="0" name="thuKhac" type="xs:string" />
+          <xs:element minOccurs="0" name="thuKhamBenh" type="xs:string" />
+          <xs:element minOccurs="0" name="thuMauTruyen" type="xs:string" />
+          <xs:element minOccurs="0" name="thuNoiSoi" type="xs:string" />
+          <xs:element minOccurs="0" name="thuPhauThuat" type="xs:string" />
+          <xs:element minOccurs="0" name="thuSieuAm" type="xs:string" />
+          <xs:element minOccurs="0" name="thuThamDoChucNang" type="xs:string" />
+          <xs:element minOccurs="0" name="thuThanNhanTao" type="xs:string" />
+          <xs:element minOccurs="0" name="thuThuoc" type="xs:string" />
+          <xs:element minOccurs="0" name="thuTienGiuong" type="xs:string" />
+          <xs:element minOccurs="0" name="thuXNHIV" type="xs:string" />
+          <xs:element minOccurs="0" name="thuXNHoaSinh" type="xs:string" />
+          <xs:element minOccurs="0" name="thuXNHuyetHoc" type="xs:string" />
+          <xs:element minOccurs="0" name="thuXNViSinh" type="xs:string" />
+          <xs:element minOccurs="0" name="thuXQuang" type="xs:string" />
+          <xs:element minOccurs="0" name="tongChi" type="xs:string" />
+          <xs:element minOccurs="0" name="tongThu" type="xs:string" />
+          <xs:element minOccurs="0" name="tuNgay" type="xs:string" />
+          <xs:element minOccurs="0" name="cBoSungChuyenMon" type="xs:string" />
+          <xs:element minOccurs="0" name="cDichTruyen" type="xs:string" />
+          <xs:element minOccurs="0" name="cHoaChatXetNghiem" type="xs:string" />
+          <xs:element minOccurs="0" name="cKhac" type="xs:string" />
+          <xs:element minOccurs="0" name="cKinhPhiNopCapTrendt" type="xs:string" />
+          <xs:element minOccurs="0" name="cKinhPhiTrichThuong" type="xs:string" />
+          <xs:element minOccurs="0" name="cMauTruyen" type="xs:string" />
+          <xs:element minOccurs="0" name="cThuoc" type="xs:string" />
+          <xs:element minOccurs="0" name="cVatTuTieuHoa" type="xs:string" />
+          <xs:element minOccurs="0" name="cXQThuocCanQuang" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sHDTCVPResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="ns1:OpenmrsResponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sHDCLS">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sBaoCaoHDCLS" type="tns:emrSdmxHoatDongCLS" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxHoatDongCLS">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="daxoa" type="xs:string" />
+          <xs:element minOccurs="0" name="denngay" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="emrSdmxHoatDongCLSInfos" nillable="true" type="tns:emrSdmxHoatDongCLSInfo" />
+          <xs:element name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="loaiBaocao" type="xs:string" />
+          <xs:element minOccurs="0" name="ngayketxuat" type="xs:string" />
+          <xs:element minOccurs="0" name="thoiGianLapBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="tungay" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxHoatDongCLSInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="chuandoanhakhac" type="xs:string" />
+          <xs:element minOccurs="0" name="conghuongtu" type="xs:string" />
+          <xs:element minOccurs="0" name="ctscaner" type="xs:string" />
+          <xs:element minOccurs="0" name="daxoa" type="xs:string" />
+          <xs:element minOccurs="0" name="diennao" type="xs:string" />
+          <xs:element minOccurs="0" name="dientim" type="xs:string" />
+          <xs:element minOccurs="0" name="emrSdmxHoatDongCLS" type="tns:emrSdmxHoatDongCLS" />
+          <xs:element minOccurs="0" name="giaiphaudaithe" type="xs:string" />
+          <xs:element minOccurs="0" name="giaphaukhac" type="xs:string" />
+          <xs:element minOccurs="0" name="giaphauvithe" type="xs:string" />
+          <xs:element minOccurs="0" name="hiv" type="xs:string" />
+          <xs:element minOccurs="0" name="hoasinh" type="xs:string" />
+          <xs:element minOccurs="0" name="huyethoc" type="xs:string" />
+          <xs:element minOccurs="0" name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="mautruyen" type="xs:string" />
+          <xs:element minOccurs="0" name="noisoi" type="xs:string" />
+          <xs:element minOccurs="0" name="phamvi" type="xs:string" />
+          <xs:element minOccurs="0" name="sieuam" type="xs:string" />
+          <xs:element minOccurs="0" name="thamdocnkhac" type="xs:string" />
+          <xs:element minOccurs="0" name="vikhuan" type="xs:string" />
+          <xs:element minOccurs="0" name="xetnghiemkhac" type="xs:string" />
+          <xs:element minOccurs="0" name="xquangchieu" type="xs:string" />
+          <xs:element minOccurs="0" name="xquangchup" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sHDCLSResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="ns1:OpenmrsResponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sSKSS">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sBaoCaoSKSS" type="tns:emrSdmxSKSS" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emrSdmxSKSS">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="benhNhanDatVong" type="xs:string" />
+          <xs:element minOccurs="0" name="benhNhanDinhSan" type="xs:string" />
+          <xs:element minOccurs="0" name="benhNhanDinhSanNam" type="xs:string" />
+          <xs:element minOccurs="0" name="benhNhanKhamThai" type="xs:string" />
+          <xs:element minOccurs="0" name="benhNhanNaoThai" type="xs:string" />
+          <xs:element minOccurs="0" name="benhNhanPhaThaiTo" type="xs:string" />
+          <xs:element minOccurs="0" name="benhNhanSinh" type="xs:string" />
+          <xs:element minOccurs="0" name="benhNhanSinhDeKho" type="xs:string" />
+          <xs:element minOccurs="0" name="benhNhanSinhPhauThuat" type="xs:string" />
+          <xs:element minOccurs="0" name="coThai" type="xs:string" />
+          <xs:element minOccurs="0" name="daXoa" type="xs:string" />
+          <xs:element minOccurs="0" name="denNgay" type="xs:string" />
+          <xs:element minOccurs="0" name="dieuHoaKinhNguyet" type="xs:string" />
+          <xs:element name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="loaiBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="ngayKetXuat" type="xs:string" />
+          <xs:element minOccurs="0" name="phuKhoa" type="xs:string" />
+          <xs:element minOccurs="0" name="phuKhoaDieuTri" type="xs:string" />
+          <xs:element minOccurs="0" name="phuKhoaNhiemKhuan" type="xs:string" />
+          <xs:element minOccurs="0" name="sanPhuTuVongChuaDe" type="xs:string" />
+          <xs:element minOccurs="0" name="sayThaiTuNhien" type="xs:string" />
+          <xs:element minOccurs="0" name="sinhDeKeHoachKhac" type="xs:string" />
+          <xs:element minOccurs="0" name="soLanKhamThai" type="xs:string" />
+          <xs:element minOccurs="0" name="soSinhDuoi2500gr" type="xs:string" />
+          <xs:element minOccurs="0" name="soSinhSong" type="xs:string" />
+          <xs:element minOccurs="0" name="soSinhTuVong" type="xs:string" />
+          <xs:element minOccurs="0" name="soSinhTuVongTrongKhiSinh" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienBangHuyet" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienBangHuyetTuVong" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienDatVong" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienDinhSan" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienNaoHut" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienNhiemKhuan" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienNhiemKhuanTuVong" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienPhauThuatLayThai" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienSanGiat" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienSanGiatTuVong" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienSanKhoa" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienUonVan" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienUonVanTuVong" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienVoTuCung" type="xs:string" />
+          <xs:element minOccurs="0" name="taiBienVoTuCungTuVong" type="xs:string" />
+          <xs:element minOccurs="0" name="thaiChetLuu" type="xs:string" />
+          <xs:element minOccurs="0" name="thoiGianLapBaoCao" type="xs:string" />
+          <xs:element minOccurs="0" name="thuocTiem" type="xs:string" />
+          <xs:element minOccurs="0" name="thuocUong" type="xs:string" />
+          <xs:element minOccurs="0" name="tuNgay" type="xs:string" />
+          <xs:element minOccurs="0" name="voSinh" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sSKSSResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="ns1:OpenmrsResponse" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="sHDTCVP">
+    <wsdl:part name="parameters" element="tns:sHDTCVP" />
+  </wsdl:message>
+  <wsdl:message name="sHDTCVPResponse">
+    <wsdl:part name="parameters" element="tns:sHDTCVPResponse" />
+  </wsdl:message>
+  <wsdl:message name="sHDTTVP">
+    <wsdl:part name="parameters" element="tns:sHDTTVP" />
+  </wsdl:message>
+  <wsdl:message name="sHDKBResponse">
+    <wsdl:part name="parameters" element="tns:sHDKBResponse" />
+  </wsdl:message>
+  <wsdl:message name="sHDPT">
+    <wsdl:part name="parameters" element="tns:sHDPT" />
+  </wsdl:message>
+  <wsdl:message name="sHDCLS">
+    <wsdl:part name="parameters" element="tns:sHDCLS" />
+  </wsdl:message>
+  <wsdl:message name="sSKSS">
+    <wsdl:part name="parameters" element="tns:sSKSS" />
+  </wsdl:message>
+  <wsdl:message name="sDuocBVResponse">
+    <wsdl:part name="parameters" element="tns:sDuocBVResponse" />
+  </wsdl:message>
+  <wsdl:message name="sCCVC">
+    <wsdl:part name="parameters" element="tns:sCCVC" />
+  </wsdl:message>
+  <wsdl:message name="sHDTCCResponse">
+    <wsdl:part name="parameters" element="tns:sHDTCCResponse" />
+  </wsdl:message>
+  <wsdl:message name="sHDPTResponse">
+    <wsdl:part name="parameters" element="tns:sHDPTResponse" />
+  </wsdl:message>
+  <wsdl:message name="sHDDTResponse">
+    <wsdl:part name="parameters" element="tns:sHDDTResponse" />
+  </wsdl:message>
+  <wsdl:message name="sBTTVResponse">
+    <wsdl:part name="parameters" element="tns:sBTTVResponse" />
+  </wsdl:message>
+  <wsdl:message name="sHDTCC">
+    <wsdl:part name="parameters" element="tns:sHDTCC" />
+  </wsdl:message>
+  <wsdl:message name="sHDDT">
+    <wsdl:part name="parameters" element="tns:sHDDT" />
+  </wsdl:message>
+  <wsdl:message name="sHDCLSResponse">
+    <wsdl:part name="parameters" element="tns:sHDCLSResponse" />
+  </wsdl:message>
+  <wsdl:message name="sDuocBV">
+    <wsdl:part name="parameters" element="tns:sDuocBV" />
+  </wsdl:message>
+  <wsdl:message name="sBTTV">
+    <wsdl:part name="parameters" element="tns:sBTTV" />
+  </wsdl:message>
+  <wsdl:message name="sHDKB">
+    <wsdl:part name="parameters" element="tns:sHDKB" />
+  </wsdl:message>
+  <wsdl:message name="sSKSSResponse">
+    <wsdl:part name="parameters" element="tns:sSKSSResponse" />
+  </wsdl:message>
+  <wsdl:message name="sHDTTVPResponse">
+    <wsdl:part name="parameters" element="tns:sHDTTVPResponse" />
+  </wsdl:message>
+  <wsdl:message name="sCCVCResponse">
+    <wsdl:part name="parameters" element="tns:sCCVCResponse" />
+  </wsdl:message>
+  <wsdl:portType name="BaoCaoThongKeServiceImpl">
+    <wsdl:operation name="sHDTCC">
+      <wsdl:input name="sHDTCC" message="tns:sHDTCC" />
+      <wsdl:output name="sHDTCCResponse" message="tns:sHDTCCResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="sHDKB">
+      <wsdl:input name="sHDKB" message="tns:sHDKB" />
+      <wsdl:output name="sHDKBResponse" message="tns:sHDKBResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="sDuocBV">
+      <wsdl:input name="sDuocBV" message="tns:sDuocBV" />
+      <wsdl:output name="sDuocBVResponse" message="tns:sDuocBVResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="sHDTTVP">
+      <wsdl:input name="sHDTTVP" message="tns:sHDTTVP" />
+      <wsdl:output name="sHDTTVPResponse" message="tns:sHDTTVPResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="sHDDT">
+      <wsdl:input name="sHDDT" message="tns:sHDDT" />
+      <wsdl:output name="sHDDTResponse" message="tns:sHDDTResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="sHDPT">
+      <wsdl:input name="sHDPT" message="tns:sHDPT" />
+      <wsdl:output name="sHDPTResponse" message="tns:sHDPTResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="sCCVC">
+      <wsdl:input name="sCCVC" message="tns:sCCVC" />
+      <wsdl:output name="sCCVCResponse" message="tns:sCCVCResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="sBTTV">
+      <wsdl:input name="sBTTV" message="tns:sBTTV" />
+      <wsdl:output name="sBTTVResponse" message="tns:sBTTVResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="sHDTCVP">
+      <wsdl:input name="sHDTCVP" message="tns:sHDTCVP" />
+      <wsdl:output name="sHDTCVPResponse" message="tns:sHDTCVPResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="sHDCLS">
+      <wsdl:input name="sHDCLS" message="tns:sHDCLS" />
+      <wsdl:output name="sHDCLSResponse" message="tns:sHDCLSResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="sSKSS">
+      <wsdl:input name="sSKSS" message="tns:sSKSS" />
+      <wsdl:output name="sSKSSResponse" message="tns:sSKSSResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BaoCaoThongKeWebserviceSoapBinding" type="tns:BaoCaoThongKeServiceImpl">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="sHDTCC">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input name="sHDTCC">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sHDTCCResponse">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sHDKB">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input name="sHDKB">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sHDKBResponse">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sDuocBV">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input name="sDuocBV">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sDuocBVResponse">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sHDTTVP">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input name="sHDTTVP">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sHDTTVPResponse">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sHDDT">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input name="sHDDT">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sHDDTResponse">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sHDPT">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input name="sHDPT">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sHDPTResponse">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sCCVC">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input name="sCCVC">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sCCVCResponse">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sBTTV">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input name="sBTTV">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sBTTVResponse">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sHDCLS">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input name="sHDCLS">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sHDCLSResponse">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sHDTCVP">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input name="sHDTCVP">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sHDTCVPResponse">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sSKSS">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input name="sSKSS">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sSKSSResponse">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BaoCaoThongKeWebservice">
+    <wsdl:port name="BaoCaoThongKeServiceImplPort" binding="tns:BaoCaoThongKeWebserviceSoapBinding">
+      <soap12:address location="http://172.28.30.30:8080/qlhsba/BaoCaoThongKeWebservice" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfemrThongBao">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="emrThongBao" nillable="true" type="tns:emrThongBao" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfemrThongBao" nillable="true" type="tns:ArrayOfemrThongBao" />
+  <xs:complexType name="emrThongBao">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LoaiThongBao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaNV" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MoTa" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NgayThongBao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ThongBao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TrangThaiDoc" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="emrThongBao" nillable="true" type="tns:emrThongBao" />
+  <xs:complexType name="emrResultTransfer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="emrResultTransfer" nillable="true" type="tns:emrResultTransfer" />
+  <xs:complexType name="ArrayOfemrBaoCaoCLS">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="emrBaoCaoCLS" nillable="true" type="tns:emrBaoCaoCLS" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfemrBaoCaoCLS" nillable="true" type="tns:ArrayOfemrBaoCaoCLS" />
+  <xs:complexType name="emrBaoCaoCLS">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Ma" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NoiTru" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Ten" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TongSo" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="emrBaoCaoCLS" nillable="true" type="tns:emrBaoCaoCLS" />
+  <xs:complexType name="ArrayOfemrBaoCaoTuVong">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="emrBaoCaoTuVong" nillable="true" type="tns:emrBaoCaoTuVong" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfemrBaoCaoTuVong" nillable="true" type="tns:ArrayOfemrBaoCaoTuVong" />
+  <xs:complexType name="emrBaoCaoTuVong">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="KhamChung" type="xs:decimal" />
+      <xs:element minOccurs="0" name="KhamTreEm" type="xs:decimal" />
+      <xs:element minOccurs="0" name="KhamTuVong" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MaBenh" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaICD" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SoNgayDieuTri" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNgayDieuTriTreEm" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNgayDieuTriTreEm4" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiDieuTri" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiDieuTriTreEm" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiDieuTriTreEm4" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiTVTreEm4" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiTuVong" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoTuVongTreEm" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TenBenh" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="emrBaoCaoTuVong" nillable="true" type="tns:emrBaoCaoTuVong" />
+  <xs:complexType name="ArrayOfemrBaoCaoPhauThuatThuThuat">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="emrBaoCaoPhauThuatThuThuat" nillable="true" type="tns:emrBaoCaoPhauThuatThuThuat" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfemrBaoCaoPhauThuatThuThuat" nillable="true" type="tns:ArrayOfemrBaoCaoPhauThuatThuThuat" />
+  <xs:complexType name="emrBaoCaoPhauThuatThuThuat">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Ma" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TaiBienHoiSuc" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TaiBienK" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TaiBienNoiKhoa" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Ten" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TenLoai" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TheoCapCuu" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TheoKeHoach" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TongCong" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TuVongPT" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TuVongTrong24h" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="emrBaoCaoPhauThuatThuThuat" nillable="true" type="tns:emrBaoCaoPhauThuatThuThuat" />
+  <xs:complexType name="ArrayOfemrBaoCaoHDDieuTri">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="emrBaoCaoHDDieuTri" nillable="true" type="tns:emrBaoCaoHDDieuTri" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfemrBaoCaoHDDieuTri" nillable="true" type="tns:ArrayOfemrBaoCaoHDDieuTri" />
+  <xs:complexType name="emrBaoCaoHDDieuTri">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MaKhoa" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SoGiuong" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNgayDieuTri" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiBenh" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiBenhBaoHiem" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiBenhCapCuu" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiBenhChuyenKhoa" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiBenhTV" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiBenhTVongTreEm" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiBenhTVongTruoc" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiBenhTreEm" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiDK" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TenKhoa" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="emrBaoCaoHDDieuTri" nillable="true" type="tns:emrBaoCaoHDDieuTri" />
+  <xs:complexType name="ArrayOfemrBaoCaoHDKhamBenh">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="emrBaoCaoHDKhamBenh" nillable="true" type="tns:emrBaoCaoHDKhamBenh" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfemrBaoCaoHDKhamBenh" nillable="true" type="tns:ArrayOfemrBaoCaoHDKhamBenh" />
+  <xs:complexType name="emrBaoCaoHDKhamBenh">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MaKhoa" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SoLanBH" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoLanCapCuu" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoLanKThu" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoLanVienPhi" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNgayDieuTri" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiBenhChuyenVien" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiDieuTri" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SoNguoiVaoVien" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TenKhoa" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="emrBaoCaoHDKhamBenh" nillable="true" type="tns:emrBaoCaoHDKhamBenh" />
+</xs:schema>

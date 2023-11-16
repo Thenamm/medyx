@@ -1,0 +1,24 @@
+6/12/2023 8:49:08 AM  txthoten.Text: Nguyễn Văn Ba
+6/12/2023 8:49:08 AM  txthotencha.Text: Nguyễn Văn Du
+6/12/2023 8:49:08 AM  MaBHXHCha.Text: 2222222222
+6/12/2023 8:51:06 AM  txthoten.Text: Nguyễn Văn Ba
+6/12/2023 8:51:06 AM  txthotencha.Text: Nguyễn Văn Sáu
+6/12/2023 8:51:06 AM  MaBHXHCha.Text: 8888888888
+6/12/2023 9:23:56 AM  txthoten.Text: Nguyễn Văn Ba
+6/12/2023 9:23:56 AM  txthotencha.Text: Nguyễn Văn Moi
+6/12/2023 9:23:56 AM  MaBHXHCha.Text: 12345678
+6/12/2023 10:06:27 AM  txthoten.Text: Nguyễn Văn Ba
+6/12/2023 10:06:27 AM  txthotencha.Text: Nguyễn Văn Moi
+6/12/2023 10:06:27 AM  MaBHXHCha.Text: 8888888888
+6/12/2023 11:45:54 AM  txthoten.Text: Nguyễn Văn Ba
+6/12/2023 11:45:54 AM  txthotencha.Text: Nguyễn Văn Ngon
+6/12/2023 11:45:54 AM  MaBHXHCha.Text: 2222222222
+6/12/2023 1:58:42 PM  txthoten.Text: Nguyễn Văn Ba
+6/12/2023 1:58:42 PM  txthotencha.Text: Nguyễn Văn Ngon
+6/12/2023 1:58:42 PM  MaBHXHCha.Text: 2222222222
+6/12/2023 2:31:19 PM  txthoten.Text: Nguyễn Văn Ba
+6/12/2023 2:31:19 PM  txthotencha.Text: Nguyễn Văn Sáu
+6/12/2023 2:31:19 PM  MaBHXHCha.Text: 8888888888
+6/12/2023 2:34:36 PM  txthoten.Text: Nguyễn Văn Ba
+6/12/2023 2:34:36 PM  txthotencha.Text: Nguyễn Văn Nali
+6/12/2023 2:34:36 PM  MaBHXHCha.Text: 

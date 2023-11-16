@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using HTC.Business.CategoryList;
+using HTC.Business.NoiTru;
+using HTC.Common.Web;
+using Telerik.Web.UI;
+
+public partial class Test_LoadOnClick : Page
+{
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {            
+        }
+        else
+        { 
+        
+        }
+    }
+    protected void cmdBenhKhiVao2_ItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)
+    {
+        /*
+        if (cmdBenhKhiVao2.DataSource == null)
+        {
+            cmdBenhKhiVao2.DataSource = odsBenhKhiVao;
+            cmdBenhKhiVao2.DataBind();
+        }*/
+        ///cmdBenhKhiVao2.DataBind();
+    }
+}

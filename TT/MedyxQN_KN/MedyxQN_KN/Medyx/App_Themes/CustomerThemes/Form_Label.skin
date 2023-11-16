@@ -1,0 +1,18 @@
+
+
+<asp:Label SkinID="lblForm" runat="server" style="font-weight: bold; font-size: 13px; color: #686868; font-family: tahoma" />
+
+<asp:Label SkinID="lblInformation" runat="server" style="font-weight: bold; font-size: 15px;font-family: tahoma;color:#990033" />
+
+
+<asp:Label SkinID="lblForm_OrderList_Title" runat="server" style="font-weight: bold; font-size: 12px; color: #2c2c2c; font-family: tahoma" />
+
+<asp:Label SkinID="lblForm_OrderList_Value" runat="server" style="font-size: 13px; color: #2f2b2c; font-family: tahoma" />
+
+<asp:Label SkinID="lblText" runat="server" style="font-size: 11px; color: #2f2b2c; font-family: tahoma;font-weight:bold" />
+
+<asp:Label SkinID="lblOutOfStock" runat="server" style="font-family:arial;font-size:14px;font-weight:bold;color:#33783f; font-style: italic;" />
+
+
+
+<asp:Label SkinID="lblOrderDetails_Title" runat="server" style="font-size:14px;color:#333333;font-weight:bold;font-family:tahoma" />

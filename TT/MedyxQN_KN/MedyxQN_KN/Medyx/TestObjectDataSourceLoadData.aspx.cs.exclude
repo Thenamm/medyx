@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using HTC.Business.CategoryList;
+using HTC.Business.Duoc;
+using HTC.Common.Web;
+using Telerik.Web.UI;
+using System.Collections;
+using CrystalDecisions.CrystalReports.Engine;
+using System.IO;
+using System.Text.RegularExpressions;
+
+public partial class TestObjectDataSourceLoadData : Page
+{
+    protected void odsDichVu_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
+    {
+        e.InputParameters["maDV"] = 1;        
+    }
+    
+    protected void btnClick_Click(object sender, EventArgs e)
+    {        
+        Object list = obsDMNhanVien.Select();        
+        Response.Write(list==null);     
+    }
+    protected void ObjectDanhMucNV_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
+    {                
+        /*
+        if (IsPostBack)
+        {
+            e.Cancel = true;
+        }*/
+    }
+}
+
+

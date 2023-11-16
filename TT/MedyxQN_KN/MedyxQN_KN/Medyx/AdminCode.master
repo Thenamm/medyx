@@ -1,0 +1,576 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="AdminCode.master.cs" Inherits="AdminCode_AdminCode" %>
+
+<%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Medyx version 3</title>
+  
+    <script src='<%: ResolveUrl("~/js/datepicker/jquery-1.7.2.min.js")%>' type="text/javascript"></script>
+    <script src='<%: ResolveUrl("~/js/datepicker/jquery-ui-1.8.19.custom.min.js")%>' type="text/javascript"></script>
+    <script type="text/javascript" src='<%: ResolveUrl("~/js/maskinput/jquery.maskedinput-1.3.1.min_.js") %>'></script>
+    <link href='<%: ResolveUrl("~/css/datepicker/jquery-ui-1.8.19.custom.css")%>' rel="stylesheet" />
+    <!--        COMPRESSED CSS            -->
+    <link href="<%: ResolveUrl("~/css/compressed_min/medyx_css_all_min.css") %>" rel="stylesheet" type="text/css" />
+  
+   
+    <telerik:RadStyleSheetManager ID="RadStyleSheetManager1" runat="server" CdnSettings-TelerikCdn="Disabled" />
+       <style type="text/css">
+        
+        table {
+            table-layout: fixed !important;
+        }
+
+
+        .rcbList {
+            white-space: inherit !important;
+        }
+
+        #progress-bar {
+            width: 400px;
+        }
+
+        .header-repeat {
+            background-color: #F6F9FE;
+        }
+
+        /*
+        #ctl00_SkinChooser
+        {
+            display:none;    
+        }*/
+
+        .tabItem, .rtsLI {
+            width: 100px !important;
+        }
+
+        .RadForm.rfdTextbox #ctl00_ContentPlaceHolder1_grdChiTiet input.rfdDecorated[type="text"], .RadForm.rfdTextbox #ctl00_ContentPlaceHolder1_grdDanhSach input.rfdDecorated[type="text"] {
+            width: 98% !important;
+        }
+
+        .RadForm.rfdTextbox input.rfdDecorated[type="text"], .RadForm.rfdTextbox input.rfdDecorated[type="password"],
+        .RadForm.rfdTextbox input.rfdDecorated[type="search"],
+        .RadForm.rfdTextbox input.rfdDecorated[type="url"], .RadForm.rfdTextbox input.rfdDecorated[type="tel"], .RadForm.rfdTextbox input.rfdDecorated[type="email"] {
+            width: 98% !important;
+        }
+
+
+        /*    Form tìm kiếm: Từ ngày + đến ngày không nhảy dòng     */
+        fieldset #ContentPlaceHolder1_dtTuNgay, fieldset #ContentPlaceHolder1_dtDenNgay {
+            width: 100px !important;
+        }
+
+        .RadForm .rfdSelect .rfdSelectOuter, .RadForm .rfdSelect.rfdSelectDisabled:hover .rfdSelectOuter {
+            line-height: 22px;
+            height: 22px;
+        }
+
+        .rfdSelect {
+            /* width:150px !important; */
+            width: 100% !important;
+        }
+
+        .rtsLI {
+            width: 180px !important;
+        }
+
+        .RadForm_Default .rfdSelect_Default .rfdSelectOuter, .RadForm_Default .rfdSelect_Default.rfdSelectDisabled:hover .rfdSelectOuter {
+            text-align: left !important;
+        }
+    </style>
+
+    <script type="text/javascript">
+        //function heartBeat() {
+        //    $.get("KeepAlive.ashx?", function (data) { });
+
+        //}
+               
+        //$(function () {
+           
+        //    setInterval("heartBeat()", 1000*10* 30); // 30*10s gửi request một lần
+            
+        //});
+        $(function () {
+            $('button,input,textarea,select').focus();
+            var $inp = $('input[id*=cbo]:text:enabled:visible');
+
+            $inp.bind('keydown', function (e) {
+                //var key = (e.keyCode ? e.keyCode : e.charCode);
+                var key = e.which;
+                if (key == 13) {
+                    e.preventDefault();
+                    var $inpt = $('input:enabled:visible');
+
+                    var nxtIdx = $inpt.index(this) + 1;
+
+                    $("input:enabled:visible:eq(" + nxtIdx + ")").focus();
+                    //  $inpt.eq(nxtIdx).focus();
+
+
+                }
+            });
+        });
+        $(document).ready(function () {
+            $("button,input,select").keypress(function (evt) {
+
+                if (evt.keyCode == 13) {
+
+                    iname = $(this).val();
+                    name = $(this).attr("id");
+                    if (name.indexOf("grd") < 0) {
+                        if (iname !== 'Submit') {
+
+                            var fields = $(this).parents('form:eq(0),body').find('button,input,textarea,select');
+
+                            var index = fields.index(this);
+
+                            if (index > -1 && (index + 1) < fields.length) {
+                                fields.eq(index + 1).focus();
+                            }
+                            return false;
+                        }
+                    }
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $('td:has(:checkbox)').css('text-align', 'left');
+            /*$('td:has(:rfdSelect)').css('text-align', 'left');            */
+        });
+
+        $('td:has(:checkbox)').css('text-align', 'left');
+    </script>
+    <script type="text/javascript">
+        function processClick(sender, args) {
+            var commandName = args.get_item().get_commandName();
+
+            if (commandName == 'cmdExit') {
+
+                var txtURL = document.getElementById("<%=txtURL.ClientID%>");
+
+                if (txtURL == '') {
+                  
+                    window.Location.href = "/Default.aspx";
+                    return false;
+                }
+                else {
+                    window.Location.href = txtURL;
+                    return false;
+                }
+
+            }
+        }
+        function onlyNumbers(e) {
+
+            var specialKeys = new Array();
+            specialKeys.push(8); //Backspace
+            specialKeys.push(46); //.
+            specialKeys.push(44); //,
+            var charCode = e.which || e.keyCode;
+
+            if (specialKeys.indexOf(charCode) != -1)
+                return true
+            else if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                alert("Ký tự nhập số sai định dạng");
+                return false;
+            }
+            return true;
+
+        }
+        function onlyFaxs(e) {
+            var specialKeys = new Array();
+            specialKeys.push(8); //Backspace
+            specialKeys.push(40); //(
+            specialKeys.push(41); //)
+            specialKeys.push(46); //.
+            specialKeys.push(44); //,
+            specialKeys.push(45); //-
+            specialKeys.push(47); // /
+            var charCode = e.which || e.keyCode;
+
+            if (specialKeys.indexOf(charCode) != -1)
+                return true
+            else if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                alert("Ký tự nhập điện thoại sai định dạng");
+                return false;
+            }
+            return true;
+        }
+        function pressEnterToNext(evt, obj) {
+            if (evt.keyCode == 13) {
+                iname = $(obj).val();
+
+                if (iname != 'Submit') {
+                    var fields = $(obj).parents('form:eq(0),body').find('button,input,textarea,select');
+
+                    var index = fields.index(obj);
+
+                    if (index > -1 && (index + 1) < fields.length) {
+                        fields.eq(index + 1).focus();
+                    }
+                    return false;
+                }
+            }
+        }
+    function DisableRootClick(sender, args) {
+            if (args.get_item().get_items().get_count() != 0 ) {
+                args.get_item().set_selected(false);
+                args.get_item().set_focused(false);
+
+                args.set_cancel(true); // Cancel the event
+            }
+    
+        }
+        function HandlekeyPressEnter(sender, args) {
+
+            var e = args.get_domEvent();
+            var id = "";
+            var senderId = sender.get_inputDomElement().id;
+            var isMarked = false;
+
+            if (e.keyCode == 13) {
+                sender._raiseClientBlur(e);
+                var curtabIndex = sender.get_inputDomElement().tabIndex;
+
+                for (i = 0; i < document.forms[0].elements.length; i++) {
+                    if (document.forms[0].elements[i].type == "text"
+                        || document.forms[0].elements[i].type == "textarea"
+                        || document.forms[0].elements[i].type == "select-one"
+                        || document.forms[0].elements[i].type == "checkbox"
+                        || document.forms[0].elements[i].type == "select"
+                        ) {
+                        id = document.forms[0].elements[i].id;
+
+                        if (isMarked) {
+                            setTimeout('document.getElementById("' + id + '").focus();', 10);
+                            break;
+                        }
+
+                        if (id == senderId) {
+                            isMarked = true;
+                        }
+                    }
+                }
+            }
+        }
+        function changeHashOnLoad() {
+            window.location.href += "#";
+            setTimeout("changeHashAgain()", "50");
+        }
+
+        function changeHashAgain() {
+            window.location.href += "1";
+        }
+
+        var storedHash = window.location.hash;
+        window.setInterval(function () {
+            if (window.location.hash != storedHash) {
+                window.location.hash = storedHash;
+            }
+        }, 50);
+    </script>
+
+</head>
+
+<%--<script type="text/javascript">
+    function MsgBox(msg) {
+        if (confirm(msg)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function sendContentToPrinter() {
+        window.print();
+    }
+
+    var clicked = false;
+    function CheckBrowser() {
+        if (clicked == false) {
+            //Browser closed
+        }
+        else {
+            //redirected 
+            clicked = false;
+        }
+    }
+
+    function bodyUnload() {
+        if (clicked == false)//browser is closed
+        {
+            alert("Closing browser!!!");
+
+            var request = GetRequest();
+
+            request.open("GET", "AutoLogOut.aspx", true);
+            request.send();
+        }
+    }
+
+    function GetRequest() {
+        var request = null;
+        if (window.XMLHttpRequest) {
+            //incase of IE7,FF, Opera and Safari browser
+            request = new XMLHttpRequest();
+        }
+        else {
+            //for old browser like IE 6.x and IE 5.x
+            request = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+        }
+        return request;
+    }
+
+</script>--%>
+
+<body onload="changeHashOnLoad();" >
+
+    <form id="form1" runat="server">
+        <telerik:RadScriptManager ID="RadScriptManager1" runat="server"
+            CdnSettings-TelerikCdn="Disabled"
+            OutputCompression="AutoDetect"
+            CdnSettings-CombinedResource="Enabled"
+            EnableScriptCombine="true">
+            <Scripts>
+                <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.Core.js" />
+                <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQuery.js" />
+            </Scripts>
+        </telerik:RadScriptManager>
+      
+         <%if (txtCT.Value == "") %>
+        <%{ %>
+        <telerik:RadAjaxLoadingPanel runat="server" ID="LoadingPanel1" Skin="MetroTouch">
+        </telerik:RadAjaxLoadingPanel>
+           <telerik:RadSkinManager ID="QsfSkinManager" runat="server" ShowChooser="false" />
+
+        <%--<asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQueryInclude.js" />--%>
+
+        <%--<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
+            <AjaxSettings>
+                <telerik:AjaxSetting AjaxControlID="RadTabStrip111">
+                    <UpdatedControls>
+                        <telerik:AjaxUpdatedControl ControlID="lblMessage" LoadingPanelID="LoadingPanel1"></telerik:AjaxUpdatedControl>
+                    </UpdatedControls>
+                </telerik:AjaxSetting>
+            </AjaxSettings>
+        </telerik:RadAjaxManager>--%>
+
+        <%} %>
+          <telerik:RadFormDecorator ID="QsfFromDecorator" runat="server" DecoratedControls="All" EnableRoundedCorners="true"  />
+      
+        <div class="outer">
+            <div class="mainContent">
+                <div class="container_12">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder3" runat="server">
+                    </asp:ContentPlaceHolder>
+                      <%if (txtCT.Value != "CT") %>
+                            <%{%>
+                    <div class="clear">
+                    </div>
+
+                    <div class="grid_12">
+                                           
+                        <ul>
+                          
+                            <telerik:RadMenu ID="radMenu" runat="server"
+                                EnableRoundedCorners="true"
+                                EnableShadows="true"
+                                EnableTextHTMLEncoding="true"
+                                Skin="WebBlue"
+                                
+                                Width="1000px"
+                                ExpandAnimation-Duration="600"
+                                CollapseDelay="50" ExpandDelay="50" OnClientItemClicking="DisableRootClick"
+                                ClickToOpen ="false" 
+                                TabIndex="1000">
+                                
+                                <DefaultGroupSettings RepeatColumns="1" RepeatDirection="Vertical" />
+                             </telerik:RadMenu>
+                   
+                          
+                        </ul>
+                    </div>
+                      <%} %>
+                    <div class="clear">
+                    </div>
+                    
+                    <div class="grid_12">
+                        <div class="box round first fullpage" style="">
+                            <h2>
+                                <asp:Label runat="server" Text="" ID="lblFormTitle"></asp:Label>
+                                 <asp:Label runat="server" Text="" ID="lblFormThongBao" style="float:right!important;color: red;font-weight:bold;font-size: 150%;"></asp:Label> 
+                            </h2>
+                            <div class="block " style="min-height: 350px" align="center">
+                                <%-- <noscript>
+                                        <div class="pam fbPageBanner _3ky uiBoxYellow noborder" style="background-color: #fff9d7; z-index: 301; position: relative; text-align: center; padding: 10px">
+                                            <div class="fbPageBannerInner">
+                                                <i class="mrm _3kz img sp_C-sFpHpjRfv sx_aeb4b4"></i>
+                                                <span class="pts fsl fwb">Để ứng dụng hoạt động ổn định, xin bật Javascript trên trình duyệt , hoặc <a target="_blank" href="https://support.google.com/adsense/answer/12654?hl=vi">xem hướng dẫn.</a>.</span>
+                                            </div>
+                                        </div>
+                                    </noscript>--%>
+                                <asp:Label runat="server" Text="" ID="lblMessage" Style="line-height: 20px; font-weight: bold; font-size: 13px;"></asp:Label>
+                                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                                </asp:ContentPlaceHolder>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="site_info">
+                    <p>
+                        Copyright <a href="#">HTC</a>. All Rights Reserved.
+                    </p>
+                </div>
+
+
+            </div>
+        </div>
+         <div style="display: none;">
+        <asp:HiddenField ID="txtloaiphieu" runat="server" Value="" />
+        <asp:HiddenField ID="txtCT" runat="server" Value="" />
+             </div>
+         <%if (txtloaiphieu.Value == "") %>
+        <%{ %>
+        <div id="Div1" runat="server">
+
+            <script type="text/javascript">
+
+                function keyHandlerForDMFormsPrintOnly(e) {
+                    var pressedKey;
+
+                    if (document.all) {
+                        e = window.event;
+                        pressedKey = e.keyCode;
+                    }
+
+                    if (e.which) {
+                        pressedKey = e.which;
+                    }
+
+                    if (pressedKey == 121) { //f10-thoat
+                        window.history.back(-1);
+                        return false;
+                        e.cancelBubble = true; // cancel goto history[-1] in chrome
+                        e.returnValue = false;
+                    }
+                }
+                function ComBoKeyress(sender, eventArgs) {
+                    var key = eventArgs.get_domEvent().keyCode;
+
+                    if (key == 27) //Check for the Esc key being press
+                    {
+                        //                  ret_bHandlePress = false;
+                        var grid = $find("ctl00_ContentPlaceHolder1_grdChiTiet");
+
+                        grid.get_masterTableView().fireCommand("CancelAll", ""); //Cancel any editing activities in the grid
+                        grid.get_masterTableView().clearSelectedItems(); //De-select any rows
+                    }
+                }
+                function keyHandlerForDMFormsFull(e) {
+                    var pressedKey;
+
+                    if (document.all) {
+                        e = window.event;
+                        pressedKey = e.keyCode;
+                    }
+
+                    if (e.which) {
+                        pressedKey = e.which;
+                    }
+
+                    if (pressedKey == 121) { //f10-thoat
+                        window.history.back(-1);
+                        return false;
+                        e.cancelBubble = true; // cancel goto history[-1] in chrome
+                        e.returnValue = false;
+                    }
+                    else if (pressedKey == 123) { //f2-them                                            
+
+                        /*var masterTable = $find("<= grdChiTiet.ClientID >").get_masterTableView();*/
+                        var masterTable = $find("ctl00_ContentPlaceHolder1_grdChiTiet").get_masterTableView();
+                        masterTable.fireCommand("InitInsert");
+
+                        //e.cancelBubble = true;
+                        //e.returnValue = false;
+                    }
+
+                    //e.stopPropagation();
+                    //e.preventDefault();
+                }
+                function RowDblClickForDMForms(sender, eventArgs) {
+                    editedRow = eventArgs.get_itemIndexHierarchical();
+                    var grid = $find("ctl00_ContentPlaceHolder1_grdChiTiet");
+                    grid.get_masterTableView().editItem(editedRow);
+                    grid.get_masterTableView().get_dataItems()[editedRow].set_selected(true);
+                }
+
+                function GridCommandForDMForms(sender, args) {
+                    if (args.get_commandName() != "Edit") {
+                        editedRow = null;
+                    }
+                }
+
+                function RowClickForDMForms(sender, eventArgs) {
+                    /*
+                    if (editedRow && hasChanges) {
+                        hasChanges = false;
+                        if (confirm("Có lưu dữ liệu?")) {
+                            $find("ctl00_ContentPlaceHolder1_grdChiTiet").get_masterTableView().updateItem(editedRow);
+                    }
+                    }*/
+                }
+
+
+                function GridCreatedForDMForms(sender, eventArgs) {
+
+                    var gridElement = sender.get_element();
+                    var elementsToUse = [];
+                    inputs = gridElement.getElementsByTagName("input");
+                    for (var i = 0; i < inputs.length; i++) {
+                        var lowerType = inputs[i].type.toLowerCase();
+                        if (lowerType == "hidden" || lowerType == "button") {
+                            continue;
+                        }
+                        if (inputs[i].id.indexOf("PageSizeComboBox") == -1 && inputs[i].type.toLowerCase() != "checkbox") {
+                            Array.add(elementsToUse, inputs[i]);
+                        }
+                        inputs[i].onchange = TrackChanges;
+                    }
+
+                    dropdowns = gridElement.getElementsByTagName("select");
+                    for (var i = 0; i < dropdowns.length; i++) {
+                        dropdowns[i].onchange = TrackChanges;
+                    }
+
+                    setTimeout(function () { if (elementsToUse[0]) elementsToUse[0].focus(); }, 100);
+                }
+                function TrackChanges(e) {
+                    hasChanges = true;
+                }
+            </script>
+            <input type="hidden" runat="server" name="txtURL" id="txtURL" value="Default.aspx" />
+
+        </div>
+        <%} %>
+         <style type="text/css">
+         .RadComboBoxDropDown .rcbHovered
+                {
+                    background: #4842d9;
+                    color: #fff;
+                }
+              .RadGrid .rgSelectedRow
+            {
+                background-image : none !important;
+              background-color: #FFDEAD!important;
+                color:black;
+            }
+    </style>
+
+    </form>
+</body>
+</html>

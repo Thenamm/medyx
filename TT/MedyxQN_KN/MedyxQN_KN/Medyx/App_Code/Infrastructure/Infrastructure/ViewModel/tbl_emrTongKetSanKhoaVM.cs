@@ -1,0 +1,84 @@
+namespace  Infrastructure.ViewModel
+{
+    using System;
+    public partial class tbl_emrTongKetSanKhoaVM
+    {
+        public Int32? IdDanhSachHSBA { set; get; }
+        public Byte? apgar01 { set; get; }
+        public Byte? apgar05 { set; get; }
+        public Byte? apgar10 { set; get; }
+        public Byte? apgar1pMausacda { set; get; }
+        public Byte? apgar1pPhanxa { set; get; }
+        public Byte? apgar1pTho { set; get; }
+        public Byte? apgar1pTim { set; get; }
+        public Byte? apgar1pTruonglucco { set; get; }
+        public Byte? apgar5pMausacda { set; get; }
+        public Byte? apgar5pPhanxa { set; get; }
+        public Byte? apgar5pTho { set; get; }
+        public Byte? apgar5pTim { set; get; }
+        public Byte? apgar5pTruonglucco { set; get; }
+        public Boolean? bocraunhantao { set; get; }
+        public String cannangrau { set; get; }
+        public String canthiepkhac { set; get; }
+        public Boolean? chaymausauso { set; get; }
+        public String chieudairau { set; get; }
+        public String chucdanhnguoitheodoi { set; get; }
+        public DateTime? deluc { set; get; }
+        public String emrDmCachDe { set; get; }
+        public String emrDmTrangThaiMoDeByIdtrangthaiamdao { set; get; }
+        public String emrDmTrangThaiMoDeByIdtrangthaicotucung { set; get; }
+        public String emrDmTrangThaiMoDeByIdtrangthaisinhmon { set; get; }
+        public String huyetapcao { set; get; }
+        public String huyetapthap { set; get; }
+        public Boolean? kiemsoattucung { set; get; }
+        public Int32? loaisorau { set; get; }
+        public Byte? luongmaubimat { set; get; }
+        public String luongmaumat { set; get; }
+        public String lydobocrau { set; get; }
+        public String lydocanthiep { set; get; }
+        public String lydocanthiepkhac { set; get; }
+        public String lydokiemsoat { set; get; }
+        public String mach { set; get; }
+        public String motabanhrau { set; get; }
+        public String motachamsoctresosinh { set; get; }
+        public String motamatmang { set; get; }
+        public String motamatmui { set; get; }
+        public String motasorau { set; get; }
+        public String motatoantrang { set; get; }
+        public String nhietdo { set; get; }
+        public String nhiptho { set; get; }
+        public String phuongphapkhauloaichi { set; get; }
+        public Boolean? raubongnon { set; get; }
+        public Boolean? raucuonso { set; get; }
+        public DateTime? rausoluc { set; get; }
+        public Byte? soluongchet { set; get; }
+        public Byte? soluongsong { set; get; }
+        public Boolean? somatmang { set; get; }
+        public Boolean? somatmui { set; get; }
+        public Byte? somuikhau { set; get; }
+        public Boolean? ssbopbongo2 { set; get; }
+        public String sscannang { set; get; }
+        public String sschieucao { set; get; }
+        public Boolean? ssdathai { set; get; }
+        public Boolean? ssditathaumon { set; get; }
+        public Boolean? ssditatkhac { set; get; }
+        public Boolean? sshoisinhkhac { set; get; }
+        public Boolean? sshutdich { set; get; }
+        public String ssmotaditat { set; get; }
+        public Boolean? ssnoikhiquan { set; get; }
+        public String sssogai { set; get; }
+        public String sssotrai { set; get; }
+        public Boolean? ssthoo2 { set; get; }
+        public String sstinhtrang { set; get; }
+        public String ssvongdau { set; get; }
+        public Boolean? ssxoaboptim { set; get; }
+        public String tennguoidode { set; get; }
+        public String tennguoimo { set; get; }
+        public String tennguoitheodoi { set; get; }
+        public DateTime? thoigianchuyenda { set; get; }
+        public String thoigiansorau { set; get; }
+        public DateTime? thoigiantheodoikhoade { set; get; }
+        public String toantrang { set; get; }
+        public String xulysorau { set; get; }
+    }
+}

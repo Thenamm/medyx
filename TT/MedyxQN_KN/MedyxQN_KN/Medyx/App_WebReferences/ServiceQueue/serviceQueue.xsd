@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://main.com/" xmlns:ns1="http://jaxb.dev.java.net/array" targetNamespace="http://main.com/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://101.99.17.230:5719/serviceQueue/serviceQueue?xsd=2" namespace="http://jaxb.dev.java.net/array" />
+  <xs:element name="GetNumber" type="tns:GetNumber" />
+  <xs:element name="GetNumberResponse" type="tns:GetNumberResponse" />
+  <xs:element name="addServiceTranfer" type="tns:addServiceTranfer" />
+  <xs:element name="addServiceTranferResponse" type="tns:addServiceTranferResponse" />
+  <xs:element name="addServiceTranferRoom" type="tns:addServiceTranferRoom" />
+  <xs:element name="addServiceTranferRoomResponse" type="tns:addServiceTranferRoomResponse" />
+  <xs:element name="callQueueNumber" type="tns:callQueueNumber" />
+  <xs:element name="callQueueNumberResponse" type="tns:callQueueNumberResponse" />
+  <xs:element name="createNewQueue" type="tns:createNewQueue" />
+  <xs:element name="createNewQueueResponse" type="tns:createNewQueueResponse" />
+  <xs:element name="createQueueByRoom" type="tns:createQueueByRoom" />
+  <xs:element name="createQueueByRoomResponse" type="tns:createQueueByRoomResponse" />
+  <xs:element name="createQueueNumber" type="tns:createQueueNumber" />
+  <xs:element name="createQueueNumberResponse" type="tns:createQueueNumberResponse" />
+  <xs:element name="emdQueue" type="tns:emdQueue" />
+  <xs:element name="emdQueueResponse" type="tns:emdQueueResponse" />
+  <xs:element name="endQueueAndCreateQueueServiceTranfer" type="tns:endQueueAndCreateQueueServiceTranfer" />
+  <xs:element name="endQueueAndCreateQueueServiceTranferResponse" type="tns:endQueueAndCreateQueueServiceTranferResponse" />
+  <xs:element name="endQueuePatient" type="tns:endQueuePatient" />
+  <xs:element name="endQueuePatientResponse" type="tns:endQueuePatientResponse" />
+  <xs:element name="freshQueueCall" type="tns:freshQueueCall" />
+  <xs:element name="freshQueueCallResponse" type="tns:freshQueueCallResponse" />
+  <xs:element name="getAllDepartmentOfBrank" type="tns:getAllDepartmentOfBrank" />
+  <xs:element name="getAllDepartmentOfBrankResponse" type="tns:getAllDepartmentOfBrankResponse" />
+  <xs:element name="getAllQueueOfBrank" type="tns:getAllQueueOfBrank" />
+  <xs:element name="getAllQueueOfBrankResponse" type="tns:getAllQueueOfBrankResponse" />
+  <xs:element name="getAllServiceOfBrank" type="tns:getAllServiceOfBrank" />
+  <xs:element name="getAllServiceOfBrankResponse" type="tns:getAllServiceOfBrankResponse" />
+  <xs:element name="getAllSignOfBrank" type="tns:getAllSignOfBrank" />
+  <xs:element name="getAllSignOfBrankResponse" type="tns:getAllSignOfBrankResponse" />
+  <xs:element name="getAllTerminalOfBrank" type="tns:getAllTerminalOfBrank" />
+  <xs:element name="getAllTerminalOfBrankResponse" type="tns:getAllTerminalOfBrankResponse" />
+  <xs:element name="getAllUserOfBrank" type="tns:getAllUserOfBrank" />
+  <xs:element name="getAllUserOfBrankResponse" type="tns:getAllUserOfBrankResponse" />
+  <xs:element name="printerTeckket" type="tns:printerTeckket" />
+  <xs:element name="printerTeckketResponse" type="tns:printerTeckketResponse" />
+  <xs:element name="sendTerminalMissQueue" type="tns:sendTerminalMissQueue" />
+  <xs:element name="sendTerminalMissQueueResponse" type="tns:sendTerminalMissQueueResponse" />
+  <xs:element name="sendTerminalQueue" type="tns:sendTerminalQueue" />
+  <xs:element name="sendTerminalQueueResponse" type="tns:sendTerminalQueueResponse" />
+  <xs:element name="setMissQueue" type="tns:setMissQueue" />
+  <xs:element name="setMissQueueResponse" type="tns:setMissQueueResponse" />
+  <xs:complexType name="getAllQueueOfBrank">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="dayImport" type="xs:string" />
+      <xs:element name="companyId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAllQueueOfBrankResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sendTerminalQueue">
+    <xs:sequence>
+      <xs:element name="signId" type="xs:int" />
+      <xs:element name="terminalId" type="xs:int" />
+      <xs:element minOccurs="0" name="terminalNick" type="xs:string" />
+      <xs:element minOccurs="0" name="queueNo" type="xs:string" />
+      <xs:element name="serviceId" type="xs:int" />
+      <xs:element name="userId" type="xs:int" />
+      <xs:element minOccurs="0" name="nextQueue" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sendTerminalQueueResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAllSignOfBrank">
+    <xs:sequence>
+      <xs:element name="companyId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAllSignOfBrankResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createQueueByRoom">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="queueNo" type="xs:string" />
+      <xs:element minOccurs="0" name="codeTerminal" type="xs:string" />
+      <xs:element minOccurs="0" name="codePatient" type="xs:string" />
+      <xs:element minOccurs="0" name="patientName" type="xs:string" />
+      <xs:element name="patientAge" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createQueueByRoomResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="callQueueNumber">
+    <xs:sequence>
+      <xs:element name="transactionId" type="xs:int" />
+      <xs:element minOccurs="0" name="terminalCode" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="callQueueNumberResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="emdQueue">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="patientCode" type="xs:string" />
+      <xs:element minOccurs="0" name="queueNo" type="xs:string" />
+      <xs:element name="departmentId" type="xs:int" />
+      <xs:element name="terminalId" type="xs:int" />
+      <xs:element name="transactionId" type="xs:int" />
+      <xs:element name="userId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="emdQueueResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="freshQueueCall">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="codeTerminal" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="freshQueueCallResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" nillable="true" type="ns1:stringArray" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createNewQueue">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="patientCode" type="xs:string" />
+      <xs:element minOccurs="0" name="departmentId" type="xs:string" />
+      <xs:element name="terminalId" type="xs:int" />
+      <xs:element name="userId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createNewQueueResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="printerTeckket">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="content" type="xs:string" />
+      <xs:element minOccurs="0" name="queueNo" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="printerTeckketResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetNumber">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodeTerminal" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetNumberResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sendTerminalMissQueue">
+    <xs:sequence>
+      <xs:element name="signId" type="xs:int" />
+      <xs:element name="terminalId" type="xs:int" />
+      <xs:element minOccurs="0" name="terminalNick" type="xs:string" />
+      <xs:element minOccurs="0" name="queueNo" type="xs:string" />
+      <xs:element name="userid" type="xs:int" />
+      <xs:element name="serviceid" type="xs:int" />
+      <xs:element minOccurs="0" name="nextQueue" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sendTerminalMissQueueResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="endQueueAndCreateQueueServiceTranfer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="patientCode" type="xs:string" />
+      <xs:element minOccurs="0" name="queueNo" type="xs:string" />
+      <xs:element minOccurs="0" name="departmentId" type="xs:string" />
+      <xs:element name="terminalId" type="xs:int" />
+      <xs:element name="transactionId" type="xs:int" />
+      <xs:element name="userId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="endQueueAndCreateQueueServiceTranferResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAllTerminalOfBrank">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getAllTerminalOfBrankResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAllUserOfBrank">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getAllUserOfBrankResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createQueueNumber">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="codeTerminal" type="xs:string" />
+      <xs:element minOccurs="0" name="patientCode" type="xs:string" />
+      <xs:element minOccurs="0" name="patientName" type="xs:string" />
+      <xs:element name="patientAge" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createQueueNumberResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addServiceTranferRoom">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="patientCode" type="xs:string" />
+      <xs:element name="transactionId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addServiceTranferRoomResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="endQueuePatient">
+    <xs:sequence>
+      <xs:element name="transactionId" type="xs:int" />
+      <xs:element minOccurs="0" name="codeTerminal" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="endQueuePatientResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setMissQueue">
+    <xs:sequence>
+      <xs:element name="transactionId" type="xs:int" />
+      <xs:element minOccurs="0" name="terminalCode" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setMissQueueResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAllServiceOfBrank">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getAllServiceOfBrankResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAllDepartmentOfBrank">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getAllDepartmentOfBrankResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addServiceTranfer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="patientCode" type="xs:string" />
+      <xs:element minOccurs="0" name="departmentId" type="xs:string" />
+      <xs:element name="terminalId" type="xs:int" />
+      <xs:element name="transactionId" type="xs:int" />
+      <xs:element name="userId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addServiceTranferResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

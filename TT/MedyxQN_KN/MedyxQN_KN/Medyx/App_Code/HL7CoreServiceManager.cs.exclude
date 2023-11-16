@@ -1,0 +1,1763 @@
+﻿using DTT.HL7Core;
+ 
+using HL7CoreDBTableAdapters;
+using HSBATableAdapters;
+using HTC.Common.Web;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Web;
+
+/// <summary>
+/// Summary description for HL7CoreServiceManager
+/// </summary>
+public class HL7CoreServiceManager : WebBase
+{
+
+    public HL7CoreServiceManager()
+    {
+        //
+        // TODO: Add constructor logic here
+        //
+    }
+
+    public string ConvertFileToString(string filePath)
+    {
+
+        string encodingBase64 = string.Empty;
+        try
+        {
+            byte[] byteList = File.ReadAllBytes(filePath);
+
+            return Convert.ToBase64String(byteList);
+        }
+        catch (Exception)
+        {
+            return string.Empty;
+        }
+    }
+
+
+    public string DownloadLatestCategoryMetaList()
+    {
+        try
+        {
+            DTT.HL7Core.OpenmrsService service = new DTT.HL7Core.OpenmrsService();
+
+            GetAllMetadataResponse response = service.getAllList();
+            EmrMetadata[] list = response.entities;
+
+            DateTime createdDate = DateTime.Now;
+            string createdUser = Pub_sAccount;
+
+            PhienBanTableAdapter phienBanAdapter = new PhienBanTableAdapter();
+
+
+            StringBuilder msg = new StringBuilder();
+            foreach (EmrMetadata danhmuc in list)
+            {
+                try
+                {
+                    if (danhmuc.ngayhethieuluc >= DateTime.MinValue)
+                    {
+                        phienBanAdapter.InsertPhienBan(danhmuc.ma, danhmuc.phienbanmoinhat,
+                                                        danhmuc.coquanbanhanh,
+                                                        danhmuc.ngaybanhanh,
+                                                        danhmuc.ngaycohieuluc, null
+                                                        ,
+                                                        createdDate, createdUser, createdDate, createdUser);
+                    }
+                    else
+                    {
+                        phienBanAdapter.InsertPhienBan(danhmuc.ma, danhmuc.phienbanmoinhat,
+                                danhmuc.coquanbanhanh,
+                                danhmuc.ngaybanhanh,
+
+                                danhmuc.ngaycohieuluc,
+                                danhmuc.ngayhethieuluc,
+
+                                createdDate, createdUser, createdDate, createdUser);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    msg.Append("<BR/>Mã danh mục Error:" + danhmuc.ma + "  " + ex.Message);
+                }
+            }
+
+            msg.Append("<BR/>Thông tin phiên bản mới nhất các đầu danh mục đã được tải xuống !");
+
+            return msg.ToString();
+        }
+        catch (Exception ex)
+        {
+            ShowMessage("Không lấy được danh mục" + ex.Message);
+            throw;
+        }
+    }
+
+
+    public void DownloadLatestCategoryDataList()
+    {
+        try
+        {
+            PhienBanTableAdapter phienBanAdapter = new PhienBanTableAdapter();
+
+            HL7CoreDB.PhienBanDataTable notDownloadedPhienBanList = phienBanAdapter.GetAllNotDownloadPhienBanByDanhMucId();
+
+            if (notDownloadedPhienBanList != null && notDownloadedPhienBanList.Rows.Count > 0)
+            {
+                foreach (HL7CoreDB.PhienBanRow row in notDownloadedPhienBanList.Rows)
+                {
+                    if (row != null)
+                    {
+                        DownloadCategoryDataByVersion(row.PhienBanDanhMucId, row.MaDanhMuc);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowMessage("Không load được dữ liệu" + ex.Message);
+            throw;
+        }
+    }
+
+    public void DownloadCategoryDataByVersion(int phienBanDanhMucId, string maDanhMuc)
+    {
+        try
+        {
+
+            using (DTT.HL7Core.OpenmrsService service = new DTT.HL7Core.OpenmrsService())
+            {
+                DTT.HL7Core.GetCategoryDataFullRequest request = new DTT.HL7Core.GetCategoryDataFullRequest();
+                request.ma = maDanhMuc;
+
+                GetCategoryDataResponse response = service.getCategoryDataFull(request);
+                EmrCategoryData[] list = response.entities;
+
+                DateTime createdDate = DateTime.Now;
+                string createdUser = Pub_sAccount;
+
+                DuLieuDanhMucTableAdapter duLieuDanhMucAdapter = new DuLieuDanhMucTableAdapter();
+
+                if (list != null)
+                {
+                    foreach (EmrCategoryData duLieu in list)
+                    {
+                        try
+                        {
+                            duLieuDanhMucAdapter.InsertDuLieuDanhMuc(phienBanDanhMucId, duLieu.id, duLieu.macha, duLieu.ma, duLieu.ten, duLieu.tenta, createdDate, createdUser);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                    }
+                }
+
+                PhienBanTableAdapter phienBanAdapter = new PhienBanTableAdapter();
+                phienBanAdapter.UpdateDownloadStatus(phienBanDanhMucId, true, createdUser, createdDate, createdDate, createdUser);
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+
+    public void ApplyDauDanhMucEffective(int phienBanDanhMucId)
+    {
+        try
+        {
+            SqlConnection con = new SqlConnection();
+            emrConnection cnn = new emrConnection();
+            con = cnn.Connection();
+            using (PhienBanTableAdapter phienBanAdapter = new PhienBanTableAdapter())
+            {
+                SqlCommand com = new SqlCommand("sp_ApplyPhienBan", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.Add("@PhienBanDanhMucId", SqlDbType.Int).Value = phienBanDanhMucId;
+                com.Parameters.Add("@Account", SqlDbType.NVarChar).Value = Pub_sAccount;
+                com.ExecuteNonQuery();
+                //   DateTime now = DateTime.Now;
+                //   phienBanAdapter.UpdateApDungStatus(phienBanDanhMucId, true, Pub_sAccount, now, now, Pub_sAccount);
+            }
+            con.Close();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+    // Hàm mã hóa
+    public bool LockHSBA(string maHSBA, DateTime updatedDate, string updatedBy)
+    {
+        try
+        {
+            HSBALockTableAdapter hsbaLockAdapter = new HSBALockTableAdapter();
+
+            /// 1. Encrytp data
+            if (_IsBVPhuSan)
+            {
+                hsbaLockAdapter.EncryptHSBA_PSTW(maHSBA);
+            }
+            else if (_IsBVYHocCoTruyen)
+            {
+                hsbaLockAdapter.EncryptHSBA_YHCTTW(maHSBA);
+            }
+            else if (_IsBVTWHue)
+            {
+                using (HL7CoreHueDataContext db = new HL7CoreHueDataContext())
+                {
+                    db.Sp_EnCryptOrDeCrypt_HSBAHue(maHSBA);
+                }
+            }
+            else
+            {
+                //Nothing
+            }
+
+            /// 2. Trace info            
+            hsbaLockAdapter.LockHSBA(maHSBA, updatedDate, updatedBy);
+
+            return true;
+        }
+        catch (Exception)
+        {
+            //  throw;
+            return false;
+        }
+    }
+
+    public bool UnLockHSBA(string maHSBA, DateTime updatedDate, string updatedBy)
+    {
+        try
+        {
+            HSBALockTableAdapter hsbaLockAdapter = new HSBALockTableAdapter();
+
+            /// 1. Encrytp data
+
+            if (_IsBVPhuSan)
+            {
+                hsbaLockAdapter.DecryptHSBA_PSTW(maHSBA);
+            }
+            else if (_IsBVYHocCoTruyen)
+            {
+                hsbaLockAdapter.DecryptHSBA_YHCTTW(maHSBA);
+            }
+            else if (_IsBVTWHue)
+            {
+                using (HL7CoreHueDataContext db = new HL7CoreHueDataContext())
+                {
+                    db.Sp_EnCryptOrDeCrypt_HSBAHue(maHSBA);
+                }
+            }
+            else
+            {
+                // Nothing
+            }
+            /// 2. Trace info            
+            hsbaLockAdapter.UnLockHSBA(maHSBA, updatedDate, updatedBy);
+
+            return true;
+        }
+        catch (Exception)
+        {
+            // throw;
+            return false;
+        }
+    }
+
+
+
+
+    #region TRANSFER HSBA
+
+    public bool TransferHSBA(string maHSBA)
+    {
+        try
+        {
+            try
+            {
+                emrDanhSachHoSoBenhAn hsba = PopulateHSBA(maHSBA);
+
+                using (DTT.HL7Core.HisWebservice service = new DTT.HL7Core.HisWebservice())
+                {
+                    service.transferHSBA(hsba);
+
+                    HSBALockTableAdapter hsbaAdapter = new HSBALockTableAdapter();
+                    hsbaAdapter.TransferHSBA(maHSBA, DateTime.Now, Pub_sAccount);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return true;
+        }
+        catch (Exception)
+        {
+            throw;
+            return false;
+        }
+    }
+
+    #endregion
+
+
+    #region POPULATE HSBA
+
+    public MappingTableAdapter mappingAdapter = new MappingTableAdapter();
+
+    private emrDanhSachHoSoBenhAn PopulateHSBA(string maHSBA)
+    {
+        emrDanhSachHoSoBenhAn hsba = new emrDanhSachHoSoBenhAn();
+
+        sp_DanhSachHsbaTableAdapter hsbaAdapter = new sp_DanhSachHsbaTableAdapter();
+
+        EmrCkTienSuSanKhoaTableAdapter emrCkTienSuSanKhoaAdapter = new EmrCkTienSuSanKhoaTableAdapter();
+
+        HSBA.sp_DanhSachHsbaDataTable hsbaDT = hsbaAdapter.GetDanhSachHsba(maHSBA);
+
+
+
+
+        if (hsbaDT != null && hsbaDT.Rows.Count > 0)
+        {
+
+            foreach (HSBA.sp_DanhSachHsbaRow row in hsbaDT.Rows)
+            {
+                ///// ****************   DTT **************** /////                
+                //Bệnh án
+
+                //   hsba.giamdocbenhvien = "";
+                hsba.maluutru = row.IssoluutruNull() ? string.Empty : row.soluutru;
+                // cứ add lại HSBA.xsd là die cái lìn này IssovaovienNull
+                //hsba.mayte = row.IssovaovienNull() ? string.Empty : row.sovaovien;
+                hsba.mayte = row.sovaovien;
+                hsba.ngaytao = row.ngaygiovaovien.ToString("yyyy-MM-dd HH:mm:ss");
+                hsba.daxoa = "0";
+                hsba.idnguoitao = "100";
+
+                //Thông tin chẩn đoán               
+
+                // Thêm cái này DTT ko nhận đc dữ liệu
+                hsba.emrDmLoaiBenhAn = GetEmrDmLoaiBenhAn(row);
+
+                hsba.emrBenhNhan = GetEmrBenhNhan(row);
+
+                hsba.emrQuanLyNguoiBenh = GetEmrQuanLyNguoiBenh(row);
+                hsba.emrTinhTrangRaVien = GetEmrTinhTrangRaVien(row);
+
+                hsba.emrChanDoan = GetEmrChanDoan(row);
+
+                hsba.emrBenhAn = GetEmrBenhAn(row);
+
+                //row.emrquanlynguoi
+                //emrCkTienSuSanKhoaAdapter.GetEmrCkTienSuSanKhoa(row);                
+
+                /// EMPTY                
+                hsba.emrHinhAnhTonThuongs = GetEmrHinhAnhTonThuongs(row);
+
+                hsba.emrTongKetSanKhoa = GetEmrTongKetSanKhoa(row);
+
+
+                hsba.emrTongKetRaVien = GetEmrTongKetRaVien(row);
+                hsba.emrPhauThuatThuThuats = GetEmrPhauThuatThuThuats(row, maHSBA);
+                hsba.emrXetNghiems = GetEmrXetNghiems(row, maHSBA);
+
+                hsba.emrChanDoanHinhAnhs = GetEmrChanDoanHinhAnhs(row, maHSBA);
+
+                hsba.emrThamDoChucNangs = GetEmrThamDoChucNangs(row, maHSBA);
+
+                hsba.emrGiaiPhauBenhs = GetEmrGiaiPhauBenhs(row, maHSBA);
+
+                hsba.emrDonThuocs = GetEmrDonThuocs(row, maHSBA);
+
+                hsba.emrVaoKhoas = GetEmrVaoKhoas(row, maHSBA);
+
+            }
+        }
+
+        return hsba;
+    }
+
+
+
+    private emrDonThuoc[] GetEmrDonThuocs(HSBA.sp_DanhSachHsbaRow row, string maHSBA)
+    {
+        List<emrDonThuoc> emrDonThuocList = new List<emrDonThuoc>();
+
+        EmrDonThuocsTableAdapter donThuocAdapter = new EmrDonThuocsTableAdapter();
+        HSBA.EmrDonThuocsDataTable dt = donThuocAdapter.GetEmrDonThuocs(maHSBA);
+
+        EmrDonThuocChiTietsTableAdapter donThuocChiTiet = new EmrDonThuocChiTietsTableAdapter();
+
+        foreach (HSBA.EmrDonThuocsRow item in dt.Rows)
+        {
+            emrDonThuoc emrDonThuoc = new emrDonThuoc();
+
+            emrDonThuoc.bacsikedon = item.IsbacsikedonNull() ? string.Empty : item.bacsikedon;
+            try
+            {
+                emrDonThuoc.ngaykedon = item.ngaykedon.ToString();
+            }
+            catch (Exception)
+            { }
+
+            emrDonThuoc.sodon = item.IssodonNull() ? string.Empty : item.sodon.ToString();
+
+
+            List<emrDonThuocChiTiet> emrDonThuocChiTietList = new List<emrDonThuocChiTiet>();
+
+            HSBA.EmrDonThuocChiTietsDataTable chiTietThuocDT = donThuocChiTiet.GetEmrDonThuocChiTiets(maHSBA);
+            foreach (HSBA.EmrDonThuocChiTietsRow chiTiet in chiTietThuocDT.Rows)
+            {
+                emrDonThuocChiTiet emrDonThuocChiTiet = new emrDonThuocChiTiet();
+
+                emrDonThuocChiTiet.chidandungthuoc = chiTiet.IschidandungthuocNull() ? string.Empty : chiTiet.chidandungthuoc.ToString();
+                emrDonThuocChiTiet.emrDmDuongDungThuoc = GetEmrDmDuongDungThuoc(chiTiet);
+                emrDonThuocChiTiet.emrDmTanXuatDungThuoc = GetEmrDmTanXuatDungThuoc(chiTiet);
+
+
+                emrDonThuocChiTiet.lieuluongdung = chiTiet.IslieuluongdungNull() ? string.Empty : chiTiet.lieuluongdung;
+                emrDonThuocChiTiet.ngaybatdau = chiTiet.ngaybatdau.ToString();
+                emrDonThuocChiTiet.ngayketthuc = chiTiet.ngayketthuc.ToString();
+
+                emrDonThuocChiTiet.emrDmThuoc = GetEmrDmThuoc(chiTiet);
+
+
+                emrDonThuocChiTietList.Add(emrDonThuocChiTiet);
+            }
+
+
+            emrDonThuocList.Add(emrDonThuoc);
+        }
+
+
+        return emrDonThuocList.ToArray();
+    }
+
+    private emrDmThuoc GetEmrDmThuoc(HSBA.EmrDonThuocChiTietsRow chiTiet)
+    {
+        emrDmThuoc emrDmThuoc = new emrDmThuoc();
+
+        emrDmThuoc.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM36", chiTiet.emrDmThuoc);
+
+        return emrDmThuoc;
+    }
+
+    private emrDmTanXuatDungThuoc GetEmrDmTanXuatDungThuoc(HSBA.EmrDonThuocChiTietsRow chiTiet)
+    {
+        if (!chiTiet.IsemrDmTanXuatDungThuocNull())
+        {
+            emrDmTanXuatDungThuoc emrDmTanXuatDungThuoc = new emrDmTanXuatDungThuoc();
+
+            emrDmTanXuatDungThuoc.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM39", chiTiet.emrDmTanXuatDungThuoc.ToString());
+
+            return emrDmTanXuatDungThuoc;
+        }
+
+        return null;
+    }
+
+    private emrDmDuongDungThuoc GetEmrDmDuongDungThuoc(HSBA.EmrDonThuocChiTietsRow chiTiet)
+    {
+        if (!chiTiet.IsemrDmDuongDungThuocNull())
+        {
+            emrDmDuongDungThuoc emrDmDuongDungThuoc = new emrDmDuongDungThuoc();
+
+            emrDmDuongDungThuoc.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM38", chiTiet.emrDmDuongDungThuoc.ToString());
+
+            return emrDmDuongDungThuoc;
+        }
+
+        return null;
+    }
+
+    private emrGiaiPhauBenh[] GetEmrGiaiPhauBenhs(HSBA.sp_DanhSachHsbaRow row, string maHSBA)
+    {
+        List<emrGiaiPhauBenh> emrGiaiPhauBenhList = new List<emrGiaiPhauBenh>();
+
+        EmrGiaiPhauBenhsTableAdapter adapter = new EmrGiaiPhauBenhsTableAdapter();
+
+        HSBA.EmrGiaiPhauBenhsDataTable dt = adapter.GetEmrGiaiPhauBenhs(maHSBA);
+
+        foreach (HSBA.EmrGiaiPhauBenhsRow item in dt.Rows)
+        {
+            emrGiaiPhauBenh emrGiaiPhauBenh = new emrGiaiPhauBenh();
+
+            emrGiaiPhauBenh.bacsichuyenkhoa = item.bacsichuyenkhoa;
+            emrGiaiPhauBenh.bacsiyeucau = item.bacsiyeucau;
+
+
+            //emrGiaiPhauBenh.emrDmGiaiPhauBenh = GetEmrDmGiaiPhauBenh(item);
+
+            emrGiaiPhauBenhList.Add(emrGiaiPhauBenh);
+        }
+
+        return emrGiaiPhauBenhList.ToArray();
+    }
+
+    private emrThamDoChucNang[] GetEmrThamDoChucNangs(HSBA.sp_DanhSachHsbaRow row, string maHSBA)
+    {
+        List<emrThamDoChucNang> emrThamDoChucNangList = new List<emrThamDoChucNang>();
+
+        EmrThamDoChucNangsTableAdapter adapter = new EmrThamDoChucNangsTableAdapter();
+
+        HSBA.EmrThamDoChucNangsDataTable dt = adapter.GetEmrThamDoChucNangs(maHSBA);
+
+        foreach (HSBA.EmrThamDoChucNangsRow item in dt.Rows)
+        {
+            emrThamDoChucNang emrThamDoChucNang = new DTT.HL7Core.emrThamDoChucNang();
+            emrThamDoChucNang.bacsichuyenkhoa = item.IsbacsichuyenkhoaNull() ? string.Empty : item.bacsichuyenkhoa;
+            emrThamDoChucNang.bacsiyeucau = item.IsbacsiyeucauNull() ? string.Empty : item.bacsiyeucau;
+            emrThamDoChucNang.ketluan = item.IsketluanNull() ? string.Empty : item.ketluan;
+            emrThamDoChucNang.ketqua = item.IsketquaNull() ? string.Empty : item.ketqua;
+            emrThamDoChucNang.loidan = item.IsloidanNull() ? string.Empty : item.loidan.ToString();
+            emrThamDoChucNang.ngayyeucau = item.IsngayyeucauNull() ? string.Empty : item.ngayyeucau.ToString();
+            emrThamDoChucNang.noidungyeucau = item.IsnoidungyeucauNull() ? string.Empty : item.noidungyeucau.ToString();
+            emrThamDoChucNang.loidan = item.IsloidanNull() ? string.Empty : item.loidan.ToString();
+
+            emrThamDoChucNang.emrDmLoaiThamDoChucNang = GetEmrDmLoaiThamDoChucNang(item, maHSBA);
+
+            emrThamDoChucNang.emrDmThamDoChucNang = GetEmrDmThamDoChucNang(item);
+
+            emrThamDoChucNangList.Add(emrThamDoChucNang);
+        }
+
+        return emrThamDoChucNangList.ToArray();
+    }
+
+    private emrDmThamDoChucNang GetEmrDmThamDoChucNang(HSBA.EmrThamDoChucNangsRow item)
+    {
+        if (!item.IsemrDmLoaiThamDoChucNangNull())
+        {
+            emrDmThamDoChucNang emrDmThamDoChucNang = new emrDmThamDoChucNang();
+
+            emrDmThamDoChucNang.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM26", item.emrDmThamDoChucNang);
+
+            return emrDmThamDoChucNang;
+        }
+
+        return null;
+    }
+
+    private emrDmLoaiThamDoChucNang GetEmrDmLoaiThamDoChucNang(HSBA.EmrThamDoChucNangsRow item, string maHSBA)
+    {
+
+        if (!item.IsemrDmLoaiThamDoChucNangNull())
+        {
+            emrDmLoaiThamDoChucNang emrDmLoaiThamDoChucNang = new emrDmLoaiThamDoChucNang();
+
+            emrDmLoaiThamDoChucNang.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM32", item.emrDmLoaiThamDoChucNang);
+
+            return emrDmLoaiThamDoChucNang;
+        }
+
+        return null;
+    }
+
+    private emrChanDoanHinhAnh[] GetEmrChanDoanHinhAnhs(HSBA.sp_DanhSachHsbaRow row, string maHSBA)
+    {
+        List<emrChanDoanHinhAnh> emrChanDoanHinhAnhList = new List<emrChanDoanHinhAnh>();
+
+        EmrChanDoanHinhAnhsTableAdapter adapter = new EmrChanDoanHinhAnhsTableAdapter();
+        HSBA.EmrChanDoanHinhAnhsDataTable dt = adapter.GetEmrChanDoanHinhAnh(maHSBA);
+
+        foreach (HSBA.EmrChanDoanHinhAnhsRow item in dt.Rows)
+        {
+            emrChanDoanHinhAnh emrChanDoanHinhAnh = new emrChanDoanHinhAnh();
+
+            emrChanDoanHinhAnh.bacsichuyenkhoa = item.IsbacsichuyenkhoaNull() ? string.Empty : item.bacsichuyenkhoa;
+            emrChanDoanHinhAnh.bacsiyeucau = item.IsbacsiyeucauNull() ? string.Empty : item.bacsiyeucau;
+
+            emrChanDoanHinhAnh.ketluan = item.IsketluanNull() ? string.Empty : item.ketluan;
+            emrChanDoanHinhAnh.ketqua = item.IsketquaNull() ? string.Empty : item.ketqua.ToString();
+            emrChanDoanHinhAnh.loidan = item.IsloidanNull() ? string.Empty : item.loidan.ToString();
+
+            emrChanDoanHinhAnh.emrDmChanDoanHinhAnh = GetEmrChanDoanHinhAnh(item);
+            emrChanDoanHinhAnh.emrDmLoaiChanDoanHinhAnh = GetEmrDmLoaiChanDoanHinhAnh(item);
+
+            emrChanDoanHinhAnh.ngaythuchien = item.IsngaythuchienNull() ? string.Empty : item.ngaythuchien.ToString();
+            emrChanDoanHinhAnh.ngayyeucau = item.IsngayyeucauNull() ? string.Empty : item.ngayyeucau.ToString();
+
+
+
+            emrChanDoanHinhAnhList.Add(emrChanDoanHinhAnh);
+        }
+
+        return emrChanDoanHinhAnhList.ToArray();
+    }
+
+    private emrDmLoaiChanDoanHinhAnh GetEmrDmLoaiChanDoanHinhAnh(HSBA.EmrChanDoanHinhAnhsRow item)
+    {
+        if (!item.IsemrDmLoaiChanDoanHinhAnhNull())
+        {
+            emrDmLoaiChanDoanHinhAnh emrDmLoaiChanDoanHinhAnh = new emrDmLoaiChanDoanHinhAnh();
+
+            emrDmLoaiChanDoanHinhAnh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM31", item.emrDmLoaiChanDoanHinhAnh);
+
+            return emrDmLoaiChanDoanHinhAnh;
+        }
+
+        return null;
+    }
+
+    private emrDmChanDoanHinhAnh GetEmrChanDoanHinhAnh(HSBA.EmrChanDoanHinhAnhsRow item)
+    {
+        emrDmChanDoanHinhAnh emrDmChanDoanHinhAnh = new emrDmChanDoanHinhAnh();
+
+        emrDmChanDoanHinhAnh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM25", item.emrDmChanDoanHinhAnh);
+
+        return emrDmChanDoanHinhAnh;
+    }
+
+    private emrXetNghiem[] GetEmrXetNghiems(HSBA.sp_DanhSachHsbaRow row, string maHSBA)
+    {
+        List<emrXetNghiem> emrXetNghiemList = new List<emrXetNghiem>();
+
+        EmrXetNghiemsTableAdapter adapter = new EmrXetNghiemsTableAdapter();
+
+        HSBA.EmrXetNghiemsDataTable dt = adapter.GetEmrXetNghiems(maHSBA);
+
+        foreach (HSBA.EmrXetNghiemsRow item in dt.Rows)
+        {
+            emrXetNghiem emrXetNghiem = new emrXetNghiem();
+
+            emrXetNghiem.bacsixetnghiem = item.IsbacsixetnghiemNull() ? string.Empty : item.bacsixetnghiem;
+            emrXetNghiem.bacsiyeucau = item.IsbacsiyeucauNull() ? string.Empty : item.bacsiyeucau;
+            emrXetNghiem.ngaythuchien = item.IsngaythuchienNull() ? string.Empty : item.ngaythuchien.ToString();
+            emrXetNghiem.ngayyeucau = item.IsngayyeucauNull() ? string.Empty : item.ngayyeucau.ToString();
+            emrXetNghiem.nhanxet = item.IsnhanxetNull() ? string.Empty : item.nhanxet;
+            emrXetNghiem.noidungyeucau = item.IsnoidungyeucauNull() ? string.Empty : item.noidungyeucau.ToString();
+
+            emrXetNghiem.emrDmLoaiXetNghiem = GetEmrDmLoaiXetNghiem(item);
+
+            emrXetNghiem.emrXetNghiemDichVus = GetEmrXetNghiemDichVus(item, maHSBA);
+
+            //emrXetNghiem.emrXetNghiemKetQuas = GetEmrXetNghiemKetQuas(item, maHSBA);
+
+            emrXetNghiemList.Add(emrXetNghiem);
+        }
+
+        return emrXetNghiemList.ToArray();
+    }
+
+    private emrXetNghiemKetQua[] GetEmrXetNghiemKetQuas(HSBA.EmrXetNghiemsRow item, string maHSBA)
+    {
+        List<emrXetNghiemKetQua> emrXetNghiemKetQuaList = new List<emrXetNghiemKetQua>();
+
+        EmrXetNghiemKetQuasTableAdapter adapter = new EmrXetNghiemKetQuasTableAdapter();
+
+        HSBA.EmrXetNghiemKetQuasDataTable dt = adapter.GetEmrXetNghiemKetQuas(maHSBA);
+        foreach (HSBA.EmrXetNghiemKetQuasRow row in dt.Rows)
+        {
+            emrXetNghiemKetQua emrXetNghiemKetQua = new emrXetNghiemKetQua();
+
+            emrXetNghiemKetQua.emrDmChiSoXetNghiem = GetEmrDmChiSoXetNghiem(row);
+
+            emrXetNghiemKetQua.emrDmDichKetQuaXetNghiem = GetEmrDmDichKetQuaXetNghiem(row);
+
+            emrXetNghiemKetQua.giatrido = row.IsgiatridoNull() ? string.Empty : row.giatrido.ToString();
+
+            emrXetNghiemKetQuaList.Add(emrXetNghiemKetQua);
+        }
+
+        return emrXetNghiemKetQuaList.ToArray();
+    }
+
+    private emrDmDichKetQuaXetNghiem GetEmrDmDichKetQuaXetNghiem(HSBA.EmrXetNghiemKetQuasRow row)
+    {
+        if (!row.IsemrDmDichKetQuaXetNghiemNull())
+        {
+            emrDmDichKetQuaXetNghiem emrDmDichKetQuaXetNghiem = new emrDmDichKetQuaXetNghiem();
+
+            emrDmDichKetQuaXetNghiem.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM35", row.emrDmDichKetQuaXetNghiem);
+
+            return emrDmDichKetQuaXetNghiem;
+        }
+
+        return null;
+    }
+
+    private emrDmChiSoXetNghiem GetEmrDmChiSoXetNghiem(HSBA.EmrXetNghiemKetQuasRow row)
+    {
+        if (!row.IsemrDmChiSoXetNghiemNull())
+        {
+            emrDmChiSoXetNghiem emrDmChiSoXetNghiem = new emrDmChiSoXetNghiem();
+
+            emrDmChiSoXetNghiem.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM34", row.emrDmChiSoXetNghiem);
+
+            return emrDmChiSoXetNghiem;
+        }
+
+        return null;
+    }
+
+    private emrXetNghiemDichVu[] GetEmrXetNghiemDichVus(HSBA.EmrXetNghiemsRow item, string maHSBA)
+    {
+        List<emrXetNghiemDichVu> emrXetNghiemDichVuList = new List<emrXetNghiemDichVu>();
+
+        EmrXetNghiemDichVusTableAdapter xetNghiemDichVuAdapter = new EmrXetNghiemDichVusTableAdapter();
+        HSBA.EmrXetNghiemDichVusDataTable dt = xetNghiemDichVuAdapter.GetEmrXetNghiemDichVus(maHSBA);
+
+        foreach (HSBA.EmrXetNghiemDichVusRow row in dt.Rows)
+        {
+            emrXetNghiemDichVu emrXetNghiemDichVu = new emrXetNghiemDichVu();
+
+            emrXetNghiemDichVu.emrDmXetNghiem = GetEmrDmXetNghiem(row);
+
+            emrXetNghiemDichVuList.Add(emrXetNghiemDichVu);
+        }
+
+        return emrXetNghiemDichVuList.ToArray();
+    }
+
+
+
+    private emrDmXetNghiem GetEmrDmXetNghiem(HSBA.EmrXetNghiemDichVusRow row)
+    {
+        emrDmXetNghiem emrDmXetNghiem = new emrDmXetNghiem();
+        emrDmXetNghiem.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM24", row.emrDmXetNghiem);
+
+        return emrDmXetNghiem;
+    }
+
+
+    private emrDmLoaiXetNghiem GetEmrDmLoaiXetNghiem(HSBA.EmrXetNghiemsRow item)
+    {
+        emrDmLoaiXetNghiem emrDmLoaiXetNghiem = new emrDmLoaiXetNghiem();
+
+        if (!item.IsemrDmLoaiXetNghiemNull())
+        {
+            emrDmLoaiXetNghiem.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM30", item.emrDmLoaiXetNghiem);
+        }
+
+        return emrDmLoaiXetNghiem;
+    }
+
+    private emrPhauThuatThuThuat[] GetEmrPhauThuatThuThuats(HSBA.sp_DanhSachHsbaRow row, string maHSBA)
+    {
+        List<emrPhauThuatThuThuat> list = new List<emrPhauThuatThuThuat>();
+
+        EmrPhauThuatThuThuatsTableAdapter adapter = new EmrPhauThuatThuThuatsTableAdapter();
+        HSBA.EmrPhauThuatThuThuatsDataTable dt = adapter.GetEmrPhauThuatThuThuats(maHSBA);
+
+        foreach (HSBA.EmrPhauThuatThuThuatsRow item in dt.Rows)
+        {
+            emrPhauThuatThuThuat emrPhauThuatThuThuat = new emrPhauThuatThuThuat();
+
+            emrPhauThuatThuThuat.bacsithuchien = item.IsbacsithuchienNull() ? string.Empty : item.bacsithuchien;
+            emrPhauThuatThuThuat.bacsygayme = item.IsbacsygaymeNull() ? string.Empty : item.bacsygayme;
+            emrPhauThuatThuThuat.chidinhptt = item.IschidinhpttNull() ? string.Empty : item.chidinhptt.ToString();
+
+            //emrPhauThuatThuThuat.emrDmMaBenhByIdicdchandoansau = GetEmrDmMaBenhByIdicdchandoansau(item);            
+
+            emrPhauThuatThuThuat.luocdoptt = item.IsluocdopttNull() ? string.Empty : item.luocdoptt;
+            emrPhauThuatThuThuat.motachandoansaupt = item.IsmotachandoansauptNull() ? string.Empty : item.motachandoansaupt;
+            emrPhauThuatThuThuat.motachandoantruocpt = item.IsmotachandoantruocptNull() ? string.Empty : item.motachandoantruocpt;
+            emrPhauThuatThuThuat.ngaygiopttt = item.IsngaygioptttNull() ? string.Empty : item.ngaygiopttt.ToString();
+            emrPhauThuatThuThuat.phuongphapvocam = item.IsphuongphapvocamNull() ? string.Empty : item.phuongphapvocam.ToString();
+            emrPhauThuatThuThuat.trinhtuptt = item.IstrinhtupttNull() ? string.Empty : item.trinhtuptt.ToString();
+            emrPhauThuatThuThuat.luocdoptt = item.IsluocdopttNull() ? string.Empty : item.luocdoptt;
+
+            list.Add(emrPhauThuatThuThuat);
+        }
+
+        return list.ToArray();
+    }
+
+
+
+    private emrDmPhauThuThuat GetEmrDmPhauThuThuat1(HSBA.EmrPhauThuatThuThuatsRow item)
+    {
+        emrDmPhauThuThuat emrDmPhauThuThuat = new emrDmPhauThuThuat();
+
+        if (!item.IsemrDmPhauThuThuatNull())
+        {
+            emrDmPhauThuThuat.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM22", item.emrDmPhauThuThuat);
+        }
+
+        return emrDmPhauThuThuat;
+    }
+
+
+    private emrTongKetRaVien GetEmrTongKetRaVien(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrTongKetRaVien emrTongKetRaVien = new emrTongKetRaVien();
+
+        emrTongKetRaVien.bacsydieutri = row.IsbacsydieutriNull() ? string.Empty : row.bacsydieutri;
+        emrTongKetRaVien.canlamsang = row.IscanlamsangNull() ? string.Empty : row.canlamsang.ToString();
+        emrTongKetRaVien.chidandieutri = row.IschidandieutriNull() ? string.Empty : row.chidandieutri;
+        emrTongKetRaVien.dienbienlamsang = row.IsdienbienlamsangNull() ? string.Empty : row.dienbienlamsang.ToString();
+
+        emrTongKetRaVien.emrCkPhuongPhapDieuTriUngBuou = GetEmrCkPhuongPhapDieuTriUngBuou(row);
+
+        emrTongKetRaVien.phuongphapdieutri = row.IsphuongphapdieutriNull() ? string.Empty : row.phuongphapdieutri.ToString();
+        emrTongKetRaVien.tinhtrangnguoibenh = row.IstinhtrangnguoibenhNull() ? string.Empty : row.tinhtrangnguoibenh.ToString();
+
+
+        return emrTongKetRaVien;
+    }
+
+    private emrCkPhuongPhapDieuTriUngBuou GetEmrCkPhuongPhapDieuTriUngBuou(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrCkPhuongPhapDieuTriUngBuou emrCkPhuongPhapDieuTriUngBuou = new emrCkPhuongPhapDieuTriUngBuou();
+
+        emrCkPhuongPhapDieuTriUngBuou.dapung = row.IsdapungNull() ? string.Empty : row.dapung.ToString();
+        emrCkPhuongPhapDieuTriUngBuou.kieudieutri = row.IskieudieutriNull() ? string.Empty : row.kieudieutri.ToString();
+        emrCkPhuongPhapDieuTriUngBuou.hoachat = row.IshoachatNull() ? string.Empty : row.hoachat.ToString();
+        emrCkPhuongPhapDieuTriUngBuou.phauthuatu = row.IsphauthuatuNull() ? string.Empty : row.phauthuatu.ToString();
+        emrCkPhuongPhapDieuTriUngBuou.sodot = row.IssodotNull() ? string.Empty : row.sodot.ToString();
+        emrCkPhuongPhapDieuTriUngBuou.tiaxadonthuantaihach = row.IstiaxadonthuantaihachNull() ? string.Empty : row.tiaxadonthuantaihach.ToString();
+        emrCkPhuongPhapDieuTriUngBuou.tiaxadonthuantaiu = row.IstiaxadonthuantaiuNull() ? string.Empty : row.tiaxadonthuantaiu.ToString();
+        emrCkPhuongPhapDieuTriUngBuou.tiaxahauphautaihach = row.IstiaxahauphautaihachNull() ? string.Empty : row.tiaxahauphautaihach.ToString();
+        emrCkPhuongPhapDieuTriUngBuou.tiaxahauphautaiu = row.IstiaxahauphautaiuNull() ? string.Empty : row.tiaxahauphautaiu.ToString();
+        emrCkPhuongPhapDieuTriUngBuou.tiaxatienphautaihach = row.IstiaxatienphautaihachNull() ? string.Empty : row.tiaxatienphautaihach.ToString();
+        emrCkPhuongPhapDieuTriUngBuou.tiaxatienphautaiu = row.IstiaxatienphautaiuNull() ? string.Empty : row.tiaxatienphautaiu.ToString();
+
+        return emrCkPhuongPhapDieuTriUngBuou;
+    }
+
+    private emrHinhAnhTonThuong[] GetEmrHinhAnhTonThuongs(HSBA.sp_DanhSachHsbaRow row)
+    {
+        List<emrHinhAnhTonThuong> emrHinhAnhTonThuongList = new List<emrHinhAnhTonThuong>();
+
+
+        emrHinhAnhTonThuong emrHinhAnhTonThuong = new DTT.HL7Core.emrHinhAnhTonThuong();
+        emrHinhAnhTonThuong.anhtonthuong = row.IsanhtonthuongNull() ? string.Empty : row.anhtonthuong.ToString();
+        emrHinhAnhTonThuong.motatonthuong = row.IsmotatonthuongNull() ? string.Empty : row.motatonthuong.ToString();
+
+        emrHinhAnhTonThuongList.Add(emrHinhAnhTonThuong);
+
+        return emrHinhAnhTonThuongList.ToArray();
+    }
+
+    private emrTongKetSanKhoa GetEmrTongKetSanKhoa(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrTongKetSanKhoa emrTongKetSanKhoa = new emrTongKetSanKhoa();
+
+
+        /*  ERROR
+        emrTongKetSanKhoa.deluc = row.IsDeLucNull() ? DateTime.Now : row.DeLuc;
+        emrTongKetSanKhoa.apgar01 = row.Isapgar01Null() ? 0 : Int32.Parse(row.apgar01);
+        emrTongKetSanKhoa.apgar05 = row.Isapgar05Null() ? 0 : Int32.Parse(row.apgar05);
+        emrTongKetSanKhoa.sscannang = row.IsSSCanNangNull() ? 0 : Int32.Parse(row.SSCanNang);
+        emrTongKetSanKhoa.sschieucao = row.IsSSChieuCaoNull() ? 0 : Int32.Parse(row.SSChieuCao);
+        emrTongKetSanKhoa.ssvongdau = row.IsSSVongDauNull() ? 0 : Int32.Parse(row.SSVongDau);
+        emrTongKetSanKhoa.ssdathai = false;
+        emrTongKetSanKhoa.sssogai = 1;
+        emrTongKetSanKhoa.ssditathaumon = false;
+        emrTongKetSanKhoa.ssditatkhac = row.IsSSDiTatKhacNull() ? false : row.SSDiTatKhac;
+        emrTongKetSanKhoa.sstinhtrang = row.IsSSTinhTrangNull() ? string.Empty : row.SSTinhTrang;
+        emrTongKetSanKhoa.sshutdich = row.IsSSHutDichNull() ? false : row.SSHutDich;
+        emrTongKetSanKhoa.ssxoaboptim = row.IsSSXoaBopTimNull() ? false : row.SSXoaBopTim;
+        emrTongKetSanKhoa.ssthoo2 = row.IsSSThoO2Null() ? false : row.SSThoO2;
+        emrTongKetSanKhoa.ssnoikhiquan = row.IsSSNoiKhiQuanNull() ? false : row.SSNoiKhiQuan;
+        */
+
+
+        /*
+        emrTongKetSanKhoa.ssbopbongo2 = 0;
+        emrTongKetSanKhoa.SSHoiSinhKhac = row.SSHoiSinhKhac;
+        emrTongKetSanKhoa.RauSoLuc = row.RauSoLuc;
+        emrTongKetSanKhoa.SoMatMang = row.SoMatMang;
+
+        emrTongKetSanKhoa.Mach = row.Mach;
+        emrTongKetSanKhoa.NhietDo = row.NhietDo;
+        emrTongKetSanKhoa.HuyetApThu = row.HuyetApThu;
+        emrTongKetSanKhoa.HuyetApTruong = row.HuyetApTruong;
+        emrTongKetSanKhoa.NhipTho = row.NhipTho;
+        emrTongKetSanKhoa.emrCachDe = row.emrCachDe;
+        emrTongKetSanKhoa.LyDoCanThiep = row.LyDoCanThiep;
+        emrTongKetSanKhoa.TangSinhMon = row.TangSinhMon;
+        emrTongKetSanKhoa.AmDao = row.AmDao;
+        emrTongKetSanKhoa.CoTuCung = row.CoTuCung;*/
+
+        return emrTongKetSanKhoa;
+    }
+
+    private emrVaoKhoa[] GetEmrVaoKhoas(HSBA.sp_DanhSachHsbaRow row, string hsba)
+    {
+        List<emrVaoKhoa> emrVaoKhoaList = new List<emrVaoKhoa>();
+
+        EmrVaoKhoasTableAdapter emrVaoKhoasAdapter = new EmrVaoKhoasTableAdapter();
+        HSBA.EmrVaoKhoasDataTable dt = emrVaoKhoasAdapter.GetEmrVaoKhoas(hsba);
+
+        foreach (HSBA.EmrVaoKhoasRow item in dt.Rows)
+        {
+            emrVaoKhoa emrVaoKhoa = new emrVaoKhoa();
+            emrVaoKhoa.bacsidieutri = item.IsbacsidieutriNull() ? string.Empty : item.bacsidieutri;
+            emrVaoKhoa.ngaygiovaokhoa = item.ngaygiovaokhoa.ToString();
+            emrVaoKhoa.ngayketthucdieutri = item.IsngayketthucdieutriNull() ? string.Empty : item.ngayketthucdieutri.ToString();
+            emrVaoKhoa.phong = item.IsphongNull() ? string.Empty : item.phong;
+            emrVaoKhoa.giuong = item.IsgiuongNull() ? string.Empty : item.giuong;
+
+            emrVaoKhoa.emrDmKhoaDieuTri = GetEmrDmKhoaDieuTri(item);
+
+            emrVaoKhoa.emrChamSocs = GetEmrChamSocs(item, hsba);
+            emrVaoKhoa.emrHoiChans = GetEmrHoiChans(item, hsba);
+            emrVaoKhoa.emrChucNangSongs = GetEmrChucNangSongs(item, hsba);
+
+            emrVaoKhoaList.Add(emrVaoKhoa);
+        }
+
+        return emrVaoKhoaList.ToArray();
+    }
+
+    private emrChucNangSong[] GetEmrChucNangSongs(HSBA.EmrVaoKhoasRow item, string maHSBA)
+    {
+        List<emrChucNangSong> emrChucNangSongList = new List<emrChucNangSong>();
+
+        emrChucNangSong emrChucNangSong = new emrChucNangSong();
+
+        List<emrChucNangSongChiTiet> emrChucNangSongChiTietList = new List<emrChucNangSongChiTiet>();
+
+        EmrQuaTrinhChamSocsTableAdapter adapter = new EmrQuaTrinhChamSocsTableAdapter();
+        HSBA.EmrQuaTrinhChamSocsDataTable dt = adapter.GetEmrQuaTrinhChamSocs(maHSBA);
+
+        foreach (HSBA.EmrQuaTrinhChamSocsRow row in dt.Rows)
+        {
+            emrChucNangSongChiTiet emrChucNangSongChiTiet = new emrChucNangSongChiTiet();
+            emrChucNangSongChiTiet.cannang = row.IscannangNull() ? "0" : row.cannang.ToString();
+            emrChucNangSongChiTiet.huyetapcao = row.IshuyetapcaoNull() ? "0" : row.huyetapcao.ToString();
+            emrChucNangSongChiTiet.huyetapthap = row.IshuyetapthapNull() ? "0" : row.huyetapthap.ToString();
+            emrChucNangSongChiTiet.mach = row.IsmachNull() ? "0" : row.mach;
+
+            try
+            {
+                emrChucNangSongChiTiet.ngaytheodoi = row.ngaytheodoi.ToString();
+            }
+            catch (Exception)
+            { }
+
+            emrChucNangSongChiTiet.nhietdo = row.IsnhietdoNull() ? "" : row.nhietdo.ToString();
+            emrChucNangSongChiTiet.nhiptho = row.IsnhipthoNull() ? "" : row.nhiptho;
+            emrChucNangSongChiTiet.ytatheodoi = row.IsytatheodoiNull() ? "" : row.ytatheodoi;
+
+            emrChucNangSongChiTietList.Add(emrChucNangSongChiTiet);
+        }
+
+        emrChucNangSong.emrChucNangSongChiTiets = emrChucNangSongChiTietList.ToArray();
+        emrChucNangSongList.Add(emrChucNangSong);
+
+        return emrChucNangSongList.ToArray();
+    }
+
+    private emrHoiChan[] GetEmrHoiChans(HSBA.EmrVaoKhoasRow EmrVaoKhoasRow, string maBA)
+    {
+        EmrHoiChansTableAdapter adapter = new EmrHoiChansTableAdapter();
+        HSBA.EmrHoiChansDataTable hoiChanDT = adapter.GetEmrHoiChans(maBA);
+
+        List<emrHoiChan> hoiChanList = new List<emrHoiChan>();
+
+        if (hoiChanDT != null && hoiChanDT.Rows.Count > 0)
+        {
+            foreach (HSBA.EmrHoiChansRow item in hoiChanDT.Rows)
+            {
+                emrHoiChan hoiChan = new emrHoiChan();
+
+                hoiChan.emrHoiDongHoiChans = GetEmrHoiDongHoiChans(item.mahc);
+
+                hoiChan.huongdieutri = item.huongdieutri;
+                hoiChan.ketluanhoichan = item.ketluanhoichan;
+                hoiChan.ngaythuchien = item.ngaythuchien.ToString("yyyy-MM-dd HH:mm:ss");
+                hoiChan.tomtatdienbien = item.tomtatdienbien;
+
+                hoiChanList.Add(hoiChan);
+            }
+
+            return hoiChanList.ToArray();
+        }
+
+        return hoiChanList.ToArray();
+    }
+
+    private emrHoiDongHoiChan[] GetEmrHoiDongHoiChans(string maHC)
+    {
+        EmrHoiDongHoiChansTableAdapter hoiDongHoiChanAdapter = new EmrHoiDongHoiChansTableAdapter();
+
+        HSBA.EmrHoiDongHoiChansDataTable dt = hoiDongHoiChanAdapter.GetEmrHoiDongHoiChans(maHC);
+
+        List<emrHoiDongHoiChan> emrHoiDongHoiChanList = new List<emrHoiDongHoiChan>();
+
+        foreach (HSBA.EmrHoiDongHoiChansRow item in dt.Rows)
+        {
+            emrHoiDongHoiChan emrHoiDongHoiChan = new emrHoiDongHoiChan();
+            emrHoiDongHoiChan.bacsihoichan = item.bacsihoichan;
+            emrHoiDongHoiChan.idvaitro = item.vaitro;
+
+            emrHoiDongHoiChanList.Add(emrHoiDongHoiChan);
+        }
+
+        return emrHoiDongHoiChanList.ToArray();
+    }
+
+    private emrChamSoc[] GetEmrChamSocs(HSBA.EmrVaoKhoasRow row, string maHSBA)
+    {
+        List<emrChamSoc> emrChamSocList = new List<emrChamSoc>();
+
+        emrChamSoc emrChamSoc = new DTT.HL7Core.emrChamSoc();
+
+
+        List<emrQuaTrinhChamSoc> chamSocList = new List<emrQuaTrinhChamSoc>();
+
+        #region CHĂM SÓC
+        EmrQuaTrinhChamSocsTableAdapter quaTrinhChamSocAdpater = new EmrQuaTrinhChamSocsTableAdapter();
+        HSBA.EmrQuaTrinhChamSocsDataTable dt = quaTrinhChamSocAdpater.GetEmrQuaTrinhChamSocs(maHSBA);
+
+        foreach (HSBA.EmrQuaTrinhChamSocsRow item in dt.Rows)
+        {
+            emrQuaTrinhChamSoc emrQuaTrinhChamSoc = new emrQuaTrinhChamSoc();
+            emrQuaTrinhChamSoc.ngaychamsoc = item.ngaychamsoc.ToString();
+            emrQuaTrinhChamSoc.theodoidienbien = item.IstheodoidienbienNull() ? string.Empty : item.theodoidienbien.ToString();
+            emrQuaTrinhChamSoc.thuchienylenh = item.IsthuchienylenhNull() ? string.Empty : item.thuchienylenh.ToString();
+            emrQuaTrinhChamSoc.ytachamsoc = item.IsytachamsocNull() ? string.Empty : item.ytachamsoc.ToString();
+
+            chamSocList.Add(emrQuaTrinhChamSoc);
+        }
+        #endregion
+
+        #region CHĂM SÓC SẢN
+        EmrQuaTrinhChamSocs_SanTableAdapter quaTrinhChamSocSanAdpater = new EmrQuaTrinhChamSocs_SanTableAdapter();
+        HSBA.EmrQuaTrinhChamSocs_SanDataTable dtSan = quaTrinhChamSocSanAdpater.EmrQuaTrinhChamSocs_San(maHSBA);
+
+        foreach (HSBA.EmrQuaTrinhChamSocs_SanRow item in dtSan.Rows)
+        {
+            emrQuaTrinhChamSoc emrQuaTrinhChamSoc = new emrQuaTrinhChamSoc();
+            emrQuaTrinhChamSoc.ngaychamsoc = item.ngaychamsoc.ToString();
+            emrQuaTrinhChamSoc.theodoidienbien = item.IstheodoidienbienNull() ? string.Empty : item.theodoidienbien.ToString();
+            emrQuaTrinhChamSoc.thuchienylenh = item.IsthuchienylenhNull() ? string.Empty : item.thuchienylenh.ToString();
+            emrQuaTrinhChamSoc.ytachamsoc = item.IsytachamsocNull() ? string.Empty : item.ytachamsoc.ToString();
+
+            chamSocList.Add(emrQuaTrinhChamSoc);
+        }
+        #endregion
+
+        #region CHĂM SÓC SƠ SINH
+        EmrQuaTrinhChamSocs_SSTableAdapter quaTrinhChamSocSSAdpater = new EmrQuaTrinhChamSocs_SSTableAdapter();
+        HSBA.EmrQuaTrinhChamSocs_SSDataTable dtSS = quaTrinhChamSocSSAdpater.EmrQuaTrinhChamSocs_SS(maHSBA);
+
+        foreach (HSBA.EmrQuaTrinhChamSocs_SSRow item in dtSS.Rows)
+        {
+            emrQuaTrinhChamSoc emrQuaTrinhChamSoc = new emrQuaTrinhChamSoc();
+            emrQuaTrinhChamSoc.ngaychamsoc = item.ngaychamsoc.ToString();
+            emrQuaTrinhChamSoc.theodoidienbien = item.IstheodoidienbienNull() ? string.Empty : item.theodoidienbien.ToString();
+            emrQuaTrinhChamSoc.thuchienylenh = item.IsthuchienylenhNull() ? string.Empty : item.thuchienylenh.ToString();
+            emrQuaTrinhChamSoc.ytachamsoc = item.IsytachamsocNull() ? String.Empty : item.ytachamsoc.ToString();
+
+            chamSocList.Add(emrQuaTrinhChamSoc);
+        }
+        #endregion
+
+        emrChamSoc.emrQuaTrinhChamSocs = chamSocList.ToArray();
+
+        emrChamSocList.Add(emrChamSoc);
+
+        return emrChamSocList.ToArray();
+    }
+
+    private emrDmKhoaDieuTri GetEmrDmKhoaDieuTri(HSBA.EmrVaoKhoasRow row)
+    {
+        emrDmKhoaDieuTri emrDmKhoaDieuTri = new emrDmKhoaDieuTri();
+
+        try
+        {
+            emrDmKhoaDieuTri.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM19", row.emrDmKhoaDieuTri);
+            emrDmKhoaDieuTri.ma = row.emrDmKhoaDieuTri;
+            emrDmKhoaDieuTri.ten = row.emrDmKhoaDieuTri;
+        }
+        catch (Exception)
+        { }
+
+        return emrDmKhoaDieuTri;
+    }
+
+    private emrBenhAn GetEmrBenhAn(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrBenhAn emrBenhAn = new emrBenhAn();
+        emrBenhAn.bacsylambenhan = row.IsbacsydieutriNull() ? String.Empty : row.bacsydieutri;
+        emrBenhAn.cannang = row.IscannangNull() ? String.Empty : row.cannang.ToString();
+        emrBenhAn.chieucao = row.IschieucaoNull() ? string.Empty : row.chieucao.ToString();
+        emrBenhAn.chucnangsinhhoat = row.IschucnangsinhhoatNull() ? String.Empty : row.chucnangsinhhoat.ToString();
+        emrBenhAn.coquankhac = row.IscoquankhacNull() ? string.Empty : row.coquankhac.ToString();
+        emrBenhAn.coxuongkhop = row.IscoxuongkhopNull() ? String.Empty : row.coxuongkhop.ToString();
+        emrBenhAn.dacdiemkhac = row.IsdacdiemkhacNull() ? string.Empty : row.dacdiemkhac.ToString();
+        emrBenhAn.dalieu = row.IsdalieuNull() ? String.Empty : row.dalieu.ToString();
+        emrBenhAn.dichte = row.IsdichteNull() ? String.Empty : row.dichte.ToString();
+        emrBenhAn.diung = row.IsdiungNull() ? String.Empty : row.diung.ToString();
+        emrBenhAn.emrCkChucNangSinhHoat = GetEmrCkChucNangSinhHoat(row);
+        emrBenhAn.emrCkCoXuongKhop = GetEmrCkCoXuongKhop(row);
+        emrBenhAn.emrCkHoHap = GetEmrCkHoHap(row);
+        emrBenhAn.emrCkMat = GetEmrCkMat(row);
+        emrBenhAn.emrCkPhuongPhapHoiSinh = GetEmrCkPhuongPhapHoiSinh(row);
+        emrBenhAn.emrCkQuaTrinhSinhTruong = GetEmrCkQuaTrinhSinhTruong(row);
+        emrBenhAn.emrCkTamThan = GetEmrCkTamThan(row);
+        emrBenhAn.emrCkThanKinh = GetEmrCkThanKinh(row);
+
+
+        emrBenhAn.emrCkTiemChung = GetEmrCkTiemChung(row);
+        //emrCkTinhTrangSanPhu
+        //emrCkTinhTrangSoSinh
+        //emrCkTuanHoan
+        //emrCkTienSuPhuKhoa
+        //emrBenhAn.emrCkTienSuPhuKhoa = GetEmrCkTienSuPhuKhoa(row);
+
+        emrBenhAn.hohap = row.IshohapNull() ? string.Empty : row.hohap.ToString();
+        emrBenhAn.huongdieutri = row.IshuongdieutriNull() ? String.Empty : row.huongdieutri.ToString();
+        emrBenhAn.huyetapcao = row.IsHuyetApThuNull() ? string.Empty : row.HuyetApThu.ToString();
+        emrBenhAn.huyetapthap = row.IshuyetapthapNull() ? string.Empty : row.huyetapthap.ToString();
+        emrBenhAn.lydovaovien = row.IslydovaovienNull() ? string.Empty : row.lydovaovien.ToString().Trim();
+        emrBenhAn.mach = row.IsmachNull() ? string.Empty : row.mach;
+        emrBenhAn.mat = row.IsmatNull() ? String.Empty : row.mat.ToString().Trim();
+        emrBenhAn.matuy = row.IsmatuyNull() ? String.Empty : row.matuy.ToString();
+        emrBenhAn.nguonlay = row.IsnguonlayNull() ? String.Empty : row.nguonlay.ToString();
+        emrBenhAn.nhietdo = row.IsnhietdoNull() ? string.Empty : row.nhietdo.ToString();
+        emrBenhAn.nhiptho = row.IsnhipthoNull() ? String.Empty : row.nhiptho;
+
+        emrBenhAn.noitietdinhduong = row.IsnoitietdinhduongNull() ? String.Empty : row.noitietdinhduong.ToString();
+        emrBenhAn.phuongphaphoisinh = row.IsphuongphaphoisinhNull() ? string.Empty : row.phuongphaphoisinh.ToString();
+        emrBenhAn.quatrinhbenhly = row.IsquatrinhbenhlyNull() ? string.Empty : row.quatrinhbenhly;
+        emrBenhAn.quatrinhsinhtruong = row.IsquatrinhsinhtruongNull() ? string.Empty : row.quatrinhsinhtruong.ToString();
+
+        emrBenhAn.ranghammat = row.IsranghammatNull() ? string.Empty : row.ranghammat.ToString().Trim();
+        emrBenhAn.ruoubia = row.IsruoubiaNull() ? string.Empty : row.ruoubia.ToString();
+        emrBenhAn.taimuihong = row.IstaimuihongNull() ? string.Empty : row.taimuihong.ToString().Trim();
+        emrBenhAn.tamthan = row.IstamthanNull() ? string.Empty : row.tamthan.ToString();
+
+        emrBenhAn.thuocla = row.IsthuoclaNull() ? string.Empty : row.thuocla.ToString();
+        emrBenhAn.thuoclao = row.IsthuoclaoNull() ? string.Empty : row.thuoclao.ToString();
+        emrBenhAn.tiemchung = row.IstiemchungNull() ? String.Empty : row.tiemchung.ToString();
+
+        emrBenhAn.tienluong = row.IstienluongNull() ? string.Empty : row.tienluong.ToString();
+
+        emrBenhAn.tiensubanthan = row.IstiensubanthanNull() ? string.Empty : row.tiensubanthan;
+        emrBenhAn.tiensugiadinh = row.IstiensugiadinhNull() ? string.Empty : row.tiensugiadinh;
+        emrBenhAn.tiensusankhoa = row.IstiensusankhoaNull() ? string.Empty : row.tiensusankhoa.ToString();
+        emrBenhAn.tiensuphukhoa = row.IstiensuphukhoaNull() ? string.Empty : row.tiensuphukhoa.ToString();
+        emrBenhAn.tietnieusinhduc = row.IstietnieusinhducNull() ? string.Empty : row.tietnieusinhduc.ToString();
+
+        emrBenhAn.tieuhoa = row.IstieuhoaNull() ? string.Empty : row.tieuhoa.ToString().Trim();
+        emrBenhAn.tinhtrangsanphu = row.IstinhtrangsanphuNull() ? string.Empty : row.tinhtrangsanphu.ToString();
+        emrBenhAn.tinhtrangsosinh = row.IstinhtrangsosinhNull() ? string.Empty : row.tinhtrangsosinh.ToString();
+
+        // sankhoa 
+        emrBenhAn.toanthan = row.IstoanthanNull() ? string.Empty : row.toanthan;
+        emrBenhAn.tomtat = row.IstomtatNull() ? string.Empty : row.tomtat.ToString().Trim();
+
+        emrBenhAn.tuanhoan = row.IstuanhoanNull() ? string.Empty : row.tuanhoan.ToString().Trim();
+        emrBenhAn.vaongaythu = row.IsvaongaythuNull() ? string.Empty : row.vaongaythu.ToString();
+
+        emrBenhAn.vongdau = row.IsvongdauNull() ? string.Empty : row.vongdau.ToString();
+        emrBenhAn.vongnguc = row.IsvongngucNull() ? string.Empty : row.vongnguc.ToString();
+        emrBenhAn.xetnghiemcanlamsang = row.IsxetnghiemcanlamsangNull() ? string.Empty : row.xetnghiemcanlamsang.ToString();
+
+        emrBenhAn.thankinh = row.IsthankinhNull() ? string.Empty : row.thankinh.ToString().Trim();
+
+        return emrBenhAn;
+    }
+
+    private emrCkTiemChung GetEmrCkTiemChung(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrCkTiemChung emrCkTiemChung = new emrCkTiemChung();
+
+        emrCkTiemChung.tcbachhau = row.IstcbachhauNull() ? string.Empty : row.tcbachhau.ToString();
+        emrCkTiemChung.tchoga = row.IstchogaNull() ? string.Empty : row.tchoga.ToString();
+        emrCkTiemChung.tckhac = row.IstckhacNull() ? string.Empty : row.tckhac.ToString();
+        emrCkTiemChung.tclao = row.IstclaoNull() ? string.Empty : row.tclao.ToString();
+        emrCkTiemChung.tcmotakhac = row.IstcmotakhacNull() ? string.Empty : row.tcmotakhac.ToString();
+        emrCkTiemChung.tcsoi = row.IstcsoiNull() ? string.Empty : row.tcsoi.ToString();
+        emrCkTiemChung.tcuonvan = row.IstcuonvanNull() ? string.Empty : row.tcuonvan.ToString();
+
+        return emrCkTiemChung;
+    }
+
+    private emrCkTienSuSanKhoa GetEmrCkTienSuSanKhoa(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrCkTienSuSanKhoa emrCkTienSuSanKhoa = new emrCkTienSuSanKhoa();
+        // thoigiandiadiem
+        emrCkTienSuSanKhoa.tuoithai = row.IsTuoiThaiNull() ? string.Empty : row.TuoiThai.ToString();
+        // DienBienThai        
+        // CachDe
+        emrCkTienSuSanKhoa.cachde = row.IsemrCachDeNull() ? string.Empty : row.emrCachDe;
+        // tresosinh
+        // HauSan                
+
+        return emrCkTienSuSanKhoa;
+    }
+
+    private emrCkTienSuPhuKhoa GetEmrCkTienSuPhuKhoa(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrCkTienSuPhuKhoa emrCkTienSuPhuKhoa = new emrCkTienSuPhuKhoa();
+
+        /*
+        emrCkTienSuPhuKhoa.tuoicokinh = row.IsTuoiCoKinhNull() ? -1 : Int32.Parse(row.TuoiCoKinh);
+        emrCkTienSuPhuKhoa.chukikinh = row.IsChuKiKinhNull() ? -1 : Int32.Parse(row.ChuKiKinh);
+        emrCkTienSuPhuKhoa.ngaythaykinh = row.IsNgayThayKinhNull() ? -1 : Int32.Parse(row.NgayThayKinh);
+        emrCkTienSuPhuKhoa.tuoilaychong = row.IsTuoiLayChongNull() ? -1 : Int32.Parse(row.TuoiLayChong);
+        emrCkTienSuPhuKhoa.benhphukhoa = row.IsBenhPhuKhoaNull() ? string.Empty : row.BenhPhuKhoa;
+        emrCkTienSuPhuKhoa.khoiubt = row.IsKhoiUBTNull() ? false : row.KhoiUBT;
+        emrCkTienSuPhuKhoa.uxotc = row.IsUXoTCNull() ? false : row.UXoTC;
+
+        emrCkTienSuPhuKhoa.didangsd = row.IsDiDangSDNull() ? false : row.DiDangSD;
+        emrCkTienSuPhuKhoa.ssd = row.IsSSDNull() ? false : row.SSD;
+        emrCkTienSuPhuKhoa.tsm = row.IsTSMNull() ? false : row.TSM;
+        emrCkTienSuPhuKhoa.dieutrictc = row.IsDieuTriCTCNull() ? false : row.DieuTriCTC;
+        emrCkTienSuPhuKhoa.catcutctc = row.IsCatCutCTCNull() ? false : row.CatCutCTC;
+
+         * 
+         */
+        return emrCkTienSuPhuKhoa;
+    }
+
+    private emrCkThanKinh GetEmrCkThanKinh(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrCkThanKinh emrCkThanKinh = new emrCkThanKinh();
+        emrCkThanKinh.camgiac = row.IscamgiacNull() ? String.Empty : row.camgiac.ToString();
+        emrCkThanKinh.daymat = row.IsdaymatNull() ? String.Empty : row.daymat.ToString();
+        emrCkThanKinh.daythankinhsonao = row.IsdaythankinhsonaoNull() ? string.Empty : row.daythankinhsonao.ToString();
+        emrCkThanKinh.phanxa = row.IsphanxaNull() ? String.Empty : row.phanxa.ToString();
+        emrCkThanKinh.roiloanchucnang = row.IsroiloanchucnangNull() ? String.Empty : row.roiloanchucnang.ToString();
+        emrCkThanKinh.truonglucco = row.IstruongluccoNull() ? string.Empty : row.truonglucco.ToString();
+        emrCkThanKinh.vandong = row.IsvandongNull() ? string.Empty : row.vandong.ToString();
+
+        return emrCkThanKinh;
+    }
+
+    private emrCkTamThan GetEmrCkTamThan(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrCkTamThan emrCkTamThan = new emrCkTamThan();
+        emrCkTamThan.bieuhienchung = row.IsbieuhienchungNull() ? string.Empty : row.bieuhienchung.ToString();
+        emrCkTamThan.dinhhuongkhonggian = row.IsdinhhuongkhonggianNull() ? string.Empty : row.dinhhuongkhonggian.ToString();
+        emrCkTamThan.dinhhuongthoigian = row.IsdinhhuongthoigianNull() ? String.Empty : row.dinhhuongthoigian.ToString();
+        emrCkTamThan.dinhhuongbanthan = row.IsdinhhuongbanthanNull() ? string.Empty : row.dinhhuongbanthan.ToString();
+        emrCkTamThan.camxuc = row.IscamxucNull() ? String.Empty : row.camxuc.ToString();
+        emrCkTamThan.trigiac = row.IstrigiacNull() ? String.Empty : row.trigiac.ToString();
+
+        return emrCkTamThan;
+    }
+
+    private emrCkQuaTrinhSinhTruong GetEmrCkQuaTrinhSinhTruong(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrCkQuaTrinhSinhTruong emrCkQuaTrinhSinhTruong = new emrCkQuaTrinhSinhTruong();
+        emrCkQuaTrinhSinhTruong.benhlykhac = row.IsbenhlykhacNull() ? string.Empty : row.benhlykhac;
+
+        return emrCkQuaTrinhSinhTruong;
+    }
+
+    private emrCkPhuongPhapHoiSinh GetEmrCkPhuongPhapHoiSinh(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrCkPhuongPhapHoiSinh emrCkPhuongPhapHoiSinh = new emrCkPhuongPhapHoiSinh();
+        emrCkPhuongPhapHoiSinh.bopbongoxy = row.IsbopbongoxyNull() ? string.Empty : row.bopbongoxy.ToString();
+
+        return emrCkPhuongPhapHoiSinh;
+    }
+
+    private emrCkMat GetEmrCkMat(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrCkMat emrCkMat = new emrCkMat();
+        emrCkMat.chaynuocmattrai = row.IschaynuocmattraiNull() ? string.Empty : row.chaynuocmattrai.ToString();
+
+        return emrCkMat;
+    }
+
+    private emrCkHoHap GetEmrCkHoHap(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrCkHoHap emrCkHoHap = new emrCkHoHap();
+        emrCkHoHap.conngungtho = row.IsemrCkHoHapconngungthoNull() ? string.Empty : row.emrCkHoHapconngungtho.ToString();
+
+        return emrCkHoHap;
+    }
+
+    private emrCkCoXuongKhop GetEmrCkCoXuongKhop(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrCkCoXuongKhop emrCkCoXuongKhop = new emrCkCoXuongKhop();
+        emrCkCoXuongKhop.baccothu = row.IsemrCkCoXuongKhopbaccothuNull() ? String.Empty : row.emrCkCoXuongKhopbaccothu.ToString();
+
+        return emrCkCoXuongKhop;
+    }
+
+    private emrCkChucNangSinhHoat GetEmrCkChucNangSinhHoat(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrCkChucNangSinhHoat emrCkChucNangSinhHoat = new emrCkChucNangSinhHoat();
+        emrCkChucNangSinhHoat.anuong = row.IsemrCkChucNangSinhHoatanuongNull() ? String.Empty : row.emrCkChucNangSinhHoatanuong.ToString();
+
+        return emrCkChucNangSinhHoat;
+    }
+
+    private emrChanDoan GetEmrChanDoan(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrChanDoan emrChanDoan = new emrChanDoan();
+        emrChanDoan.bibienchung = row.bitaibien.ToString();
+        emrChanDoan.bitaibien = row.bitaibien.ToString();
+        emrChanDoan.emrDmLyDoTaiBienBienChung = GetEmrDmLyDoTaiBienBienChung(row);
+        emrChanDoan.emrDmMaBenhByIdicdChandoandieutri = GetEmrDmMaBenhByIdicdChandoandieutri(row);
+        emrChanDoan.emrDmMaBenhByIdicdChandoankkb = GetEmrDmMaBenhByIdicdChandoankkb(row);
+        emrChanDoan.emrDmMaBenhByIdicdChandoannoiden = GetEmrDmMaBenhByIdicdChandoannoiden(row);
+        emrChanDoan.emrDmMaBenhByIdicdChandoanravienchinh = GetEmrDmMaBenhByIdicdChandoanravienchinh(row);
+        emrChanDoan.emrDmMaBenhByIdicdChandoanravienkemtheo = GetEmrDmMaBenhByIdicdChandoanravienkemtheo(row);
+        emrChanDoan.emrDmMaBenhByIdicdChandoanraviennguyennhan = GetEmrDmMaBenhByIdicdChandoanraviennguyennhan(row);
+        emrChanDoan.emrDmMaBenhByIdicdChandoansaupt = GetEmrDmMaBenhByIdicdChandoansaupt(row);
+        emrChanDoan.emrDmMaBenhByIdicdChandoantruocpt = GetEmrDmMaBenhByIdicdChandoantruocpt(row);
+        emrChanDoan.motachandoandieutri = row.IsmotachandoandieutriNull() ? string.Empty : row.motachandoandieutri;
+        emrChanDoan.motachandoankkb = row.IsmotachandoankkbNull() ? string.Empty : row.motachandoankkb;
+        emrChanDoan.motachandoannoiden = row.IsmotachandoannoidenNull() ? string.Empty : row.motachandoannoiden;
+        emrChanDoan.motachandoanravienchinh = row.IsmotachandoanravienchinhNull() ? string.Empty : row.motachandoanravienchinh;
+        emrChanDoan.motachandoanravienkemtheo = row.IsmotachandoanravienkemtheoNull() ? string.Empty : row.motachandoanravienkemtheo;
+        emrChanDoan.motachandoanraviennguyennhan = row.IsmotachandoanraviennguyennhanNull() ? string.Empty : row.motachandoanraviennguyennhan.ToString();
+        emrChanDoan.motachandoansaupt = row.IsmotachandoansauptNull() ? string.Empty : row.motachandoansaupt;
+        emrChanDoan.motachandoantruocpt = row.IsmotachandoantruocptNull() ? string.Empty : row.motachandoantruocpt;
+        emrChanDoan.tongsolanpt = row.IstongsolanptNull() ? string.Empty : row.tongsolanpt.ToString();
+        emrChanDoan.tongsongaysaupt = row.IstongsongaysauptNull() ? string.Empty : row.tongsongaysaupt.ToString();
+
+        return emrChanDoan;
+    }
+
+    private emrDmMaBenh GetEmrDmMaBenhByIdicdChandoantruocpt(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmMaBenh emrDmMaBenh = new emrDmMaBenh();
+
+        if (!row.IsemrDmMaBenhByIdicdChandoantruocptNull())
+        {
+            emrDmMaBenh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM20", row.emrDmMaBenhByIdicdChandoantruocpt.ToString());
+        }
+
+
+        return emrDmMaBenh;
+    }
+
+    private emrDmMaBenh GetEmrDmMaBenhByIdicdChandoansaupt(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmMaBenh emrDmMaBenh = new emrDmMaBenh();
+        //emrDmMaBenh.ma = row.IsemrDmMaBenhByIdicdChandoansauptNull() ? string.Empty : row.emrDmMaBenhByIdicdChandoansaupt.ToString();
+
+        if (!row.IsemrDmMaBenhByIdicdChandoansauptNull())
+        {
+            emrDmMaBenh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM20", row.emrDmMaBenhByIdicdChandoansaupt.ToString());
+        }
+
+
+
+        return emrDmMaBenh;
+    }
+
+    private emrDmMaBenh GetEmrDmMaBenhByIdicdChandoanraviennguyennhan(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmMaBenh emrDmMaBenh = new emrDmMaBenh();
+
+        if (!row.IsemrDmMaBenhByIdicdChandoanraviennguyennhanNull())
+        {
+            emrDmMaBenh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM20", row.emrDmMaBenhByIdicdChandoanraviennguyennhan.ToString());
+        }
+
+        return emrDmMaBenh;
+    }
+
+
+    private emrDmMaBenh GetEmrDmMaBenhByIdicdChandoanravienkemtheo(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmMaBenh emrDmMaBenh = new emrDmMaBenh();
+
+        if (!row.IsemrDmMaBenhByIdicdChandoanravienkemtheoNull())
+        {
+            emrDmMaBenh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM20", row.emrDmMaBenhByIdicdChandoanravienkemtheo);
+        }
+
+
+        return emrDmMaBenh;
+    }
+
+    private emrDmMaBenh GetEmrDmMaBenhByIdicdChandoanravienchinh(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmMaBenh emrDmMaBenh = new emrDmMaBenh();
+
+        if (!row.IsemrDmMaBenhByIdicdChandoanravienchinhNull())
+        {
+            emrDmMaBenh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM20", row.emrDmMaBenhByIdicdChandoanravienchinh);
+        }
+
+
+        return emrDmMaBenh;
+    }
+
+    private emrDmMaBenh GetEmrDmMaBenhByIdicdChandoannoiden(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmMaBenh emrDmMaBenh = new emrDmMaBenh();
+
+
+        if (!row.IsemrDmMaBenhByIdicdChandoannoidenNull())
+        {
+            emrDmMaBenh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM20", row.emrDmMaBenhByIdicdChandoannoiden);
+        }
+
+
+        return emrDmMaBenh;
+    }
+
+    private emrDmMaBenh GetEmrDmMaBenhByIdicdChandoankkb(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmMaBenh emrDmMaBenh = new emrDmMaBenh();
+
+        if (!row.IsemrDmMaBenhByIdicdChandoankkbNull())
+        {
+            emrDmMaBenh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM20", row.emrDmMaBenhByIdicdChandoankkb);
+        }
+
+
+        return emrDmMaBenh;
+    }
+
+    private emrDmMaBenh GetEmrDmMaBenhByIdicdChandoandieutri(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmMaBenh emrDmMaBenh = new emrDmMaBenh();
+
+
+        if (!row.IsemrDmMaBenhByIdicdChandoandieutriNull())
+        {
+            emrDmMaBenh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM20", row.emrDmMaBenhByIdicdChandoandieutri);
+        }
+
+
+        return emrDmMaBenh;
+    }
+
+    private emrDmLyDoTaiBienBienChung GetEmrDmLyDoTaiBienBienChung(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmLyDoTaiBienBienChung emrDmLyDoTaiBienBienChung = new emrDmLyDoTaiBienBienChung();
+
+        if (!row.IsemrDmLyDoTaiBienBienChungNull())
+        {
+            emrDmLyDoTaiBienBienChung.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM16", row.emrDmLyDoTaiBienBienChung);
+        }
+
+
+        return emrDmLyDoTaiBienBienChung;
+    }
+
+    private emrTinhTrangRaVien GetEmrTinhTrangRaVien(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrTinhTrangRaVien emrTinhTrangRaVien = new emrTinhTrangRaVien();
+        emrTinhTrangRaVien.emrDmKetQuaDieuTri = GetEmrDmKetQuaDieuTri(row);
+        // update Service mới ko có cái này nữa
+        //emrTinhTrangRaVien.emrDmGiaiPhauBenh = GetEmrDmGiaiPhauBenh(row);
+        emrTinhTrangRaVien.emrDmKetQuaGiaiPhauBenh = getEmrKetQuaGiaiPhauBenh(row);
+        emrTinhTrangRaVien.emrDmLyDoTuVong = GetEmrDmLyDoTuVong(row);
+        emrTinhTrangRaVien.emrDmMaBenhByIdicdGiaiphaututhi = GetEmrDmMaBenhByIdicdGiaiphaututhi(row);
+        emrTinhTrangRaVien.emrDmMaBenhByIdicdNguyennhantuvong = GetEmrDmMaBenhByIdicdNguyennhantuvong(row);
+        emrTinhTrangRaVien.khamnghiemtuthi = row.IskhamnghiemtuthiNull() ? string.Empty : row.khamnghiemtuthi.ToString();
+        emrTinhTrangRaVien.motagiaiphaututhi = row.IsmotagiaiphaututhiNull() ? string.Empty : row.motagiaiphaututhi.ToString();
+        emrTinhTrangRaVien.motanguyennhantuvong = row.IsmotanguyennhantuvongNull() ? string.Empty : row.motanguyennhantuvong;
+        emrTinhTrangRaVien.ngaygiotuvong = row.IsNgayTVongNull() ? string.Empty : row.NgayTVong.ToString();
+        return emrTinhTrangRaVien;
+    }
+
+    private emrDmKetQuaGiaiPhauBenh getEmrKetQuaGiaiPhauBenh(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmKetQuaGiaiPhauBenh emrDmKetQuaGiaiPhauBenh = new emrDmKetQuaGiaiPhauBenh();
+        if (!row.IsemrDmGiaiPhauBenhNull())
+        {
+            emrDmKetQuaGiaiPhauBenh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM14", row.emrDmGiaiPhauBenh);
+        }
+        return emrDmKetQuaGiaiPhauBenh;
+    }
+
+    private emrDmMaBenh GetEmrDmMaBenhByIdicdNguyennhantuvong(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmMaBenh emrDmMaBenh = new emrDmMaBenh();
+
+        if (!row.IsemrDmMaBenhByIdicdNguyennhantuvongNull())
+        {
+            emrDmMaBenh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM20", row.emrDmMaBenhByIdicdNguyennhantuvong.ToString());
+        }
+
+
+        return emrDmMaBenh;
+    }
+
+    private emrDmMaBenh GetEmrDmMaBenhByIdicdGiaiphaututhi(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmMaBenh emrDmMaBenh = new emrDmMaBenh();
+
+        if (!row.IsemrDmMaBenhByIdicdGiaiphaututhiNull())
+        {
+            emrDmMaBenh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM20", row.emrDmMaBenhByIdicdGiaiphaututhi);
+        }
+
+
+        return emrDmMaBenh;
+    }
+
+    private emrDmLyDoTuVong GetEmrDmLyDoTuVong(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmLyDoTuVong emrDmLyDoTuVong = new emrDmLyDoTuVong();
+
+        if (!row.IsemrDmLyDoTuVongNull())
+        {
+            emrDmLyDoTuVong.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM15", row.emrDmLyDoTuVong);
+        }
+
+
+        return emrDmLyDoTuVong;
+    }
+
+    //private emrDmGiaiPhauBenh GetEmrDmGiaiPhauBenh(HSBA.sp_DanhSachHsbaRow row)
+    //{
+    //    emrDmGiaiPhauBenh emrDmGiaiPhauBenh = new emrDmGiaiPhauBenh();
+
+    //  H 
+
+    //    return emrDmGiaiPhauBenh;
+    //}
+
+    private emrDmKetQuaDieuTri GetEmrDmKetQuaDieuTri(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmKetQuaDieuTri emrDmKetQuaDieuTri = new emrDmKetQuaDieuTri();
+
+        if (!row.IsemrTinhTrangRaVienemrDmKetQuaDieuTriNull())
+        {
+            emrDmKetQuaDieuTri.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM13", row.emrTinhTrangRaVienemrDmKetQuaDieuTri);
+        }
+
+        return emrDmKetQuaDieuTri;
+    }
+
+    private emrQuanLyNguoiBenh GetEmrQuanLyNguoiBenh(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrQuanLyNguoiBenh emrQuanLyNguoiBenh = new emrQuanLyNguoiBenh();
+
+        //emrQuanLyNguoiBenh.emrDmLoaiVaoVien /// DTT MISSING        
+
+        //emrQuanLyNguoiBenh.emrDmLoaiChuyenVien = GetEmrDmLoaiChuyenVien();        
+        emrQuanLyNguoiBenh.emrDmLoaiVaoVien = GetEmrDmLoaiDieuTri(row);
+        emrQuanLyNguoiBenh.emrDmLoaiDoiTuongTaiChinh = GetEmrDmLoaiDoiTuongTaiChinh(row);
+        emrQuanLyNguoiBenh.emrDmLoaiRaVien = GetEmrDmLoaiRaVien(row);
+        emrQuanLyNguoiBenh.emrDmNoiTrucTiepVao = GetEmrDmNoiTrucTiepVao(row);
+
+        emrQuanLyNguoiBenh.ngaygioravien = row.IsngaygioravienNull() ? string.Empty : row.ngaygioravien.ToString();
+        emrQuanLyNguoiBenh.ngaygiovaovien = row.IsngaygiovaovienNull() ? string.Empty : row.ngaygiovaovien.ToString();
+        emrQuanLyNguoiBenh.noichuyenden = row.IsnoichuyendenNull() ? string.Empty : row.noichuyenden.ToString();
+        emrQuanLyNguoiBenh.tenbacsichoravien = row.IstenbacsichoravienNull() ? string.Empty : row.tenbacsichoravien;
+        emrQuanLyNguoiBenh.tenbacsikham = row.IstenbacsikhamNull() ? string.Empty : row.tenbacsikham;
+        emrQuanLyNguoiBenh.tongsongaydieutri = row.IstongsongaydieutriNull() ? string.Empty : row.tongsongaydieutri.ToString();
+        emrQuanLyNguoiBenh.vaovienlanthu = row.IsvaongaythuNull() ? string.Empty : row.vaongaythu.ToString();
+
+        return emrQuanLyNguoiBenh;
+    }
+
+    private emrDmNoiTrucTiepVao GetEmrDmNoiTrucTiepVao(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmNoiTrucTiepVao emrDmNoiTrucTiepVao = new emrDmNoiTrucTiepVao();
+
+        if (!row.IsemrDmNoiTrucTiepVaoNull())
+        {
+            emrDmNoiTrucTiepVao.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM09", row.emrDmNoiTrucTiepVao);
+        }
+
+        return emrDmNoiTrucTiepVao;
+    }
+
+    private emrDmLoaiRaVien GetEmrDmLoaiRaVien(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmLoaiRaVien emrDmLoaiRaVien = new emrDmLoaiRaVien();
+
+        if (!row.IsemrDmLoaiRaVienNull())
+        {
+            emrDmLoaiRaVien.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM12", row.emrDmLoaiRaVien);
+        }
+
+
+        return emrDmLoaiRaVien;
+    }
+
+    private emrDmLoaiDoiTuongTaiChinh GetEmrDmLoaiDoiTuongTaiChinh(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmLoaiDoiTuongTaiChinh emrDmLoaiDoiTuongTaiChinh = new emrDmLoaiDoiTuongTaiChinh();
+
+        if (!row.IsemrDmLoaiDoiTuongTaiChinhNull())
+        {
+            emrDmLoaiDoiTuongTaiChinh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM11", row.emrDmLoaiDoiTuongTaiChinh);
+        }
+
+
+        return emrDmLoaiDoiTuongTaiChinh;
+    }
+
+    private emrDmLoaiVaoVien GetEmrDmLoaiDieuTri(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmLoaiVaoVien emrDmLoaiVaoVien = new emrDmLoaiVaoVien();
+        if (!row.IsemrDmLoaiDieuTriNull())
+        {
+            emrDmLoaiVaoVien.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM08", row.emrDmLoaiDieuTri);
+        }
+
+        return emrDmLoaiVaoVien;
+    }
+
+    private emrBenhNhan GetEmrBenhNhan(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrBenhNhan benhNhan = new emrBenhNhan();
+        // ? add lại HSBA.xsd thì lỗi
+        //        benhNhan.iddinhdanhchinh = row.IsemrBenhNhaniddinhdanhchinhNull() ? string.Empty : row.emrBenhNhaniddinhdanhchinh;
+        // benhNhan.tendaydu = row.IsemrBenhNhantendayduNull() ? string.Empty : row.emrBenhNhantendaydu + " " + DateTime.Now.ToString();
+        benhNhan.tendaydu = row.emrBenhNhantendaydu;
+        benhNhan.iddinhdanhchinh = row.emrBenhNhaniddinhdanhchinh;
+        benhNhan.iddinhdanhphu = row.IsemrBenhNhaniddinhdanhphuNull() ? string.Empty : row.emrBenhNhaniddinhdanhphu;
+
+        benhNhan.idhis = row.IsemrBenhNhanidhisNull() ? string.Empty : row.emrBenhNhanidhis.ToString();
+
+
+
+        benhNhan.diachi = row.IsemrBenhNhandiachiNull() ? string.Empty : row.emrBenhNhandiachi;
+
+        benhNhan.ngaysinh = DateTime.Now.ToString();
+
+        benhNhan.emrDmDanToc = GetEmrDanToc(row);
+
+        benhNhan.emrDmDonViHanhChinhByIdquanhuyen = GetEmrDmDonViHanhChinhByIdquanhuyen(row);
+        benhNhan.emrDmDonViHanhChinhByIdtinhthanh = GetEmrDmDonViHanhChinhByIdtinhthanh(row);
+
+        benhNhan.emrDmGioiTinh = GetEmrDmGioiTinh(row);
+        benhNhan.emrDmNgheNghiepByIdnghebo = GetEmrDmNgheNghiepByIdnghebo(row);
+        benhNhan.emrDmNgheNghiepByIdngheme = GetEmrDmNgheNghiepByIdngheme(row);
+        benhNhan.emrDmNgheNghiepByIdnghenghiep = GetEmrDmNgheNghiepByIdnghenghiep(row);
+        benhNhan.emrDmQuocGia = GetEmrDmQuocGia(row);
+        benhNhan.hotenbo = row.IshotenboNull() ? string.Empty : row.hotenbo.ToString();
+        benhNhan.hotenme = row.IshotenmeNull() ? string.Empty : row.hotenme;
+        benhNhan.noilamviec = row.IsnoilamviecNull() ? string.Empty : row.noilamviec.ToString();
+        benhNhan.sobhyt = row.IssobhytNull() ? string.Empty : row.sobhyt;
+
+        benhNhan.ngayhethanthebhyt = row.IsngayhethanthebhytNull() ? string.Empty : row.ngayhethanthebhyt.ToString();
+        benhNhan.tennguoibaotin = row.IstennguoibaotinNull() ? string.Empty : row.tennguoibaotin.ToString();
+        benhNhan.sodienthoainguoibaotin = row.IssodienthoainguoibaotinNull() ? string.Empty : row.sodienthoainguoibaotin;
+        benhNhan.diachinguoibaotin = row.IsdiachinguoibaotinNull() ? string.Empty : row.diachinguoibaotin;
+
+        return benhNhan;
+    }
+
+    private emrDmQuocGia GetEmrDmQuocGia(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmQuocGia emrDmQuocGia = new emrDmQuocGia();
+
+        if (!row.IsemrDmQuocGiaNull())
+        {
+            emrDmQuocGia.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM01", row.emrDmQuocGia);
+        }
+
+        return emrDmQuocGia;
+    }
+
+    private emrDmNgheNghiep GetEmrDmNgheNghiepByIdnghenghiep(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmNgheNghiep emrDmNgheNghiep = new emrDmNgheNghiep();
+        if (!row.IsemrDmNgheNghiepByIdnghenghiepNull())
+        {
+            emrDmNgheNghiep.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM04", row.emrDmNgheNghiepByIdnghenghiep);
+        }
+
+        return emrDmNgheNghiep;
+    }
+
+    private emrDmNgheNghiep GetEmrDmNgheNghiepByIdngheme(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmNgheNghiep emrDmNgheNghiep = new emrDmNgheNghiep();
+        if (!row.IsemrDmNgheNghiepByIdnghemeNull())
+        {
+            emrDmNgheNghiep.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM04", row.emrDmNgheNghiepByIdngheme);
+        }
+        return emrDmNgheNghiep;
+    }
+
+    private emrDmNgheNghiep GetEmrDmNgheNghiepByIdnghebo(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmNgheNghiep emrDmNgheNghiep = new emrDmNgheNghiep();
+        if (!row.IsemrDmNgheNghiepByIdngheboNull())
+        {
+            emrDmNgheNghiep.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM04", row.emrDmNgheNghiepByIdnghebo.ToString());
+        }
+
+        return emrDmNgheNghiep;
+    }
+
+    private emrDmGioiTinh GetEmrDmGioiTinh(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmGioiTinh gioiTinh = new emrDmGioiTinh();
+        if (!row.IsemrDmGioiTinhNull())
+        {
+            gioiTinh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM18", row.emrDmGioiTinh);
+        }
+
+        return gioiTinh;
+    }
+
+    private emrDmDonViHanhChinh GetEmrDmDonViHanhChinhByIdtinhthanh(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmDonViHanhChinh emrDmDonViHanhChinh = new emrDmDonViHanhChinh();
+
+        if (!row.IsemrBenhNhanemrDmDonViHanhChinhByIdtinhthanhNull())
+        {
+            emrDmDonViHanhChinh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM05", row.emrBenhNhanemrDmDonViHanhChinhByIdtinhthanh);
+
+        }
+
+
+
+
+        return emrDmDonViHanhChinh;
+    }
+
+    private emrDmDonViHanhChinh GetEmrDmDonViHanhChinhByIdquanhuyen(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmDonViHanhChinh emrDmDonViHanhChinh = new emrDmDonViHanhChinh();
+
+        if (!row.IsemrBenhNhanemrDmDonViHanhChinhByIdquanhuyenNull())
+        {
+            emrDmDonViHanhChinh.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM05", row.emrBenhNhanemrDmDonViHanhChinhByIdquanhuyen);
+        }
+
+        return emrDmDonViHanhChinh;
+    }
+
+    private emrDmDanToc GetEmrDanToc(HSBA.sp_DanhSachHsbaRow row)
+    {
+        emrDmDanToc dantoc = new emrDmDanToc();
+
+        if (!row.IsemrBenhNhanemrDmDanTocNull())
+        {
+            dantoc.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM03", row.emrBenhNhanemrDmDanToc);
+        }
+
+        return dantoc;
+    }
+
+    private emrDmLoaiBenhAn GetEmrDmLoaiBenhAn(HSBA.sp_DanhSachHsbaRow row)
+    {
+        if (row != null)
+        {
+            emrDmLoaiBenhAn loaiBA = new emrDmLoaiBenhAn();
+
+            if (!row.IsemrDmLoaiBenhAnNull())
+            {
+                loaiBA.id = (int)mappingAdapter.GetDTTCategoryItemNameByHTCategoryItemId("DM17", row.emrDmLoaiBenhAn);
+            }
+
+            return loaiBA;
+        }
+
+        return null;
+    }
+
+    #endregion
+
+
+
+
+
+}

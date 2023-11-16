@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "kyhoadon", "kyhoadon\", "{23FC3038-07CB-4A4B-BCCF-09DA9DFDF8FA}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.7.2"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_56622"
+		Debug.AspNetCompiler.PhysicalPath = "kyhoadon\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56622\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_56622"
+		Release.AspNetCompiler.PhysicalPath = "kyhoadon\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56622\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "56622"
+		SlnRelativePath = "kyhoadon\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DonThuocDT", "..\..\htc\DTDT\DonThuocDT\DonThuocDT.csproj", "{CBB0C4D0-5E50-43C0-AB03-D773A3D9FDCC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{23FC3038-07CB-4A4B-BCCF-09DA9DFDF8FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23FC3038-07CB-4A4B-BCCF-09DA9DFDF8FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23FC3038-07CB-4A4B-BCCF-09DA9DFDF8FA}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{23FC3038-07CB-4A4B-BCCF-09DA9DFDF8FA}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{CBB0C4D0-5E50-43C0-AB03-D773A3D9FDCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB0C4D0-5E50-43C0-AB03-D773A3D9FDCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB0C4D0-5E50-43C0-AB03-D773A3D9FDCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB0C4D0-5E50-43C0-AB03-D773A3D9FDCC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2F569871-3BB0-40BA-996A-D345D954A731}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,795 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MedYX_Hue_2104" Class="DBLinQDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=HTC-SRV3\SQLSERVER2012;Initial Catalog=MedYX_Hue_2104;User ID=duanvc" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Medyx_YHCTTWConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.DMKHBaoTri" Member="DMKHBaoTris">
+    <Type Name="DMKHBaoTri">
+      <Column Name="MaKHBaoTri" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ThoigianTH" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="KeHoach" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="Loai" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Association Name="DMKHBaoTri_DMThietBiYTe" Member="DMThietBiYTes" ThisKey="MaKHBaoTri" OtherKey="MaKHBaoTri" Type="DMThietBiYTe" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TBLinhkiendikem" Member="TBLinhkiendikems">
+    <Type Name="TBLinhkiendikem">
+      <Column Name="MaTB" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="STT" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenLinhKien" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Soluong" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="BaoHanh" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="Ngaylap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DMTBYT" Member="DMThietBiYTes">
+    <Type Name="DMThietBiYTe">
+      <Column Name="MaTB" Type="System.String" DbType="NVarChar(6) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaDVT" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaNhom" Type="System.String" DbType="NVarChar(9)" CanBeNull="true" />
+      <Column Name="MaChungLoai" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKho" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKhoa" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaNoiSua" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaQG" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaBarCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="MaNSX" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NamSX" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaTinhTrang" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="TanSuatSuDung" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Khauhao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaKHBaoTri" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="BaoTriDinhKy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="KHTuNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="KHDenNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Gianhap" Type="System.Decimal" DbType="Decimal(18)" CanBeNull="true" />
+      <Column Name="NguonKP" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NgayHopDong" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SoHopDong" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="MaNCC" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NgayMua" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ThoiGianBH" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NgaySuDung" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AnhTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="NgayLap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiLap" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgayHuy" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiHuy" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Association Name="DMKHBaoTri_DMThietBiYTe" Member="DMKHBaoTri" ThisKey="MaKHBaoTri" OtherKey="MaKHBaoTri" Type="DMKHBaoTri" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.spDMKhoa_FindAccount" Method="spDMKhoa_FindAccount">
+    <Parameter Name="Acount" Parameter="acount" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Loai" Parameter="loai" Type="System.Byte" DbType="TinyInt" />
+    <ElementType Name="spDMKhoa_FindAccountResult">
+      <Column Name="STT" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="MaKhoa" Type="System.String" DbType="NVarChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="TenKhoa" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="TenTA" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="DiaDiem" Type="System.String" DbType="NVarChar(350)" CanBeNull="true" />
+      <Column Name="Loai" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Cap" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Machuyenkhoa" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="KhongHD" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Sogiuong" Type="System.Decimal" DbType="Decimal(4,0)" CanBeNull="true" />
+      <Column Name="MaNhom" Type="System.String" DbType="NVarChar(9)" CanBeNull="true" />
+      <Column Name="MaKhoaBC" Type="System.String" DbType="NVarChar(9)" CanBeNull="true" />
+      <Column Name="KhoaNT" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaKhoaQL" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaDV" Type="System.String" DbType="NVarChar(8)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_DMKHBaoTri_GetAll" Method="sp_DMKHBaoTri_GetAll">
+    <Parameter Name="QuyenAddmin" Parameter="quyenAddmin" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="sp_DMKHBaoTri_GetAllResult">
+      <Column Name="MaKHBaoTri" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="ThoigianTH" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="KeHoach" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="Loai" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDMTBYT_CapMa" Method="spDMTBYT_CapMa" IsComposable="true">
+    <Parameter Name="TenTB" Parameter="tenTB" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="object" />
+  </Function>
+  <Function Name="dbo.spTB_DMMoTaYC_getAll" Method="spTB_DMMoTaYC_getAll">
+    <Parameter Name="HienHuy" Parameter="hienHuy" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="spTB_DMMoTaYC_getAllResult">
+      <Column Name="MaMoTaYC" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MotaYC" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDMKhoTBbyAccount" Method="spDMKhoTBbyAccount">
+    <Parameter Name="Acount" Parameter="acount" Type="System.String" DbType="NVarChar(100)" />
+    <ElementType Name="spDMKhoTBbyAccountResult">
+      <Column Name="MaKho" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="TenKho" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="Loai" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Kieukho" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Khoban" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDMKhoabyAccount" Method="spDMKhoabyAccount">
+    <Parameter Name="Acount" Parameter="acount" Type="System.String" DbType="NVarChar(100)" />
+    <ElementType Name="spDMKhoabyAccountResult">
+      <Column Name="MaKhoa" Type="System.String" DbType="NVarChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="TenKhoa" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="TenTA" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="DiaDiem" Type="System.String" DbType="NVarChar(350)" CanBeNull="true" />
+      <Column Name="Loai" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Cap" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Machuyenkhoa" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="KhongHD" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Sogiuong" Type="System.Decimal" DbType="Decimal(4,0)" CanBeNull="true" />
+      <Column Name="MaNhom" Type="System.String" DbType="NVarChar(9)" CanBeNull="true" />
+      <Column Name="MaKhoaBC" Type="System.String" DbType="NVarChar(9)" CanBeNull="true" />
+      <Column Name="KhoaNT" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaKhoaQL" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaDV" Type="System.String" DbType="NVarChar(8)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spTBLINHKIENDIKEM_UPDATE" Method="spTBLINHKIENDIKEM_UPDATE">
+    <Parameter Name="MaTB" Parameter="maTB" Type="System.String" DbType="NVarChar(6)" />
+    <Parameter Name="STT" Parameter="sTT" Type="System.Decimal" DbType="Decimal(9,0)" />
+    <Parameter Name="TenLinhKien" Parameter="tenLinhKien" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Soluong" Parameter="soluong" Type="System.Decimal" DbType="Decimal(9,2)" />
+    <Parameter Name="SerialNo" Parameter="serialNo" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="Model" Parameter="model" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="BaoHanh" Parameter="baoHanh" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Ghichu" Parameter="ghichu" Type="System.String" DbType="NVarChar(150)" />
+    <Parameter Name="Huy" Parameter="huy" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="NguoiSD" Parameter="nguoiSD" Type="System.String" DbType="NVarChar(6)" />
+    <ElementType Name="spTBLINHKIENDIKEM_UPDATEResult">
+      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spTBLINHKIENDIKEM_GETALL" Method="spTBLINHKIENDIKEM_GETALL">
+    <Parameter Name="QADMIN" Parameter="qADMIN" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="MaTB" Parameter="maTB" Type="System.String" DbType="NVarChar(6)" />
+    <ElementType Name="spTBLINHKIENDIKEM_GETALLResult">
+      <Column Name="OrderNumber" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="MaTB" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="STT" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="TenLinhKien" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Soluong" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="BaoHanh" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="Ngaylap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spTBLINHKIENDIKEM_GET" Method="spTBLINHKIENDIKEM_GET">
+    <Parameter Name="STT" Parameter="sTT" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spTBLINHKIENDIKEM_GETResult">
+      <Column Name="MaTB" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="STT" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="TenLinhKien" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Soluong" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="BaoHanh" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="Ngaylap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spTBLINHKIENDIKEM_DELETED" Method="spTBLINHKIENDIKEM_DELETED">
+    <Parameter Name="STT" Parameter="sTT" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spTBLINHKIENDIKEM_CREATE" Method="spTBLINHKIENDIKEM_CREATE">
+    <Parameter Name="MaTB" Parameter="maTB" Type="System.String" DbType="NVarChar(6)" />
+    <Parameter Name="TenLinhKien" Parameter="tenLinhKien" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Soluong" Parameter="soluong" Type="System.Decimal" DbType="Decimal(9,2)" />
+    <Parameter Name="SerialNo" Parameter="serialNo" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="Model" Parameter="model" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="BaoHanh" Parameter="baoHanh" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Ghichu" Parameter="ghichu" Type="System.String" DbType="NVarChar(150)" />
+    <ElementType Name="spTBLINHKIENDIKEM_CREATEResult">
+      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDMTBYT_BaoTriSuaChua" Method="spDMTBYT_BaoTriSuaChua">
+    <Parameter Name="Account" Parameter="account" Type="System.String" DbType="NVarChar(100)" />
+    <ElementType Name="spDMTBYT_BaoTriSuaChuaResult">
+      <Column Name="MaTB" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="TenTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaDVT" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaNhom" Type="System.String" DbType="NVarChar(9)" CanBeNull="true" />
+      <Column Name="MaChungLoai" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKho" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKhoa" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaNoiSua" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaQG" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaBarCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="MaNSX" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NamSX" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaTinhTrang" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="TanSuatSuDung" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Khauhao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaKHBaoTri" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="BaoTriDinhKy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="KHTuNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="KHDenNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Gianhap" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="NguonKP" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NgayHopDong" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SoHopDong" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="MaNCC" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="ThoiGianBH" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NgaySuDung" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AnhTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="NgayMua" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NgayLap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiLap" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgayHuy" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiHuy" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="TenDVT" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNhom" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenChungLoai" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenKho" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenKhoa" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNoiSua" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenQG" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNSX" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="TenTrangThai" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="KeHoach" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="ThoiGianTHKeHoach" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TenNCC" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiLap" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiSD" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiHuy" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDMTBYT_DELETED" Method="spDMTBYT_DELETED">
+    <Parameter Name="MaMay" Parameter="maMay" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="Nguoihuy" Parameter="nguoihuy" Type="System.String" DbType="NVarChar(6)" />
+    <Parameter Name="MATB" Parameter="mATB" Type="System.String" DbType="NVarChar(6)" />
+    <ElementType Name="spDMTBYT_DELETEDResult">
+      <Column Name="" Member="Column1" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDMTBYT_FindKHOKHOA" Method="spDMTBYT_FindKHOKHOA">
+    <Parameter Name="Acount" Parameter="acount" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="TenTB" Parameter="tenTB" Type="System.String" DbType="NVarChar(100)" />
+    <ElementType Name="spDMTBYT_FindKHOKHOAResult">
+      <Column Name="MaTB" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="TenTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaDVT" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaNhom" Type="System.String" DbType="NVarChar(9)" CanBeNull="true" />
+      <Column Name="MaChungLoai" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKho" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKhoa" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaNoiSua" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaQG" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaBarCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="MaNSX" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NamSX" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaTinhTrang" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="TanSuatSuDung" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Khauhao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaKHBaoTri" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="BaoTriDinhKy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="KHTuNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="KHDenNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Gianhap" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="NguonKP" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NgayHopDong" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SoHopDong" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="MaNCC" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="ThoiGianBH" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NgaySuDung" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AnhTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="NgayMua" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NgayLap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiLap" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgayHuy" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiHuy" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="TenDVT" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNhom" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenChungLoai" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenKho" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenKhoa" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNoiSua" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenQG" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNSX" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="TenTrangThai" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="KeHoach" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="ThoiGianTHKeHoach" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TenNCC" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiLap" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiSD" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiHuy" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDMTBYT_FINDS" Method="spDMTBYT_FINDS">
+    <Parameter Name="Acount" Parameter="acount" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="MaTB" Parameter="maTB" Type="System.String" DbType="NVarChar(6)" />
+    <Parameter Name="TenTB" Parameter="tenTB" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="MaBarCode" Parameter="maBarCode" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="SerialNo" Parameter="serialNo" Type="System.String" DbType="NVarChar(30)" />
+    <Parameter Name="Model" Parameter="model" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="MaNCC" Parameter="maNCC" Type="System.String" DbType="NVarChar(5)" />
+    <Parameter Name="MaQG" Parameter="maQG" Type="System.String" DbType="NVarChar(5)" />
+    <Parameter Name="MaKho" Parameter="maKho" Type="System.String" DbType="NVarChar(5)" />
+    <Parameter Name="MaKhoa" Parameter="maKhoa" Type="System.String" DbType="NVarChar(15)" />
+    <Parameter Name="MaNoiSua" Parameter="maNoiSua" Type="System.String" DbType="NVarChar(15)" />
+    <ElementType Name="spDMTBYT_FINDSResult">
+      <Column Name="STT" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="MaTB" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="TenTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaDVT" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaNhom" Type="System.String" DbType="NVarChar(9)" CanBeNull="true" />
+      <Column Name="MaChungLoai" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKho" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKhoa" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaNoiSua" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaQG" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaBarCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="MaNSX" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NamSX" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaTinhTrang" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="TanSuatSuDung" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Khauhao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaKHBaoTri" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="BaoTriDinhKy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="KHTuNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="KHDenNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Gianhap" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="NguonKP" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NgayHopDong" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SoHopDong" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="MaNCC" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="ThoiGianBH" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NgaySuDung" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AnhTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="NgayMua" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NgayLap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiLap" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgayHuy" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiHuy" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="TenKho" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenKhoa" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNoiSua" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiLap" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDMTBYT_GET" Method="spDMTBYT_GET">
+    <Parameter Name="MATB" Parameter="mATB" Type="System.String" DbType="NVarChar(6)" />
+    <ElementType Name="spDMTBYT_GETResult">
+      <Column Name="MaTB" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="TenTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaDVT" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaNhom" Type="System.String" DbType="NVarChar(9)" CanBeNull="true" />
+      <Column Name="MaChungLoai" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKho" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKhoa" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaNoiSua" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaQG" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaBarCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="MaNSX" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NamSX" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaTinhTrang" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="TanSuatSuDung" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Khauhao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaKHBaoTri" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="BaoTriDinhKy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="KHTuNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="KHDenNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Gianhap" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="NguonKP" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NgayHopDong" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SoHopDong" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="MaNCC" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="ThoiGianBH" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NgaySuDung" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AnhTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="NgayMua" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NgayLap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiLap" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgayHuy" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiHuy" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="TenDVT" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNhom" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenChungLoai" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenKho" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenKhoa" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNoiSua" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenQG" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNSX" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="TenTrangThai" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="KeHoach" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="ThoiGianTHKeHoach" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TenNCC" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiLap" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiSD" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiHuy" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDMTBYT_GETALL" Method="spDMTBYT_GETALL">
+    <Parameter Name="TuNgay" Parameter="tuNgay" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="DenNgay" Parameter="denNgay" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="QuyenAdmin" Parameter="quyenAdmin" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="spDMTBYT_GETALLResult">
+      <Column Name="MaTB" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="TenTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaDVT" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaNhom" Type="System.String" DbType="NVarChar(9)" CanBeNull="true" />
+      <Column Name="MaChungLoai" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKho" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKhoa" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaNoiSua" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaQG" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaBarCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="MaNSX" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NamSX" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaTinhTrang" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="TanSuatSuDung" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Khauhao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaKHBaoTri" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="BaoTriDinhKy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="KHTuNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="KHDenNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Gianhap" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="NguonKP" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NgayHopDong" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SoHopDong" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="MaNCC" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="ThoiGianBH" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NgaySuDung" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AnhTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="NgayMua" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NgayLap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiLap" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgayHuy" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiHuy" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="TenDVT" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNhom" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenChungLoai" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenKho" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenKhoa" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNoiSua" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenQG" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNSX" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="TenTrangThai" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="KeHoach" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="ThoiGianTHKeHoach" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TenNCC" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiLap" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiSD" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiHuy" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDMTBYT_GETALLKHOKHOA" Method="spDMTBYT_GETALLKHOKHOA">
+    <Parameter Name="Acount" Parameter="acount" Type="System.String" DbType="NVarChar(100)" />
+    <ElementType Name="spDMTBYT_GETALLKHOKHOAResult">
+      <Column Name="MaTB" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="TenTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaDVT" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaNhom" Type="System.String" DbType="NVarChar(9)" CanBeNull="true" />
+      <Column Name="MaChungLoai" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKho" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKhoa" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaNoiSua" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaQG" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaBarCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="MaNSX" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NamSX" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaTinhTrang" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="TanSuatSuDung" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Khauhao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaKHBaoTri" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="BaoTriDinhKy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="KHTuNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="KHDenNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Gianhap" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="NguonKP" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NgayHopDong" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SoHopDong" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="MaNCC" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="ThoiGianBH" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NgaySuDung" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AnhTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="NgayMua" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NgayLap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiLap" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgayHuy" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiHuy" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="TenDVT" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNhom" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenChungLoai" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenKho" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenKhoa" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNoiSua" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenQG" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNSX" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="TenTrangThai" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="KeHoach" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="ThoiGianTHKeHoach" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TenNCC" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiLap" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiSD" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiHuy" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDMTBYT_SCHUABTRI_BYMATBYT" Method="spDMTBYT_SCHUABTRI_BYMATBYT">
+    <Parameter Name="MATB" Parameter="mATB" Type="System.String" DbType="NVarChar(6)" />
+    <ElementType Name="spDMTBYT_SCHUABTRI_BYMATBYTResult">
+      <Column Name="STT" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="MaTB" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="TenTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaBarCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="NgayYeuCau" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="MaNguoiYeuCau" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="TenNguoiYeuCau" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="MaNoiYC" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="TenNoiYC" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="NgayThucHienBatDau" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NgayThucHienKetThuc" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NgayHoanThanh" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="MaNVThucHien" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="MaDViThucHien" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="TenDonviThucHien" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNVThucHien" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDMTrangThaiCV_GetAll" Method="spDMTrangThaiCV_GetAll">
+    <Parameter Name="QADMIN" Parameter="qADMIN" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="spDMTrangThaiCV_GetAllResult">
+      <Column Name="MaTrangThai" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="TenTrangThai" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="GhiChu" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDMTBYT_UPDATE" Method="spDMTBYT_UPDATE">
+    <Parameter Name="MaTB" Parameter="maTB" Type="System.String" DbType="NVarChar(6)" />
+    <Parameter Name="TenTB" Parameter="tenTB" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="MaDVT" Parameter="maDVT" Type="System.String" DbType="NVarChar(5)" />
+    <Parameter Name="MaNhom" Parameter="maNhom" Type="System.String" DbType="NVarChar(9)" />
+    <Parameter Name="MaChungLoai" Parameter="maChungLoai" Type="System.String" DbType="NVarChar(5)" />
+    <Parameter Name="MaKho" Parameter="maKho" Type="System.String" DbType="NVarChar(5)" />
+    <Parameter Name="MaKhoa" Parameter="maKhoa" Type="System.String" DbType="NVarChar(15)" />
+    <Parameter Name="MaNoiSua" Parameter="maNoiSua" Type="System.String" DbType="NVarChar(15)" />
+    <Parameter Name="MaQG" Parameter="maQG" Type="System.String" DbType="NVarChar(5)" />
+    <Parameter Name="MaBarCode" Parameter="maBarCode" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="MaNSX" Parameter="maNSX" Type="System.String" DbType="NVarChar(5)" />
+    <Parameter Name="NamSX" Parameter="namSX" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SerialNo" Parameter="serialNo" Type="System.String" DbType="NVarChar(30)" />
+    <Parameter Name="Model" Parameter="model" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="MaTinhTrang" Parameter="maTinhTrang" Type="System.String" DbType="NVarChar(3)" />
+    <Parameter Name="TanSuatSuDung" Parameter="tanSuatSuDung" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Khauhao" Parameter="khauhao" Type="System.Int32" DbType="Int" />
+    <Parameter Name="MaKHBaoTri" Parameter="maKHBaoTri" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="BaoTriDinhKy" Parameter="baoTriDinhKy" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="KHTuNgay" Parameter="kHTuNgay" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="KHDenNgay" Parameter="kHDenNgay" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="Gianhap" Parameter="gianhap" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="NguonKP" Parameter="nguonKP" Type="System.String" DbType="NVarChar(5)" />
+    <Parameter Name="NgayHopDong" Parameter="ngayHopDong" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="SoHopDong" Parameter="soHopDong" Type="System.String" DbType="NVarChar(30)" />
+    <Parameter Name="MaNCC" Parameter="maNCC" Type="System.String" DbType="NVarChar(5)" />
+    <Parameter Name="ThoiGianBH" Parameter="thoiGianBH" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NgaySuDung" Parameter="ngaySuDung" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="AnhTB" Parameter="anhTB" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Ghichu" Parameter="ghichu" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="NguoiSD" Parameter="nguoiSD" Type="System.String" DbType="NVarChar(6)" />
+    <Parameter Name="NgayMua" Parameter="ngayMua" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spDMTBYT_XUATTRA_GET" Method="spDMTBYT_XUATTRA_GET">
+    <Parameter Name="Thang" Parameter="thang" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="MaKho" Parameter="maKho" Type="System.String" DbType="NVarChar(9)" />
+    <Parameter Name="loaiphieu" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="spDMTBYT_XUATTRA_GETResult">
+      <Column Name="MaTB" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="TenTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaDVT" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaNhom" Type="System.String" DbType="NVarChar(9)" CanBeNull="true" />
+      <Column Name="MaChungLoai" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKho" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaKhoa" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaNoiSua" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaQG" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="MaBarCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="MaNSX" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NamSX" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaTinhTrang" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="TanSuatSuDung" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Khauhao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaKHBaoTri" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="BaoTriDinhKy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="KHTuNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="KHDenNgay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Gianhap" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="NguonKP" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NgayHopDong" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SoHopDong" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="MaNCC" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="NgayMua" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ThoiGianBH" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NgaySuDung" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AnhTB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="NgayLap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiLap" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgayHuy" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiHuy" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="TenDVT" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNhom" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenChungLoai" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenKho" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenKhoa" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNoiSua" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenQG" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNSX" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="TenTrangThai" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="KeHoach" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="ThoiGianTHKeHoach" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TenNCC" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiLap" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiSD" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TenNguoiHuy" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDMNhanVienRoleBy_MaKhoa" Method="spDMNhanVienRoleBy_MaKhoa">
+    <Parameter Name="MaKhoa" Parameter="maKhoa" Type="System.String" DbType="NVarChar(15)" />
+    <Parameter Name="Account" Parameter="account" Type="System.String" DbType="NVarChar(100)" />
+    <ElementType Name="spDMNhanVienRoleBy_MaKhoaResult">
+      <Column Name="MaNV" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="HoTen" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="MaChucVu" Type="System.String" DbType="NVarChar(4)" CanBeNull="true" />
+      <Column Name="MaChuyenMon" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MaKhoa" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="KhongSD" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NguoiSD1" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="NgaySD1" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="MaQL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaCD" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="TenTat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="GhiChu" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="idnhanvien" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spTBVTPhieuXuat_C_GET" Method="spTBVTPhieuXuat_C_GET">
+    <Parameter Name="MAPX" Parameter="mAPX" Type="System.String" DbType="NVarChar(12)" />
+    <Parameter Name="STT" Parameter="sTT" Type="System.Byte" DbType="TinyInt" />
+    <ElementType Name="spTBVTPhieuXuat_C_GETResult">
+      <Column Name="MaPX" Type="System.String" DbType="NVarChar(13) NOT NULL" CanBeNull="false" />
+      <Column Name="STT" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL" CanBeNull="false" />
+      <Column Name="IsNgoaiKho" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MaVT" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="Soluong" Type="System.Decimal" DbType="Decimal(12,2) NOT NULL" CanBeNull="false" />
+      <Column Name="HanSD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Solo" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Dongia" Type="System.Decimal" DbType="Decimal(11,3)" CanBeNull="true" />
+      <Column Name="SLyc" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="Giaban" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="MAQL" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="TENTM" Type="System.String" DbType="NVarChar(552)" CanBeNull="true" />
+      <Column Name="TENDVT" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spTBVTPhieuXuat_C_GETALL" Method="spTBVTPhieuXuat_C_GETALL">
+    <Parameter Name="QADMIN" Parameter="qADMIN" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="MAPX" Parameter="mAPX" Type="System.String" DbType="NVarChar(13)" />
+    <ElementType Name="spTBVTPhieuXuat_C_GETALLResult">
+      <Column Name="mathuoc" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="MaPX" Type="System.String" DbType="NVarChar(13) NOT NULL" CanBeNull="false" />
+      <Column Name="STT" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL" CanBeNull="false" />
+      <Column Name="IsNgoaiKho" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MaVT" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="Soluong" Type="System.Decimal" DbType="Decimal(12,2) NOT NULL" CanBeNull="false" />
+      <Column Name="HanSD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Solo" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Dongia" Type="System.Decimal" DbType="Decimal(11,3)" CanBeNull="true" />
+      <Column Name="SLyc" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="Giaban" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Ghichu" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="TENTM" Type="System.String" DbType="NVarChar(552)" CanBeNull="true" />
+      <Column Name="TENDVT" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TENNGUOISD" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="TENNSX" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>

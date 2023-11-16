@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using HTC.Business.CategoryList;
+using HTC.Business.Duoc;
+using HTC.Common.Web;
+using Telerik.Web.UI;
+using System.Collections;
+using CrystalDecisions.CrystalReports.Engine;
+public partial class TestDialog : Page
+{
+
+}
+
+

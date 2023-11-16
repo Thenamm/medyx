@@ -1,0 +1,23 @@
+﻿<%@ page title="" language="C#" autoeventwireup="true" inherits="TestLocateCulture" CodeFile="TestLocateCulture.aspx.cs" %>
+
+<%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <title>ASP.NET TabStrip Demo - Dynamic PageView Creation via AJAX</title>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+  
+</head>
+<body>
+
+    <form id="form1" runat="server">
+
+        
+
+
+    </form>
+</body>
+</html>
+
+

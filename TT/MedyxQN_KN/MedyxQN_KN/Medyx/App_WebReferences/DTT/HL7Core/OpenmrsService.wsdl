@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://webservice.web.emr.dtt.vn/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="param.webservice.hanoi.dtt.vn" name="OpenmrsService" targetNamespace="http://webservice.web.emr.dtt.vn/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema xmlns:tns="param.webservice.hanoi.dtt.vn" xmlns:ns1="entity.webservice.hanoi.dtt.vn" xmlns:ns2="http://webservice.web.emr.dtt.vn/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="param.webservice.hanoi.dtt.vn" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="entity.webservice.hanoi.dtt.vn" />
+      <xs:import namespace="http://webservice.web.emr.dtt.vn/" />
+      <xs:complexType name="GetAllMetadataResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="entities" nillable="true" type="ns1:EmrMetadata" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="OpenmrsResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errormessage" type="xs:string" />
+          <xs:element minOccurs="0" name="status" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetDM22DataResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="entities" nillable="true" type="ns1:EmrPhauThuThuatData" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="GetCategoryDataFullRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ma" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetCategoryDataResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="entities" nillable="true" type="ns1:EmrCategoryData" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="GetDM50DataResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="entities" nillable="true" type="ns2:emrYHCTBenhDanhData" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="GetDM36DataCompactRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="phienbandau" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetDM36DataResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="entities" nillable="true" type="ns1:EmrThuocData" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="GetDM24DataResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="entities" nillable="true" type="ns1:EmrXetNghiemData" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="GetDM25DataResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="entities" nillable="true" type="ns1:EmrChanDoanHinhAnhData" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="GetDM05DataFullRequest">
+        <xs:sequence>
+          <xs:element name="capdo" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetDM05DataResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="entities" nillable="true" type="ns1:EmrCategoryData" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="GetDM24DataCompactRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="phienbandau" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetDM25DataCompactRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="phienbandau" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetDM39DataResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="entities" nillable="true" type="ns1:EmrTanXuatDungThuocData" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="GetDM27DataResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="entities" nillable="true" type="ns1:EmrGiaiPhauBenhData" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="GetDM20DataCompactRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="phienbandau" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetDM20DataResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="entities" nillable="true" type="ns2:emrMaBenhData" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="GetDM39DataCompactRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="phienbandau" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetDM22DataCompactRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="phienbandau" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetDM26DataCompactRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="phienbandau" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetDM26DataResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="entities" nillable="true" type="ns1:EmrThamDoChucNangData" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="GetDM05DataCompactRequest">
+        <xs:sequence>
+          <xs:element name="capdo" type="xs:int" />
+          <xs:element minOccurs="0" name="phienbandau" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetCategoryHistoryRequest">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsRequest">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="ma" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="OpenmrsRequest">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="GetCategoryHistoryResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="entities" nillable="true" type="ns1:EmrPhienBan" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="GetDM34DataCompactRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="phienbandau" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetDM34DataResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:OpenmrsResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="entities" nillable="true" type="ns1:EmrChiSoXetNghiemData" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="GetCategoryDataConpactRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ma" type="xs:string" />
+          <xs:element minOccurs="0" name="phienbandau" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetDM50DataCompactRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="phienbandau" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetDM27DataCompactRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="phienbandau" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns="http://webservice.web.emr.dtt.vn/" xmlns:ns1="entity.webservice.hanoi.dtt.vn" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://webservice.web.emr.dtt.vn/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="entity.webservice.hanoi.dtt.vn" />
+      <xs:complexType name="emrYHCTBenhDanhData">
+        <xs:complexContent mixed="false">
+          <xs:extension base="ns1:EmrCategoryData">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="mabenh" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="emrMaBenhData">
+        <xs:complexContent mixed="false">
+          <xs:extension base="ns1:EmrCategoryData">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="maphannhom" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns:tns="entity.webservice.hanoi.dtt.vn" targetNamespace="entity.webservice.hanoi.dtt.vn" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="EmrMetadata">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="coquanbanhanh" type="xs:string" />
+          <xs:element minOccurs="0" name="ma" type="xs:string" />
+          <xs:element minOccurs="0" name="ngaybanhanh" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ngaycohieuluc" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ngayhethieuluc" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="phienbanmoinhat" type="xs:int" />
+          <xs:element minOccurs="0" name="ten" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EmrPhauThuThuatData">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:EmrCategoryData">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="loaipttt" type="xs:boolean" />
+              <xs:element minOccurs="0" name="maphannhom" type="xs:string" />
+              <xs:element minOccurs="0" name="mo" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenA" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenB" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenC" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenD" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="EmrCategoryData">
+        <xs:sequence>
+          <xs:element name="capdo" type="xs:int" />
+          <xs:element name="id" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="listHistory" nillable="true" type="tns:EmrCategoryHistory" />
+          <xs:element minOccurs="0" name="ma" type="xs:string" />
+          <xs:element minOccurs="0" name="macha" type="xs:string" />
+          <xs:element minOccurs="0" name="ten" type="xs:string" />
+          <xs:element minOccurs="0" name="tenta" type="xs:string" />
+          <xs:element minOccurs="0" name="trangthai" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EmrCategoryHistory">
+        <xs:sequence>
+          <xs:element name="capdo" type="xs:int" />
+          <xs:element name="id" type="xs:int" />
+          <xs:element name="lancuoi" type="xs:int" />
+          <xs:element name="landau" type="xs:int" />
+          <xs:element minOccurs="0" name="macha" type="xs:string" />
+          <xs:element minOccurs="0" name="ten" type="xs:string" />
+          <xs:element minOccurs="0" name="tenta" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EmrThuocData">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:EmrCategoryData">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="dangbaoche" type="xs:string" />
+              <xs:element minOccurs="0" name="duongdung" type="xs:string" />
+              <xs:element minOccurs="0" name="hamluong" type="xs:string" />
+              <xs:element minOccurs="0" name="maphannhom" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="EmrXetNghiemData">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:EmrCategoryData">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="maphannhom" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenA" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenB" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenC" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenD" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="EmrChanDoanHinhAnhData">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:EmrCategoryData">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="maphannhom" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenA" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenB" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenC" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenD" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="EmrTanXuatDungThuocData">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:EmrCategoryData">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="giatri" type="xs:string" />
+              <xs:element minOccurs="0" name="loai" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="EmrGiaiPhauBenhData">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:EmrCategoryData">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="maphannhom" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenA" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenB" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenC" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenD" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="EmrThamDoChucNangData">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:EmrCategoryData">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="maphannhom" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenA" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenB" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenC" type="xs:string" />
+              <xs:element minOccurs="0" name="phantuyenD" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="EmrPhienBan">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ngaycohieuluc" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ngayhethieuluc" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="sophienban" type="xs:int" />
+          <xs:element minOccurs="0" name="trangthai" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EmrChiSoXetNghiemData">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:EmrCategoryData">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="dichvu" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getDM39DataFullResponse">
+    <wsdl:part name="GetDM39DataReponse" type="ns1:GetDM39DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM34DataFull" />
+  <wsdl:message name="getCategoryDataCompactResponse">
+    <wsdl:part name="GetCategoryDataReponse" type="ns1:GetCategoryDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM36DataFull" />
+  <wsdl:message name="getCategoryHistory">
+    <wsdl:part name="GetCategoryHistory" type="ns1:GetCategoryHistoryRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDM50DataCompactResponse">
+    <wsdl:part name="GetDM50DataReponse" type="ns1:GetDM50DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM25DataCompactResponse">
+    <wsdl:part name="GetDM25DataReponse" type="ns1:GetDM25DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM20DataFull" />
+  <wsdl:message name="getDM05DataCompact">
+    <wsdl:part name="GetDM05DataCompact" type="ns1:GetDM05DataCompactRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDM39DataCompact">
+    <wsdl:part name="GetDM39DataCompact" type="ns1:GetDM39DataCompactRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDM24DataFull" />
+  <wsdl:message name="getDM26DataFull" />
+  <wsdl:message name="getDM50DataFullResponse">
+    <wsdl:part name="GetDM50DataReponse" type="ns1:GetDM50DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM39DataCompactResponse">
+    <wsdl:part name="GetDM39DataReponse" type="ns1:GetDM39DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM22DataCompactResponse">
+    <wsdl:part name="GetDM22DataReponse" type="ns1:GetDM22DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM05DataCompactResponse">
+    <wsdl:part name="GetDM05DataReponse" type="ns1:GetDM05DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM26DataCompact">
+    <wsdl:part name="GetDM26DataCompact" type="ns1:GetDM26DataCompactRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDM27DataCompactResponse">
+    <wsdl:part name="GetDM27DataReponse" type="ns1:GetDM27DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM22DataCompact">
+    <wsdl:part name="GetDM22DataCompact" type="ns1:GetDM22DataCompactRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDM20DataCompactResponse">
+    <wsdl:part name="GetDM20DataReponse" type="ns1:GetDM20DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM34DataCompact">
+    <wsdl:part name="GetDM34DataCompact" type="ns1:GetDM34DataCompactRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDM25DataFullResponse">
+    <wsdl:part name="GetDM25DataReponse" type="ns1:GetDM25DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM27DataCompact">
+    <wsdl:part name="GetDM27DataCompact" type="ns1:GetDM27DataCompactRequest" />
+  </wsdl:message>
+  <wsdl:message name="getCategoryDataFullResponse">
+    <wsdl:part name="GetCategoryDataReponse" type="ns1:GetCategoryDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM26DataFullResponse">
+    <wsdl:part name="GetDM26DataReponse" type="ns1:GetDM26DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM36DataCompact">
+    <wsdl:part name="GetDM36DataCompact" type="ns1:GetDM36DataCompactRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDM50DataFull" />
+  <wsdl:message name="getCategoryHistoryResponse">
+    <wsdl:part name="GetCategoryHistoryResponse" type="ns1:GetCategoryHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM36DataCompactResponse">
+    <wsdl:part name="GetDM36DataReponse" type="ns1:GetDM36DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM36DataFullResponse">
+    <wsdl:part name="GetDM36DataReponse" type="ns1:GetDM36DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM27DataFullResponse">
+    <wsdl:part name="GetDM27DataReponse" type="ns1:GetDM27DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM26DataCompactResponse">
+    <wsdl:part name="GetDM26DataReponse" type="ns1:GetDM26DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM24DataCompact">
+    <wsdl:part name="GetDM24DataCompact" type="ns1:GetDM24DataCompactRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDM34DataCompactResponse">
+    <wsdl:part name="GetDM34DataReponse" type="ns1:GetDM34DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getAllList" />
+  <wsdl:message name="getCategoryDataCompact">
+    <wsdl:part name="GetCategoryDataCompact" type="ns1:GetCategoryDataConpactRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDM50DataCompact">
+    <wsdl:part name="GetDM50DataCompact" type="ns1:GetDM50DataCompactRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDM27DataFull" />
+  <wsdl:message name="getAllListResponse">
+    <wsdl:part name="GetAllListResponse" type="ns1:GetAllMetadataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM22DataFull" />
+  <wsdl:message name="getCategoryDataFull">
+    <wsdl:part name="GetCategoryDataFull" type="ns1:GetCategoryDataFullRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDM22DataFullResponse">
+    <wsdl:part name="GetDM22DataReponse" type="ns1:GetDM22DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM39DataFull" />
+  <wsdl:message name="getDM24DataCompactResponse">
+    <wsdl:part name="GetDM24DataReponse" type="ns1:GetDM24DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM25DataFull" />
+  <wsdl:message name="getDM05DataFullResponse">
+    <wsdl:part name="GetDM05DataReponse" type="ns1:GetDM05DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM05DataFull">
+    <wsdl:part name="GetDM05DataFull" type="ns1:GetDM05DataFullRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDM24DataFullResponse">
+    <wsdl:part name="GetDM24DataReponse" type="ns1:GetDM24DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM25DataCompact">
+    <wsdl:part name="GetDM25DataCompact" type="ns1:GetDM25DataCompactRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDM34DataFullResponse">
+    <wsdl:part name="GetDM34DataReponse" type="ns1:GetDM34DataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDM20DataCompact">
+    <wsdl:part name="GetDM20DataCompact" type="ns1:GetDM20DataCompactRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDM20DataFullResponse">
+    <wsdl:part name="GetDM20DataReponse" type="ns1:GetDM20DataResponse" />
+  </wsdl:message>
+  <wsdl:portType name="OpenmrsServiceImpl">
+    <wsdl:operation name="getAllList">
+      <wsdl:input name="getAllList" message="tns:getAllList" />
+      <wsdl:output name="getAllListResponse" message="tns:getAllListResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM22DataFull">
+      <wsdl:input name="getDM22DataFull" message="tns:getDM22DataFull" />
+      <wsdl:output name="getDM22DataFullResponse" message="tns:getDM22DataFullResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getCategoryDataFull">
+      <wsdl:input name="getCategoryDataFull" message="tns:getCategoryDataFull" />
+      <wsdl:output name="getCategoryDataFullResponse" message="tns:getCategoryDataFullResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM50DataFull">
+      <wsdl:input name="getDM50DataFull" message="tns:getDM50DataFull" />
+      <wsdl:output name="getDM50DataFullResponse" message="tns:getDM50DataFullResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM36DataCompact">
+      <wsdl:input name="getDM36DataCompact" message="tns:getDM36DataCompact" />
+      <wsdl:output name="getDM36DataCompactResponse" message="tns:getDM36DataCompactResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM24DataFull">
+      <wsdl:input name="getDM24DataFull" message="tns:getDM24DataFull" />
+      <wsdl:output name="getDM24DataFullResponse" message="tns:getDM24DataFullResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM25DataFull">
+      <wsdl:input name="getDM25DataFull" message="tns:getDM25DataFull" />
+      <wsdl:output name="getDM25DataFullResponse" message="tns:getDM25DataFullResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM05DataFull">
+      <wsdl:input name="getDM05DataFull" message="tns:getDM05DataFull" />
+      <wsdl:output name="getDM05DataFullResponse" message="tns:getDM05DataFullResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM24DataCompact">
+      <wsdl:input name="getDM24DataCompact" message="tns:getDM24DataCompact" />
+      <wsdl:output name="getDM24DataCompactResponse" message="tns:getDM24DataCompactResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM25DataCompact">
+      <wsdl:input name="getDM25DataCompact" message="tns:getDM25DataCompact" />
+      <wsdl:output name="getDM25DataCompactResponse" message="tns:getDM25DataCompactResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM39DataFull">
+      <wsdl:input name="getDM39DataFull" message="tns:getDM39DataFull" />
+      <wsdl:output name="getDM39DataFullResponse" message="tns:getDM39DataFullResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM27DataFull">
+      <wsdl:input name="getDM27DataFull" message="tns:getDM27DataFull" />
+      <wsdl:output name="getDM27DataFullResponse" message="tns:getDM27DataFullResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM20DataCompact">
+      <wsdl:input name="getDM20DataCompact" message="tns:getDM20DataCompact" />
+      <wsdl:output name="getDM20DataCompactResponse" message="tns:getDM20DataCompactResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM39DataCompact">
+      <wsdl:input name="getDM39DataCompact" message="tns:getDM39DataCompact" />
+      <wsdl:output name="getDM39DataCompactResponse" message="tns:getDM39DataCompactResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM22DataCompact">
+      <wsdl:input name="getDM22DataCompact" message="tns:getDM22DataCompact" />
+      <wsdl:output name="getDM22DataCompactResponse" message="tns:getDM22DataCompactResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM26DataCompact">
+      <wsdl:input name="getDM26DataCompact" message="tns:getDM26DataCompact" />
+      <wsdl:output name="getDM26DataCompactResponse" message="tns:getDM26DataCompactResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM05DataCompact">
+      <wsdl:input name="getDM05DataCompact" message="tns:getDM05DataCompact" />
+      <wsdl:output name="getDM05DataCompactResponse" message="tns:getDM05DataCompactResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getCategoryHistory">
+      <wsdl:input name="getCategoryHistory" message="tns:getCategoryHistory" />
+      <wsdl:output name="getCategoryHistoryResponse" message="tns:getCategoryHistoryResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM34DataCompact">
+      <wsdl:input name="getDM34DataCompact" message="tns:getDM34DataCompact" />
+      <wsdl:output name="getDM34DataCompactResponse" message="tns:getDM34DataCompactResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getCategoryDataCompact">
+      <wsdl:input name="getCategoryDataCompact" message="tns:getCategoryDataCompact" />
+      <wsdl:output name="getCategoryDataCompactResponse" message="tns:getCategoryDataCompactResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM26DataFull">
+      <wsdl:input name="getDM26DataFull" message="tns:getDM26DataFull" />
+      <wsdl:output name="getDM26DataFullResponse" message="tns:getDM26DataFullResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM50DataCompact">
+      <wsdl:input name="getDM50DataCompact" message="tns:getDM50DataCompact" />
+      <wsdl:output name="getDM50DataCompactResponse" message="tns:getDM50DataCompactResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM27DataCompact">
+      <wsdl:input name="getDM27DataCompact" message="tns:getDM27DataCompact" />
+      <wsdl:output name="getDM27DataCompactResponse" message="tns:getDM27DataCompactResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM34DataFull">
+      <wsdl:input name="getDM34DataFull" message="tns:getDM34DataFull" />
+      <wsdl:output name="getDM34DataFullResponse" message="tns:getDM34DataFullResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM36DataFull">
+      <wsdl:input name="getDM36DataFull" message="tns:getDM36DataFull" />
+      <wsdl:output name="getDM36DataFullResponse" message="tns:getDM36DataFullResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDM20DataFull">
+      <wsdl:input name="getDM20DataFull" message="tns:getDM20DataFull" />
+      <wsdl:output name="getDM20DataFullResponse" message="tns:getDM20DataFullResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OpenmrsServiceSoapBinding" type="tns:OpenmrsServiceImpl">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="getAllList">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getAllList">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getAllListResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCategoryDataFull">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getCategoryDataFull">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getCategoryDataFullResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM22DataFull">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM22DataFull">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM22DataFullResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM50DataFull">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM50DataFull">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM50DataFullResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM24DataFull">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM24DataFull">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM24DataFullResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM36DataCompact">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM36DataCompact">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM36DataCompactResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM05DataFull">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM05DataFull">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM05DataFullResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM25DataFull">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM25DataFull">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM25DataFullResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM24DataCompact">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM24DataCompact">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM24DataCompactResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM25DataCompact">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM25DataCompact">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM25DataCompactResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM27DataFull">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM27DataFull">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM27DataFullResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM39DataFull">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM39DataFull">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM39DataFullResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM20DataCompact">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM20DataCompact">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM20DataCompactResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM39DataCompact">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM39DataCompact">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM39DataCompactResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM22DataCompact">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM22DataCompact">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM22DataCompactResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM05DataCompact">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM05DataCompact">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM05DataCompactResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM26DataCompact">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM26DataCompact">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM26DataCompactResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCategoryHistory">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getCategoryHistory">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getCategoryHistoryResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCategoryDataCompact">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getCategoryDataCompact">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getCategoryDataCompactResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM34DataCompact">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM34DataCompact">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM34DataCompactResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM26DataFull">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM26DataFull">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM26DataFullResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM50DataCompact">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM50DataCompact">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM50DataCompactResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM27DataCompact">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM27DataCompact">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM27DataCompactResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM34DataFull">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM34DataFull">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM34DataFullResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM20DataFull">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM20DataFull">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM20DataFullResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDM36DataFull">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="getDM36DataFull">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:input>
+      <wsdl:output name="getDM36DataFullResponse">
+        <soap:body use="literal" namespace="http://webservice.web.emr.dtt.vn/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OpenmrsService">
+    <wsdl:port name="OpenmrsServiceImplPort" binding="tns:OpenmrsServiceSoapBinding">
+      <soap:address location="http://172.28.71.24:8080/qlhsba/OpenmrsService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,828 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+/// <summary>
+/// Summary description for Class1
+/// </summary>
+public class Class1
+{
+	public Class1()
+	{
+        if (this.grdBaKhoaList.Rows - 1 > 0)
+        {
+            //    _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa"))))
+            //If Me._SSTab1.SelectedIndex = 0 Then
+            //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+            //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+            //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+            //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+            //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+            //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+            //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+            //ElseIf _SSTab1.SelectedIndex = 1 Then
+            //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+            //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+            //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+            //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+            //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+            //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+            //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+            //ElseIf _SSTab1.SelectedIndex = 2 Then
+            //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+            //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+            //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+            //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+            //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+            //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+            //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+            //ElseIf _SSTab1.SelectedIndex = 3 Then
+            //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+            //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+            //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+            //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+            //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+            //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+            //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+            //ElseIf _SSTab1.SelectedIndex = 4 Then
+            //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+            //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+            //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+            //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+            //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+            //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+            //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+            //ElseIf _SSTab1.SelectedIndex = 6 Then
+            //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+            //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+            //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+            //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+            //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+            //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+            //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+
+            if (_SSTab1.SelectedIndex == 0 && int.TryParse(grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), new int()))
+            {
+                if (this.grdBaKhoaList.Rows - 1 > 0)
+                {
+                    //    _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa"))))
+                    //If Me._SSTab1.SelectedIndex = 0 Then
+                    //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+                    //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+                    //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+                    //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+                    //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+                    //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+                    //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+                    //ElseIf _SSTab1.SelectedIndex = 1 Then
+                    //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+                    //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+                    //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+                    //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+                    //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+                    //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+                    //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+                    //ElseIf _SSTab1.SelectedIndex = 2 Then
+                    //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+                    //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+                    //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+                    //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+                    //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+                    //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+                    //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+                    //ElseIf _SSTab1.SelectedIndex = 3 Then
+                    //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+                    //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+                    //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+                    //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+                    //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+                    //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+                    //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+                    //ElseIf _SSTab1.SelectedIndex = 4 Then
+                    //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+                    //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+                    //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+                    //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+                    //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+                    //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+                    //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+                    //ElseIf _SSTab1.SelectedIndex = 6 Then
+                    //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+                    //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+                    //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+                    //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+                    //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+                    //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+                    //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+                    if (_SSTab1.SelectedIndex == 0 && int.TryParse(grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        // VT SỬ DỤNG
+
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa"))));
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")));
+
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STT")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")))
+                        //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+                    }
+                    else if (_SSTab1.SelectedIndex == 1 && int.TryParse(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        //  VT Thang
+
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")),val( grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+                    }
+                    else if (_SSTab1.SelectedIndex == 2 && int.TryParse(grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa"))));
+
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")));
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STT")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")))
+                        //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+                    }
+                    else if (_SSTab1.SelectedIndex == 3 && int.TryParse(grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa"))));
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")));
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STT")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")))
+                        //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+
+                    }
+                    else if (_SSTab1.SelectedIndex == 4 && int.TryParse(grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa"))));
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")));
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STT")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")))
+                        //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+
+                    }
+                    else if (_SSTab1.SelectedIndex == 5 && int.TryParse(grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa"))));
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")));
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STT")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")))
+                        //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+
+
+                    }
+                    else if (_SSTab1.SelectedIndex == 7 && int.TryParse(grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa"))));
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")));
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STT")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")))
+                        //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+                    }
+                    else if (_SSTab1.SelectedIndex == 6 && int.TryParse(grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("MaBA")), Convert.ToInt32(grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa"))));
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.Val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                        //  _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("tungay")))
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")));
+
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        _BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STT")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")));
+                        _BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat);
+
+                    }
+                    frmNhapChiDinhDY frm = new frmNhapChiDinhDY(_BenhAn_ThuocSDList, _BenhAn_ThuocSD_DY, _BenhAn_MauList, _BenhAn_VTTHList, _BenhAn_HoaChatList, _BenhAn_CList, _BenhAn_GiuongList, _BenhAn_PhauThuatList, _BenhAn_Khoa, this.cmbKhoa.SelectedValue,
+                    this._SSTab1.SelectedIndex, false, true);
+                    //goi form chi tiet va bind gia tri tai hang kich len form
+                    if (frm.ShowDialog() == Windows.Forms.DialogResult.OK)
+                    {
+                        //Loaddata()
+                        LoadDetail();
+                    }
+
+                }
+                if (this.grdBaKhoaList.Rows - 1 > 0)
+                {
+                    //    _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa"))))
+                    //If Me._SSTab1.SelectedIndex = 0 Then
+                    //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+                    //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+                    //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+                    //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+                    //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")))
+                    //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+                    //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+                    //ElseIf _SSTab1.SelectedIndex = 1 Then
+                    //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+                    //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+                    //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+                    //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+                    //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")))
+                    //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+                    //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+                    //ElseIf _SSTab1.SelectedIndex = 2 Then
+                    //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+                    //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+                    //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+                    //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+                    //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")))
+                    //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+                    //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+                    //ElseIf _SSTab1.SelectedIndex = 3 Then
+                    //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+                    //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+                    //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+                    //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+                    //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")))
+                    //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+                    //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+                    //ElseIf _SSTab1.SelectedIndex = 4 Then
+                    //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+                    //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+                    //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+                    //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+                    //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")))
+                    //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+                    //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+                    //ElseIf _SSTab1.SelectedIndex = 6 Then
+                    //    _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+                    //    _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+                    //    _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+                    //    _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+                    //    _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("tungay")))
+                    //    _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("STTKhoa")))
+
+                    //    _BenhAn_PhauThuatList = BenhAn_PhauThuatList.getall("")
+                    if (_SSTab1.SelectedIndex == 0 && int.TryParse(grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa"))));
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")));
+
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STT")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")))
+                        //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+                    }
+                    else if (_SSTab1.SelectedIndex == 1 && int.TryParse(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")),val( grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+                    }
+                    else if (_SSTab1.SelectedIndex == 2 && int.TryParse(grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa"))));
+
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")));
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STT")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")))
+                        //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+                    }
+                    else if (_SSTab1.SelectedIndex == 3 && int.TryParse(grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa"))));
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")));
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STT")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")))
+                        //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+
+                    }
+                    else if (_SSTab1.SelectedIndex == 4 && int.TryParse(grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa"))));
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")));
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STT")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")))
+                        //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+
+                    }
+                    else if (_SSTab1.SelectedIndex == 5 && int.TryParse(grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa"))));
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")));
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STT")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")))
+                        //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+
+
+                    }
+                    else if (_SSTab1.SelectedIndex == 7 && int.TryParse(grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa"))));
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")));
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STT")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")))
+                        //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+                    }
+                    else if (_SSTab1.SelectedIndex == 6 && int.TryParse(grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), new int()))
+                    {
+                        _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("MaBA")), Convert.ToInt32(grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa"))));
+                        if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.Val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                        }
+                        else
+                        {
+                            _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                        }
+                        _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                        _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                        _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                        _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                        _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                        //  _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("tungay")))
+                        _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")));
+
+                        _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                        _BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STT")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")));
+                        _BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat);
+
+                    }
+                    frmNhapChiDinhDY frm = new frmNhapChiDinhDY(_BenhAn_ThuocSDList, _BenhAn_ThuocSD_DY, _BenhAn_MauList, _BenhAn_VTTHList, _BenhAn_HoaChatList, _BenhAn_CList, _BenhAn_GiuongList, _BenhAn_PhauThuatList, _BenhAn_Khoa, this.cmbKhoa.SelectedValue,
+                    this._SSTab1.SelectedIndex, false, true);
+                    //goi form chi tiet va bind gia tri tai hang kich len form
+                    if (frm.ShowDialog() == Windows.Forms.DialogResult.OK)
+                    {
+                        //Loaddata()
+                        LoadDetail();
+                    }
+
+                }
+
+                if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                }
+                else
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                }
+                _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+
+                _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+
+                _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+
+                _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+
+                _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("tungay")));
+                _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")));
+
+                _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("MaBA")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STT")), grdThuoc.get_TextMatrix(grdThuoc.Row, grdThuoc.get_ColIndex("STTKhoa")))
+                //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+            }
+            else if (_SSTab1.SelectedIndex == 1 && int.TryParse(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), new int()))
+            {
+                _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+
+                if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                }
+                else
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                }
+                _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("tungay")));
+                _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")),val( grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+            }
+            else if (_SSTab1.SelectedIndex == 2 && int.TryParse(grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), new int()))
+            {
+                _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa"))));
+
+                if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                }
+                else
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                }
+                _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("tungay")));
+                _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")));
+                _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("MaBA")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STT")), grdXN.get_TextMatrix(grdXN.Row, grdXN.get_ColIndex("STTKhoa")))
+                //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+            }
+            else if (_SSTab1.SelectedIndex == 3 && int.TryParse(grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), new int()))
+            {
+                _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa"))));
+                if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                }
+                else
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                }
+                _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")));
+                _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+
+                _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+
+                _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+
+                _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+                _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("tungay")));
+                _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("MaBA")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STT")), grdVTTH.get_TextMatrix(grdVTTH.Row, grdVTTH.get_ColIndex("STTKhoa")))
+                //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+
+            }
+            else if (_SSTab1.SelectedIndex == 4 && int.TryParse(grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), new int()))
+            {
+                _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa"))));
+                if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                }
+                else
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                }
+                _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")));
+                _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("tungay")));
+                _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("MaBA")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STT")), grdHoaChat.get_TextMatrix(grdHoaChat.Row, grdHoaChat.get_ColIndex("STTKhoa")))
+                //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+
+            }
+            else if (_SSTab1.SelectedIndex == 5 && int.TryParse(grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), new int()))
+            {
+                _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa"))));
+                if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                }
+                else
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                }
+                _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")));
+                _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("tungay")));
+                _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("MaBA")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STT")), grdMau.get_TextMatrix(grdMau.Row, grdMau.get_ColIndex("STTKhoa")))
+                //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+
+
+            }
+            else if (_SSTab1.SelectedIndex == 7 && int.TryParse(grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), new int()))
+            {
+                _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), Convert.ToInt32(grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa"))));
+                if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                }
+                else
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                }
+
+                _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")));
+                _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("ngaydk")));
+                _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                //_BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("MaBA")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STT")), grdGiuong.get_TextMatrix(grdGiuong.Row, grdGiuong.get_ColIndex("STTKhoa")))
+                //_BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat)
+            }
+            else if (_SSTab1.SelectedIndex == 6 && int.TryParse(grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), new int()))
+            {
+                _BenhAn_Khoa = BenhAn_Khoa.GetBenhAn_Khoa(grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("MaBA")), Convert.ToInt32(grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa"))));
+                if (this.grdThuocDY.Rows - 1 > 0 && !string.IsNullOrEmpty(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))))
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.GetBenhAn_ThuocSD_DY(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("MaBA")), grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STT")), Conversion.Val(grdThuocDY.get_TextMatrix(grdThuocDY.Row, grdThuocDY.get_ColIndex("STTKhoa"))));
+                }
+                else
+                {
+                    _BenhAn_ThuocSD_DY = BenhAn_ThuocSD_DY.NewBenhAn_ThuocSD_DY();
+                }
+                _BenhAn_HoaChatList = BenhAn_HoaChatList.GetAllBenhAn_HoaChatByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                _BenhAn_MauList = BenhAn_MauList.GetAllBenhAn_MauByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                _BenhAn_VTTHList = BenhAn_VTTHList.GetAllBenhAn_VTTHByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                _BenhAn_ThuocSDList = BenhAn_ThuocSDList.GetAllBenhAn_ThuocSDByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                _BenhAn_CList = BenhAn_C_List.GetAllBenhAn_CByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("ngaydk")));
+                //  _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongByNgayYC(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdBaKhoaList.get_ColIndex("STTKhoa")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("tungay")))
+                _BenhAn_GiuongList = BenhAn_GiuongList.GetAllBenhAn_GiuongBySTTKhoa(grdBaKhoaList.get_TextMatrix(grdBaKhoaList.Row, grdBaKhoaList.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")));
+
+                _BenhAn_PhauThuatList = BenhAn_PhauThuatList.NewList();
+
+
+                _BenhAn_PhauThuat = BenhAn_PhauThuat.GetBenhAn_PhauThuat(grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("MaBA")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STT")), grdbenhnhanphauthuat.get_TextMatrix(grdbenhnhanphauthuat.Row, grdbenhnhanphauthuat.get_ColIndex("STTKhoa")));
+                _BenhAn_PhauThuatList.NewTo(_BenhAn_PhauThuat);
+
+            }
+            frmNhapChiDinhDY frm = new frmNhapChiDinhDY(_BenhAn_ThuocSDList, _BenhAn_ThuocSD_DY, _BenhAn_MauList, _BenhAn_VTTHList, _BenhAn_HoaChatList, _BenhAn_CList, _BenhAn_GiuongList, _BenhAn_PhauThuatList, _BenhAn_Khoa, this.cmbKhoa.SelectedValue,
+            this._SSTab1.SelectedIndex, false, true);
+            //goi form chi tiet va bind gia tri tai hang kich len form
+            if (frm.ShowDialog() == Windows.Forms.DialogResult.OK)
+            {
+                //Loaddata()
+                LoadDetail();
+            }
+        }
+	}
+}

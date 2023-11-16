@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="TBYTLinQ">
+  <DataContextMoniker Name="/TBYTLinQDataContext" />
+  <nestedChildShapes>
+    <classShape Id="2e49e61b-fc1c-4450-bbaa-b0a68a747184" isExpanded="false" absoluteBounds="0.5, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/TBYTLinQDataContext/TBPhieuBaoTri1" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9eaf343f-af02-4727-8f9d-b379c9a05ebf" absoluteBounds="0.51500000000000012, 0.96, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e9c7e0c6-4eac-468f-a4aa-20d4f79329d7" isExpanded="false" absoluteBounds="0.5, 2.375, 2, 0.45">
+      <DataClassMoniker Name="/TBYTLinQDataContext/DanhMucTBYT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cd36e537-93da-4f85-8554-aa5e7bfcf46a" absoluteBounds="0.51500000000000057, 2.835, 1.9700000000000002, 7.556844075520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2c1cac25-ec57-4998-896d-98eb4b90d520" absoluteBounds="0.5, 3, 2, 4.4631168619791666">
+      <DataClassMoniker Name="/TBYTLinQDataContext/DanhMucKhoaPhong" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3cd11aea-ca80-4555-901f-81bef9ac3eb8" absoluteBounds="0.51500000000000012, 3.46, 1.9700000000000002, 3.903116861979167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="51896b1d-077c-45d5-baf8-a8805105d321" isExpanded="false" absoluteBounds="0.5, 1.75, 2, 0.45">
+      <DataClassMoniker Name="/TBYTLinQDataContext/DanhMucNV" />
+      <nestedChildShapes>
+        <elementListCompartment Id="870e60b3-c61b-40f9-b644-fefe0ffead9d" absoluteBounds="0.51500000000000012, 2.21, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="14a7a8c1-9110-4414-b466-c74f35ded12e" isExpanded="false" absoluteBounds="0.5, 1.125, 2, 0.45">
+      <DataClassMoniker Name="/TBYTLinQDataContext/TBPhieuBaoTri_C1" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0092b8fc-5f23-42da-8f47-e34fef045e54" absoluteBounds="0.51500000000000012, 1.585, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(1.5 : 0.95); (1.5 : 1.125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TBYTLinQDataContext/TBPhieuBaoTri1/TBPhieuBaoTri_TBPhieuBaoTri_C" />
+      <nodes>
+        <classShapeMoniker Id="2e49e61b-fc1c-4450-bbaa-b0a68a747184" />
+        <classShapeMoniker Id="14a7a8c1-9110-4414-b466-c74f35ded12e" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="d351de92-558f-4f0c-ad1d-3c418f61e99e" isExpanded="false" absoluteBounds="0.5, 3.75, 2, 0.45">
+      <DataClassMoniker Name="/TBYTLinQDataContext/TBYT_TBDMLoaiVatTu" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a7d7bb4f-cbc5-48de-9215-6c6f862bad2a" absoluteBounds="0.51499999999999968, 4.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="238dc3f6-655d-4bc0-b348-f09671d171b9" isExpanded="false" absoluteBounds="0.5, 4.375, 2, 0.45">
+      <DataClassMoniker Name="/TBYTLinQDataContext/TBYT_TBDMVatTuLinhKien" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4d2bfeb6-ec9d-4876-bb87-15c7c321a729" absoluteBounds="0.51499999999999968, 4.835, 1.9700000000000002, 3.903116861979167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="88d1d05d-71fb-400d-aef7-5a86a827f2d1" isExpanded="false" absoluteBounds="0.5, 2.875, 2, 0.45">
+      <DataClassMoniker Name="/TBYTLinQDataContext/TBYT_TBDUTRULKThaythe" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a339611f-6192-40ec-83b9-5b7a58ca540b" absoluteBounds="0.51499999999999968, 3.335, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

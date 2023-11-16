@@ -1,0 +1,238 @@
+﻿
+<%@ Page Title="" Language="C#"  MasterPageFile="~/AdminCode.master" AutoEventWireup="true" CodeFile="FrmUpadatedonthuoc.aspx.cs" Inherits="UI_PhongKham_KhamBenh_FrmUpadatedonthuoc" %>
+
+<script runat="server">
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+    }
+</script>
+
+
+
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">    
+
+    <style type="text/css">
+        .mainContent {
+              width:100%!important;
+          }
+    .ButtonCSS
+       {
+           margin-left:400px;
+       }
+       </style>
+      <telerik:RadCodeBlock ID="RadCodeBlock2" runat="server">
+         
+ 
+   <script type="text/javascript">
+       $(function () {
+           $("#<%= dtDenNgay.ClientID %>, #<%= dtTuNgay.ClientID %>").datepicker({
+               dateFormat: 'dd/mm/yy',
+               altFormat: "dd/mm/yy",
+               minDate: '01/01/1900',
+               maxDate: '31/12/2100'
+           })
+       });
+       document.onkeydown = keyHandler;
+       function keyHandler(e) {
+
+           var pressedKey;
+           if (document.all) {
+               e = window.event;
+               pressedKey = e.keyCode;
+           }
+
+           if (e.which) {
+               pressedKey = e.which;
+           }
+
+           if (pressedKey == 120) { //f9-In
+               var toolbar1 = $find("<%= baraction.ClientID %>");
+               var templateButton = toolbar1.findItemByValue("cmdPrint");
+               templateButton.click();
+           }
+           else if (pressedKey == 121) { //f10-thoat
+               var toolbar1 = $find("<%= baraction.ClientID %>");
+                   var templateButton = toolbar1.findItemByValue("cmdExit");
+                   templateButton.click();
+
+               }
+       }
+
+
+
+       $(document).ready(function () {
+           $("#<%= dtDenNgay.ClientID %>").mask("99/99/9999");
+                $("#<%= dtTuNgay.ClientID %>").mask("99/99/9999");
+                $("#<%= dtDenNgay.ClientID %>, #<%= dtTuNgay.ClientID %>").change(function () {
+                    var dateRegEx = /^(0?[1-9]|[12][0-9]|3[01])[\/\-\.](0?[1-9]|1[012])[\/\-\.](\d{4})$/;
+                    var validTime = $(this).val().match(dateRegEx);
+                    if (!validTime) {
+                        $(this).val('').focus().css('background', '#fdd');
+                        alert("Ngày không hợp lệ");
+                    } else {
+                        var year = validTime[3];
+                        var month = validTime[2] * 1;
+                        var day = validTime[1] * 1;
+                        var checkdate = new Date(month + "/" + day + "/" + year);
+                        var currentdate = new Date();
+                        if ((currentdate - checkdate) / (1000 * 60 * 60 * 24) < 0) {
+                            $(this).val('').focus().css('background', '#fdd');
+                            alert("Ngày phải trước ngày hiện tại");
+                        }
+                        else
+                            $(this).css('background', 'transparent');
+                    }
+                });
+
+            });
+
+   </script> 
+    </telerik:RadCodeBlock> 
+    <div >
+         <telerik:RadToolBar ID="baraction" runat="server"
+           EnableRoundedCorners="true"
+        EnableShadows="true" OnButtonClick="baraction_ButtonClick" Width ="100%" >
+             <Items >    
+               <telerik:RadToolBarButton ImageUrl="~/img/icon/exitprint.png"
+                    Text="Export Excel" Group="Align" Value="cmdExport">
+                </telerik:RadToolBarButton>
+                 <telerik:RadToolBarButton ImageUrl="~/img/icon/exitprint.png"
+                    Text="Lấy Đơn Thuốc " Group="Align" Value="cmdLayHD">
+                </telerik:RadToolBarButton>
+                 <telerik:RadToolBarButton ImageUrl="~/img/icon/View.png"
+                    Text="F6-Xem" Value="cmdView">
+                </telerik:RadToolBarButton>
+                 <telerik:RadToolBarButton ImageUrl="~/img/icon/filter.gif"
+                    Text="F7-Tìm kiếm" CheckOnClick="false" Value="cmdFilter">
+                </telerik:RadToolBarButton>
+               <telerik:RadToolBarButton ImageUrl="~/img/icon/cancel.jpg"
+                Text="F10-Thoát"  Value ="cmdExit" >
+             </telerik:RadToolBarButton>
+            </Items>
+         </telerik:RadToolBar>      
+         
+        </div>
+        <br />
+             
+    <div align="center" width="90%">
+          <div class="form-container">
+
+        <fieldset align="center">
+          <legend>
+                <label>              
+                      
+                        Cập Nhật 
+                </label>
+          </legend>
+              <div align="center" class="contentWrapper">
+       <table cellpadding="5" cellspacing="5" class="data-form-in-grid">
+            <tr>
+                <td>
+                    <asp:Label ID="Label13" runat="server" Text="Từ ngày"></asp:Label>
+                </td>
+                    
+                <td><asp:TextBox runat="server" TabIndex="1" ID="dtTuNgay" ></asp:TextBox></td>
+                      
+                <td width ="100px">
+                    <asp:Label ID="Label1" runat="server" Text="Đến ngày"></asp:Label>
+                 </td>
+                    
+                <td>   <asp:TextBox ID="dtDenNgay" runat="server" MaxLength="1" Style="text-align: justify"></asp:TextBox>
+                </td>
+              <td>
+                <asp:RadioButtonList ID="rblNhomKhoa" runat="server" RepeatDirection="Horizontal" AutoPostBack="true" Width="100%">
+                        <asp:ListItem Text="Đông Y" Value="1" />
+    <asp:ListItem Text="Tây Y" Value="0" Selected="True"/>
+
+</asp:RadioButtonList>
+                    </td>
+             <td>
+                <asp:RadioButtonList ID="rblLoaiHD" runat="server" RepeatDirection="Horizontal" AutoPostBack="true" OnSelectedIndexChanged="rblLoaiHD_SelectedIndexChanged" Width="100%">
+                        <asp:ListItem Text="HĐ phát hành mới" Value="0" Selected="True"/>
+</asp:RadioButtonList>
+                    </td>
+            </tr>
+            </table> 
+                  </div>
+      </fieldset>   
+              <telerik:RadGrid Culture="vi-VN" ClientSettings-Resizing-AllowColumnResize="true"      
+                       ID="grdDanhSach" runat="server" GridLines="None" Height="470px"
+                      OnNeedDataSource="grdDanhSach_NeedDataSource" 
+                     PagerStyle-Visible="true" ShowStatusBar="true"       
+                    Font-Size="20">
+                     <ClientSettings AllowColumnsReorder="True" ReorderColumnsOnClient="True" AllowKeyboardNavigation="true">
+                            <Selecting AllowRowSelect="true" EnableDragToSelectRows="true" />
+                            <Scrolling AllowScroll="True" UseStaticHeaders="true" />
+
+                        <KeyboardNavigationSettings AllowActiveRowCycle="true" AllowSubmitOnEnter="true" FocusKey="Y" EnableKeyboardShortcuts="true" ValidationGroup="CustomValidatioGroup" />
+                        </ClientSettings>
+                    <MasterTableView AllowAutomaticDeletes="True" AllowAutomaticInserts="True"  AllowMultiColumnSorting ="true"
+                        AllowAutomaticUpdates="True" AutoGenerateColumns="False"
+                        DataKeyNames="FKEY,MaBN, BuyerFullName " 
+                        ClientDataKeyNames="MaBN, BuyerFullName"  
+                        CommandItemDisplay="None" EditMode="InPlace"
+                        HorizontalAlign="NotSet" NoDetailRecordsText="Không có dữ liệu"
+                        NoMasterRecordsText="Không có dữ liệu">
+                         <CommandItemSettings AddNewRecordText="F12-Thêm" 
+                                ShowAddNewRecordButton="true"     
+                                ShowRefreshButton="false" 
+                                ShowCancelChangesButton="false"
+                                AddNewRecordImageUrl="~/img/icon/addCT.gif"/>                         
+                        <Columns>   
+                            <telerik:GridTemplateColumn UniqueName="ClientSelectColumn" ItemStyle-Width="30px" HeaderStyle-Width="30px" AllowFiltering="false">
+                                <ItemTemplate><asp:CheckBox ID="chkSelect"  runat="server" /></ItemTemplate>
+                                <HeaderTemplate><asp:CheckBox  ID="headerChkbox" runat="server" onclick="Checked(this)"/></HeaderTemplate>
+                               </telerik:GridTemplateColumn>
+                            <telerik:GridBoundColumn DataField="MaBN"
+                                FilterControlAltText="Filter MaBN column"
+                                HeaderText="Mã Đơn Thuốc " ReadOnly="true" SortExpression="MaDT"
+                                UniqueName="MaDT" AllowFiltering="true" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true"
+                                 ShowFilterIcon="false">
+                                <HeaderStyle Width="80px" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn DataField="BuyerFullName"
+                                FilterControlAltText="Filter BuyerFullName column"
+                                HeaderText="Họ tên" ReadOnly="true" SortExpression="BuyerFullName"
+                                UniqueName="BuyerFullName" AllowFiltering="true" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true" ShowFilterIcon="false">
+                                <HeaderStyle Width="130px" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn DataField="ProdPrice"
+                                FilterControlAltText="Filter ProdPrice column"
+                                HeaderText="Tổng thu" ReadOnly="true" SortExpression="ProdPrice"
+                                UniqueName="ProdPrice" AllowFiltering="false" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true" ShowFilterIcon="false">
+                                <HeaderStyle Width="100px" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn DataField="ProdName"
+                                FilterControlAltText="Filter ProdName column"
+                                HeaderText="Lý do thu" ReadOnly="true" SortExpression="ProdName"
+                                UniqueName="ProdName" AllowFiltering="false" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true" ShowFilterIcon="false">
+                                <HeaderStyle Width="500px" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn DataField="Extra01"
+                                FilterControlAltText="Filter Extra01 column"
+                                HeaderText="Tên khoa" ReadOnly="true" SortExpression="Extra01"
+                                UniqueName="Extra01" AllowFiltering="false" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true" ShowFilterIcon="false">
+                                <HeaderStyle Width="130px" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn DataField="Extra07"
+                                FilterControlAltText="Filter Extra07 column"
+                                HeaderText="Người thu" ReadOnly="true" SortExpression="Extra07"
+                                UniqueName="Extra07" AllowFiltering="false" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true" ShowFilterIcon="false">
+                                <HeaderStyle Width="100px" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn DataField="Extra02"
+                                FilterControlAltText="Filter Extra02 column"
+                                HeaderText="Tên BS" ReadOnly="true" SortExpression="Extra02"
+                                UniqueName="Extra02" AllowFiltering="false" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true" ShowFilterIcon="false">
+                                <HeaderStyle Width="400px" />
+                            </telerik:GridBoundColumn>
+                      </Columns>
+                    </MasterTableView>
+                </telerik:RadGrid>
+    </div>
+     
+    
+        
+</asp:Content>

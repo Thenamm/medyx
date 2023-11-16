@@ -1,0 +1,69 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using HTC.Business.CategoryList;
+using HTC.Business.Duoc;
+using HTC.Common.Web;
+using Telerik.Web.UI;
+using System.Collections;
+using CrystalDecisions.CrystalReports.Engine;
+using System.IO;
+using System.Text.RegularExpressions;
+public partial class TestRadEditor : Page
+{
+
+    private void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            //PopulateTreeViewFromDirectory(RadTreeView1.Nodes, Server.MapPath("~/Editor/Examples/TreeviewAndEditor/Img/UserDir"));
+            //RadTreeView1.Nodes[0].Expanded = true;
+
+            //RadEditor1.Modules.Clear();
+
+        }
+    }
+    private void PopulateTreeViewFromDirectory(RadTreeNodeCollection nodes,
+            string _path)
+    {
+        string[] _directories = Directory.GetDirectories(_path);
+        foreach (string _directory in _directories)
+        {
+            RadTreeNode node = new RadTreeNode();
+            node.Text = Path.GetFileName(_directory);
+            node.ImageUrl = "~/Editor/Examples/TreeviewAndEditor/Vista/folder.png";
+            node.Attributes["Category"] = "Folder";
+            nodes.Add(node);
+            PopulateTreeViewFromDirectory(node.Nodes, _directory);
+        }
+        string[] _files = Directory.GetFiles(_path);
+        foreach (string _file in _files)
+        {
+            if (IsSupportedFileType(_file))
+            {
+                RadTreeNode node = new RadTreeNode();
+                node.Text = Path.GetFileName(_file);
+                node.ImageUrl = "~/Editor/Examples/TreeviewAndEditor/Vista/" + Path.GetExtension(_file).Substring(1) + ".png";
+                node.Value = ConvertAbsoluteToRelative(_file);
+                nodes.Add(node);
+            }
+        }
+    }
+
+    private bool IsSupportedFileType(string file)
+    {
+        string pat = "(\\.gif|\\.jpg|\\.jpeg|\\.png)$";
+        return Regex.IsMatch(file, pat, RegexOptions.IgnoreCase);
+    }
+
+    private string ConvertAbsoluteToRelative(string absolute)
+    {
+        string relative = absolute.Replace(MapPath(Request.ApplicationPath), Request.ApplicationPath);
+        return relative.Replace("\\", "/");
+    }
+}
+
+

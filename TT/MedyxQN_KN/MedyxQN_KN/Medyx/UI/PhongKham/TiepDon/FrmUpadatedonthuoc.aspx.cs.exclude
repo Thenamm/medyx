@@ -1,0 +1,1656 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using HTC.Business.CategoryList;
+using HTC.Business.CanLamSang;
+using HTC.Common.Web;
+using Telerik.Web.UI;
+using System.Collections;
+using CrystalDecisions.CrystalReports.Engine;
+using System.Data;
+using System.IO;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System.Configuration;
+using System.Data.SqlClient;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using Newtonsoft.Json;
+using System.Web.Script.Serialization;
+using System.Net;
+using System.Text;
+using System.Xml.Serialization;
+using System.Xml;
+using HTC.Business.PhongKham;
+using PetaPoco;
+using System.Runtime.Remoting.Contexts;
+using System.Text.RegularExpressions;
+using Microsoft.ApplicationBlocks.Data;
+using System.Globalization;
+using System.Web.Services.Description;
+using DonThuocDT;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+
+public partial class UI_PhongKham_KhamBenh_FrmUpadatedonthuoc : WebBase
+{
+    #region PAGE PARAM REQUEST
+    private const string ViewState_PACSPOST = "PACSPOST";
+    public DataTable _PACSPOST
+    {
+        get
+        {
+            if (ViewState[ViewState_PACSPOST] == null)
+            {
+                ViewState[ViewState_PACSPOST] = GetPort1("PostOrder");
+            }
+            return (DataTable)ViewState[ViewState_PACSPOST];
+        }
+        set
+        {
+            ViewState[ViewState_PACSPOST] = value;
+        }
+    }
+
+    private const string ViewState_MaBN = "MaBN";
+
+
+    private const string ViewState_NoiTT = "NoiTT";
+
+    public string _NoiTT
+    {
+        get
+        {
+            return (string)ViewState[ViewState_NoiTT];
+        }
+
+        set
+        {
+            ViewState[ViewState_NoiTT] = value;
+        }
+
+    }
+    private const string ViewState_MaDT = "MaDT";
+
+    public string _MaDT
+    {
+        get
+        {
+            return (string)_ThongtinBN.KhamBenh.MaDT;
+        }
+
+        //set
+        //{
+        //    ViewState[ViewState_MaDT] = value;
+        //}
+
+    }
+
+    private const string ViewState_MaKhoa = "MaKhoa";
+
+    public string _MaKhoa
+    {
+        get
+        {
+            if (ViewState[ViewState_MaKhoa] == null)
+                ViewState[ViewState_MaKhoa] = "";
+
+            return (string)ViewState[ViewState_MaKhoa];
+        }
+
+        set
+        {
+            ViewState[ViewState_MaKhoa] = value;
+        }
+
+    }
+    public string _MaBN
+    {
+        get
+        {
+            if (ViewState[ViewState_MaBN] == null)
+                ViewState[ViewState_MaBN] = "";
+            return (string)ViewState[ViewState_MaBN];
+        }
+
+        set
+        {
+            ViewState[ViewState_MaBN] = value;
+        }
+
+    }
+    private const string ViewState_NgayDK = "NgayDK";
+
+    public string _NgayDK
+    {
+        get
+        {
+            return (string)ViewState[ViewState_NgayDK];
+        }
+
+        set
+        {
+            ViewState[ViewState_NgayDK] = value;
+        }
+
+    }
+    private const string ViewState_MaSoKham = "MaSoKham";
+
+    public string _MaSoKham
+    {
+        get
+        {
+            if (ViewState[ViewState_MaSoKham] == null)
+                ViewState[ViewState_MaSoKham] = "";
+
+            return (string)ViewState[ViewState_MaSoKham];
+        }
+
+        set
+        {
+            ViewState[ViewState_MaSoKham] = value;
+        }
+
+    }
+    private const string ViewState_STT = "STT";
+
+    public int _STT
+    {
+        get
+        {
+            if (ViewState[ViewState_STT] == null)
+                ViewState[ViewState_STT] = 1;
+            return (int)ViewState[ViewState_STT];
+        }
+
+        set
+        {
+            ViewState[ViewState_STT] = value;
+        }
+
+    }
+    private const string ViewState_LoaiKQCN = "LoaiKQCN";
+
+    public byte _LoaiKQCN
+    {
+        get
+        {
+            if (ViewState[ViewState_LoaiKQCN] == null)
+            {
+                if (Request["LoaiKQCN"] == null)
+                    Response.Redirect("~/Default.aspx");
+                else
+                    ViewState[ViewState_LoaiKQCN] = Convert.ToByte(Request["LoaiKQCN"].ToString());
+            }
+
+            return (byte)ViewState[ViewState_LoaiKQCN];
+        }
+
+        set
+        {
+            ViewState[ViewState_LoaiKQCN] = value;
+        }
+
+    }
+
+    private const string viewState_LoaiPhieu = "LoaiPhieu";
+    public byte _LoaiPhieu
+    {
+        get
+        {
+            if (ViewState[viewState_LoaiPhieu] == null)
+                if (Request["LoaiPhieu"] == null)
+                    Response.Redirect("~/Default.aspx");
+                else
+                    ViewState[viewState_LoaiPhieu] = byte.Parse(Request["LoaiPhieu"].ToString());
+            return (byte)ViewState[viewState_LoaiPhieu];
+        }
+
+        set
+        {
+            ViewState[viewState_LoaiPhieu] = value;
+        }
+    }
+    private const string viewState_CapCuu = "CapCuu";
+    public bool _CapCuu
+    {
+        get
+        {
+
+            return false;
+        }
+
+        set
+        {
+            ViewState[viewState_CapCuu] = value;
+        }
+    }
+    #endregion
+    private const string ViewState_PubsMaDV = "PubsMaDV";
+
+    public string _PubsMaDV
+    {
+        get
+        {
+            if (ViewState[ViewState_PubsMaDV] == null)
+                ViewState[ViewState_PubsMaDV] = "";
+
+            return (string)ViewState[ViewState_PubsMaDV];
+        }
+
+        set
+        {
+            ViewState[ViewState_PubsMaDV] = value;
+        }
+
+    }
+    private const string ViewState_ThongtinBN = "ThongtinBN";
+    public ThongtinBN _ThongtinBN
+    {
+        get
+        {
+            return (ThongtinBN)ViewState[ViewState_ThongtinBN];
+        }
+
+        set
+        {
+            ViewState[ViewState_ThongtinBN] = value;
+        }
+    }
+    private const string ViewState_KhamBenh_Noi = "KhamBenh_Noi";
+    private const string ViewState_PhacDoDT = "PhacDoDT";
+    //public PhacDoDT _PhacDoDT
+    //{
+    //    get
+    //    {
+
+    //        return (PhacDoDT)ViewState[ViewState_PhacDoDT];
+    //    }
+
+    //    set
+    //    {
+    //        ViewState[ViewState_PhacDoDT] = value;
+    //    }
+    //}
+
+    public KhamBenh_Noi _KhamBenh_Noi
+    {
+        get
+        {
+
+            return (KhamBenh_Noi)ViewState[ViewState_KhamBenh_Noi];
+        }
+
+        set
+        {
+            ViewState[ViewState_KhamBenh_Noi] = value;
+        }
+    }
+    private const string ViewState_KhamBenh_KeNgoaiList = "KhamBenh_KeNgoaiList";
+    public KhamBenh_KeNgoaiList _KhamBenh_KeNgoaiList
+    {
+        get
+        {
+
+            return (KhamBenh_KeNgoaiList)ViewState[ViewState_KhamBenh_KeNgoaiList];
+        }
+
+        set
+        {
+            ViewState[ViewState_KhamBenh_KeNgoaiList] = value;
+        }
+    }
+    //private const string ViewState_KhamBenh_KB = "KhamBenh_KB";
+    //public KhamBenh_C _KhamBenh_KB
+    //{
+    //    get
+    //    {
+    //        if (ViewState[ViewState_KhamBenh_KB] == null)
+    //        {
+    //            if (_MaBN == "")
+    //            {
+
+
+    //                if ( _ThongtinBN.KhamBenh.KhamBenh_C_List.Count == 0)
+    //                    ViewState[ViewState_KhamBenh_KB] = KhamBenh_C.NewKhamBenh_C();
+
+    //            }
+    //            else
+    //                ViewState[ViewState_KhamBenh_KB] =  _ThongtinBN.KhamBenh.KhamBenh_C_List.FirstOrDefault(X => X.STT == _STT);
+    //        }
+    //        return (KhamBenh_C)ViewState[ViewState_KhamBenh_KB];
+    //    }
+
+    //    set
+    //    {
+    //        ViewState[ViewState_KhamBenh_KB] = value;
+    //    }
+    //}
+    //private const string ViewState_KhamBenh_XN_GetsList = "KhamBenh_XN_GetsList";
+    //public KhamBenh_XN_GetsList  _ThongtinBN.KhamBenh.KhamBenh_XN_GetsList;
+    //{
+    //    get
+    //    {
+    //        return (KhamBenh_XN_GetsList) _ThongtinBN.KhamBenh.KhamBenh_XN_GetsList;
+
+    //      //  return (KhamBenh_XN_GetsList)ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_XN_GetsList];
+    //    }
+
+    //    set
+    //    {
+    //       // ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_XN_GetsList] = value;
+    //    }
+    //}
+
+    private const string ViewState_KhamBenh_GETsMABNListInfo = "KhamBenh_GETsMABNListInfo";
+    public KhamBenh_GETsMABNListInfo _KhamBenh_GETsMABNListInfo
+    {
+        get
+        {
+
+            return (KhamBenh_GETsMABNListInfo)ViewState[ViewState_KhamBenh_GETsMABNListInfo];
+        }
+
+        set
+        {
+            ViewState[ViewState_KhamBenh_GETsMABNListInfo] = value;
+        }
+    }
+
+    private const string ViewState_ThongKe_BenhNhan_NgoaiTruListInfo = "ThongKe_BenhNhan_NgoaiTruListInfo";
+    public ThongKe_BenhNhan_NgoaiTruListInfo _ThongKe_BenhNhan_NgoaiTruListInfo
+    {
+        get
+        {
+            return (ThongKe_BenhNhan_NgoaiTruListInfo)ViewState[ViewState_ThongKe_BenhNhan_NgoaiTruListInfo];
+        }
+
+        set
+        {
+            ViewState[ViewState_ThongKe_BenhNhan_NgoaiTruListInfo] = value;
+        }
+    }
+
+    //private const string ViewState_KhamBenh_GetsDichVuList = "KhamBenh_GetsDichVuList";
+    //public KhamBenh_GetsDichVuList _KhamBenh_GetsDichVuList
+    //{
+    //    get
+    //    {
+
+    //        return (KhamBenh_GetsDichVuList)ViewState[ViewState_KhamBenh_GetsDichVuList];
+    //    }
+
+    //    set
+    //    {
+    //        ViewState[ViewState_KhamBenh_GetsDichVuList] = value;
+    //    }
+    //}
+    #region Khám bệnh Thuốc Sử Dụng
+
+    //private const string ViewState _ThongtinBN.KhamBenh.KhamBenh_ThuocSDList = "KhamBenh_ThuocSDList";
+    // public KhamBenh_ThuocSDList  _ThongtinBN.KhamBenh.KhamBenh_ThuocSDList;
+    //{
+    //    get
+    //    {
+    //        //if (ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_ThuocSDList] == null)
+    //        //{
+    //        //    LoadDetails_KhamBenh_ThuocSuDung();
+    //        //}
+
+    //        return (KhamBenh_ThuocSDList) _ThongtinBN.KhamBenh.KhamBenh_ThuocSDList;
+    //    }
+    //    set
+    //    {
+    //    }
+    //    //set
+    //    //{
+    //    //    ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_ThuocSDList] = value;
+    //    //}
+
+    //}
+
+    //private const string ViewState_KhamBenh_ThuocSD = "KhamBenh_ThuocSD";
+    //public KhamBenh_ThuocSD _KhamBenh_ThuocSD
+    //{
+    //    get
+    //    {
+    //        if (ViewState[ViewState_KhamBenh_ThuocSD] != null)
+    //        {
+    //            return (KhamBenh_ThuocSD)ViewState[ViewState_KhamBenh_ThuocSD];
+    //        }
+
+    //        return null;
+    //    }
+
+    //    set
+    //    {
+    //        ViewState[ViewState_KhamBenh_ThuocSD] = value;
+    //    }
+
+    //}
+    #endregion
+
+    #region Khám bệnh Thuốc Thang
+    //private const string ViewState _ThongtinBN.KhamBenh.KhamBenh_ThuocSD_DYList = "ViewState _ThongtinBN.KhamBenh.KhamBenh_ThuocSD_DYList";
+    //public KhamBenh_ThuocSD_DYList  _ThongtinBN.KhamBenh.KhamBenh_ThuocSD_DYList;
+    //{
+    //    get
+    //    {
+
+    //        return (KhamBenh_ThuocSD_DYList) _ThongtinBN.KhamBenh.KhamBenh_ThuocSD_DYList;
+    //        // return (KhamBenh_ThuocSD_DYList)ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_ThuocSD_DYList];
+    //    }
+    //    set
+    //    {
+    //    }
+    //    //set
+    //    //{
+    //    //    ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_ThuocSD_DYList] = value;
+    //    //}
+
+    //}
+
+    private const string ViewState_KhamBenh_ThuocSD_DY = "ViewState_KhamBenh_ThuocSD_DY";
+    public KhamBenh_ThuocSD_DY _KhamBenh_ThuocSD_DY
+    {
+        get
+        {
+            //if (ViewState[ViewState_KhamBenh_ThuocSD_DY] == null)
+            //    ViewState[ViewState_KhamBenh_ThuocSD_DY] = KhamBenh_ThuocSD_DY.NewKhamBenh_ThuocSD_DY();
+
+
+            return (KhamBenh_ThuocSD_DY)ViewState[ViewState_KhamBenh_ThuocSD_DY];
+        }
+
+        set
+        {
+            ViewState[ViewState_KhamBenh_ThuocSD_DY] = value;
+        }
+
+    }
+
+
+
+    #endregion
+
+    //#region Khám bệnh XN.TT.XQ.TDCN
+
+    ////private const string ViewState_KhamBenh_C = "KhamBenh_C";
+    ////public KhamBenh_C _KhamBenh_C
+    ////{
+    ////    get
+    ////    {
+    ////        if (ViewState[ViewState_KhamBenh_C] == null)
+    ////        {
+    ////            LoadDetails_KhamBenh_XNTT();
+    ////        }
+
+    ////        return (KhamBenh_C)ViewState[ViewState_KhamBenh_C];
+    ////    }
+
+    ////    set
+    ////    {
+    ////        ViewState[ViewState_KhamBenh_C] = value;
+    ////    }
+
+    ////}
+
+    //private const string ViewState _ThongtinBN.KhamBenh.KhamBenh_C_List = "ViewState _ThongtinBN.KhamBenh.KhamBenh_C_List";
+    //public KhamBenh_C_List  _ThongtinBN.KhamBenh.KhamBenh_C_List;
+    ////{
+    ////    get
+    ////    {
+    ////        if (ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_C_List] == null)
+    ////        {
+    ////            LoadDetails_KhamBenh_XNTT();
+    ////        }
+    ////        return (KhamBenh_C_List) _ThongtinBN.KhamBenh.KhamBenh_C_List;
+
+    ////        return (KhamBenh_C_List)ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_C_List];
+    ////    }
+    ////    set
+    ////    {
+    ////    }
+    ////    set
+    ////    {
+    ////        ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_C_List] = value;
+    ////    }
+
+    ////}
+    //#endregion
+
+    //#region Khám bệnh VTTH
+
+    //private const string ViewState _ThongtinBN.KhamBenh.KhamBenh_VTTHList = "KhamBenh_VTTHList";
+    //public KhamBenh_VTTHList  _ThongtinBN.KhamBenh.KhamBenh_VTTHList;
+    ////{
+    ////    get
+    ////    {
+    ////        //if (ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_VTTHList] == null)
+    ////        //{
+    ////        //    LoadDetails_KhamBenh_VTTH();
+    ////        //}
+    ////        return (KhamBenh_VTTHList) _ThongtinBN.KhamBenh.KhamBenh_VTTHList;
+
+    ////        //return (KhamBenh_VTTHList)ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_VTTHList];
+    ////    }
+    ////    set
+    ////    {
+    ////    }
+    ////    //set
+    ////    //{
+    ////    //    ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_VTTHList] = value;
+    ////    //}
+
+    ////}
+    //#endregion
+
+    //#region Khám bệnh Hóa Chất
+
+    //private const string ViewState _ThongtinBN.KhamBenh.KhamBenh_HoaChatList = "KhamBenh_HoaChatList";
+    //public KhamBenh_HoaChatList  _ThongtinBN.KhamBenh.KhamBenh_HoaChatList;
+    ////{
+    ////    get
+    ////    {
+    ////        //if (ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_HoaChatList] == null)
+    ////        //{
+    ////        //    LoadDetails_KhamBenh_HoaChat();
+    ////        //}
+    ////        return (KhamBenh_HoaChatList) _ThongtinBN.KhamBenh.KhamBenh_HoaChatList;
+
+    ////        //return (KhamBenh_HoaChatList)ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_HoaChatList];
+    ////    }
+    ////    set
+    ////    {
+    ////    }
+    ////    //set
+    ////    //{
+    ////    //    ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_HoaChatList] = value;
+    ////    //}
+
+    ////}
+    //#endregion
+
+    //#region Khám bệnh Máu
+
+    //private const string ViewState _ThongtinBN.KhamBenh.KhamBenh_MauList = "KhamBenh_MauList";
+    //public KhamBenh_MauList  _ThongtinBN.KhamBenh.KhamBenh_MauList;
+    ////{
+    ////    get
+    ////    {
+    ////        //if (ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_MauList] == null)
+    ////        //{
+    ////        //    LoadDetails_KhamBenh_Mau();
+    ////        //}
+    ////        return (KhamBenh_MauList) _ThongtinBN.KhamBenh.KhamBenh_MauList;
+
+    ////        //  return (KhamBenh_MauList)ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_MauList];
+    ////    }
+    ////    set
+    ////    {
+    ////    }
+    ////    //set
+    ////    //{
+    ////    //    ViewState[ViewState _ThongtinBN.KhamBenh.KhamBenh_MauList] = value;
+    ////    //}
+
+    ////}
+    //#endregion
+
+
+    #region indextem
+    private const string ViewState_MaSoKhamT = "MaSoKhamT";
+
+    public string _MaSoKhamT
+    {
+        get
+        {
+            if (ViewState[ViewState_MaSoKhamT] == null)
+                ViewState[ViewState_MaSoKhamT] = "";
+
+            return (string)ViewState[ViewState_MaSoKhamT];
+        }
+
+        set
+        {
+            ViewState[ViewState_MaSoKhamT] = value;
+        }
+
+    }
+    private const string ViewState_STTT = "STTT";
+
+    public int _STTT
+    {
+        get
+        {
+            if (ViewState[ViewState_STTT] == null)
+                ViewState[ViewState_STTT] = 1;
+            return (int)ViewState[ViewState_STTT];
+        }
+
+        set
+        {
+            ViewState[ViewState_STTT] = value;
+        }
+
+    }
+    #endregion
+
+    //#region index
+    //private const string ViewState_ReportData1 = "ReportData1";
+
+    //public DataSet ReportData1
+    //{
+    //    get
+    //    {
+    //        if (ViewState[ViewState_ReportData1] != null)
+    //        {
+    //            return (DataSet)ViewState[ViewState_ReportData1];
+    //        }
+
+    //        return null;
+    //    }
+
+    //    set
+    //    {
+    //        ViewState[ViewState_ReportData1] = value;
+    //    }
+    //}
+    //private const string ViewState_ReportData2 = "ReportData2";
+
+    //public DataSet ReportData2
+    //{
+    //    get
+    //    {
+    //        if (ViewState[ViewState_ReportData2] != null)
+    //        {
+    //            return (DataSet)ViewState[ViewState_ReportData2];
+    //        }
+
+    //        return null;
+    //    }
+
+    //    set
+    //    {
+    //        ViewState[ViewState_ReportData2] = value;
+    //    }
+    //}
+
+    //private const string ViewState_ReportData3 = "ReportData3";
+
+    //public DataSet ReportData3
+    //{
+    //    get
+    //    {
+    //        if (ViewState[ViewState_ReportData3] != null)
+    //        {
+    //            return (DataSet)ViewState[ViewState_ReportData3];
+    //        }
+
+    //        return null;
+    //    }
+
+    //    set
+    //    {
+    //        ViewState[ViewState_ReportData3] = value;
+    //    }
+    //}
+
+    //private const string ViewState_ReportData4 = "ReportData4";
+
+    //public DataSet ReportData4
+    //{
+    //    get
+    //    {
+    //        if (ViewState[ViewState_ReportData4] != null)
+    //        {
+    //            return (DataSet)ViewState[ViewState_ReportData4];
+    //        }
+
+    //        return null;
+    //    }
+
+    //    set
+    //    {
+    //        ViewState[ViewState_ReportData4] = value;
+    //    }
+    //}
+    //private const string ViewState_ReportData5 = "ReportData5";
+
+    //public DataSet ReportData5
+    //{
+    //    get
+    //    {
+    //        if (ViewState[ViewState_ReportData5] != null)
+    //        {
+    //            return (DataSet)ViewState[ViewState_ReportData5];
+    //        }
+
+    //        return null;
+    //    }
+
+    //    set
+    //    {
+    //        ViewState[ViewState_ReportData5] = value;
+    //    }
+    //}
+    //private const string ViewState_ReportData6 = "ReportData6";
+
+    //public DataSet ReportData6
+    //{
+    //    get
+    //    {
+    //        if (ViewState[ViewState_ReportData6] != null)
+    //        {
+    //            return (DataSet)ViewState[ViewState_ReportData6];
+    //        }
+
+    //        return null;
+    //    }
+
+    //    set
+    //    {
+    //        ViewState[ViewState_ReportData6] = value;
+    //    }
+    //}
+    //private const string ViewState_ReportData8 = "ReportData8";
+
+    //public DataSet ReportData8
+    //{
+    //    get
+    //    {
+    //        if (ViewState[ViewState_ReportData8] != null)
+    //        {
+    //            return (DataSet)ViewState[ViewState_ReportData8];
+    //        }
+
+    //        return null;
+    //    }
+
+    //    set
+    //    {
+    //        ViewState[ViewState_ReportData8] = value;
+    //    }
+    //}
+    //#endregion
+    #region 0. thongtinbn
+    //private void LoadDetails_ThongTin(Boolean _load = true)
+    //{
+
+    //    if (_load == true)
+    //    {
+    //        KhamBenh_C _KhamBenh_KB = null;
+
+    //        if (_ThongtinBN != null)
+    //        {
+    //            txtMaQL.Text = _ThongtinBN.MaBN;
+    //            dtNgaySinh.Text = _ThongtinBN.NgaySinh;
+    //            txtHoTen.Text = _ThongtinBN.Hoten;
+    //            if (_ThongtinBN.GT == true)
+    //            {
+    //                lblGioitinh.Items[0].Selected = true;
+    //                lblGioitinh.Items[1].Selected = false;
+    //            }
+    //            else
+    //            {
+    //                lblGioitinh.Items[1].Selected = true;
+    //                lblGioitinh.Items[0].Selected = false;
+    //            }
+
+    //            txtSoThe.Text = _ThongtinBN.Sothe;
+    //            dtBHYTDN.Text = _ThongtinBN.GiaTriDN;
+    //            txtDiaChi.Text = _ThongtinBN.DiaChiC;
+    //            txtDienThoai.Text = _ThongtinBN.DienThoai;
+    //            txtTuoi.Text = _ThongtinBN.Tuoi.ToString();
+    //            txtBenhNGT.Text = _ThongtinBN.KhamBenh.maicdngt + "-" + _ThongtinBN.KhamBenh.tenbenhngt;
+
+    //            txtNgheNghiep.Text = _ThongtinBN.TenNN;
+    //            txtDoiTuong.Text = _ThongtinBN.TenDT;
+    //            txtTenBVBD.Text = _ThongtinBN.KhamBenh.mabhxh + "-" + _ThongtinBN.KhamBenh.tenbv;
+
+    //            if (_KhamBenh_KB == null && _ThongtinBN.KhamBenh.KhamBenh_C_List.Count > 0)
+    //                _KhamBenh_KB = _ThongtinBN.KhamBenh.KhamBenh_C_List.FirstOrDefault(X => X.STT == _STT);
+
+
+
+    //        }
+
+    //        if (_KhamBenh_KB != null)
+    //        {
+    //            cboHuongDT.SelectedValue = _KhamBenh_KB.MaHuongDT;
+    //            cboKhoaNV.SelectedValue = _KhamBenh_KB.MakhoaVV;
+    //            dtNgayHen.Text = _KhamBenh_KB.ngayhen;
+    //            // cboChuyenKhoa.SelectedValue = _KhamBenh_KB.Machuyenkhoa;
+    //            if (_KhamBenh_KB.BSKham == "")
+    //            {
+    //                _KhamBenh_KB.BSKham = Pub_sNguoiSD;
+    //                _KhamBenh_KB.tenbs = Pub_sTenNguoiSD;
+
+    //            }
+    //            lblngaydk.Text = _KhamBenh_KB.NgayLap;
+
+    //            if (_KhamBenh_KB.BSKham != "")
+    //            {
+    //                //RadComboBoxItem selectedItem = new RadComboBoxItem();
+
+    //                //selectedItem.Text = _KhamBenh_KB.tenbs;
+    //                //selectedItem.Value = _KhamBenh_KB.BSKham;
+    //                //cboNhanVien.Items.Add(selectedItem);
+    //                //selectedItem.Selected = true;
+    //                //selectedItem.DataBind();
+    //                //cboNhanVien.DataBind();
+    //                cboNhanVien.Text = _KhamBenh_KB.tenbs;
+    //                cboNhanVien.SelectedValue = _KhamBenh_KB.BSKham;
+    //                txtMaNV.Text = _KhamBenh_KB.BSKham;
+    //            }
+    //            if (_KhamBenh_KB.maicdKem != "")
+    //            {
+    //                //RadComboBoxItem selectedItem = new RadComboBoxItem();
+
+    //                //selectedItem.Text = _KhamBenh_KB.maicdKem;
+    //                //selectedItem.Value = _KhamBenh_KB.MabenhKem;
+    //                //cboChanDoanKem.Items.Add(selectedItem);
+    //                //selectedItem.Selected = true;
+    //                //selectedItem.DataBind();
+    //                //cboChanDoanKem.DataBind();
+    //                cboChanDoanKem.Text = _KhamBenh_KB.maicdKem;
+    //                cboChanDoanKem.SelectedValue = _KhamBenh_KB.MabenhKem;
+    //            }
+    //            txtChanDoanKem.Text = _KhamBenh_KB.tenbenhKem;
+    //            //if (_KhamBenh_KB.maicdKem2 != "")
+    //            //{
+    //            //    //RadComboBoxItem selectedItem = new RadComboBoxItem();
+
+    //            //    //selectedItem.Text = _KhamBenh_KB.maicdKem2;
+    //            //    //selectedItem.Value = _KhamBenh_KB.MabenhKem2;
+    //            //    //cboChanDoanKem2.Items.Add(selectedItem);
+    //            //    //selectedItem.Selected = true;
+    //            //    //selectedItem.DataBind();
+    //            //    //cboChanDoanKem2.DataBind();
+    //            //    cboChanDoanKem2.Text = _KhamBenh_KB.maicdKem2;
+    //            //    cboChanDoanKem2.SelectedValue = _KhamBenh_KB.MabenhKem2;
+    //            //}
+    //            //txtChanDoanKem2.Text = _KhamBenh_KB.tenbenhKem2;
+    //            //if (_KhamBenh_KB.maicdKem3 != "")
+    //            //{
+    //            //    //RadComboBoxItem selectedItem = new RadComboBoxItem();
+
+    //            //    //selectedItem.Text = _KhamBenh_KB.maicdKem3;
+    //            //    //selectedItem.Value = _KhamBenh_KB.MabenhKem3;
+    //            //    //cboChanDoanKem3.Items.Add(selectedItem);
+    //            //    //selectedItem.Selected = true;
+    //            //    //selectedItem.DataBind();
+    //            //    //cboChanDoanKem3.DataBind();
+    //            //    cboChanDoanKem3.Text = _KhamBenh_KB.maicdKem3;
+    //            //    cboChanDoanKem3.SelectedValue = _KhamBenh_KB.MabenhKem3;
+    //            //}
+    //            //txtChanDoanKem3.Text = _KhamBenh_KB.tenbenhKem3;
+    //            if (_KhamBenh_KB.maicd != "")
+    //            {
+    //                //RadComboBoxItem selectedItem = new RadComboBoxItem();
+
+    //                //selectedItem.Text = _KhamBenh_KB.maicd;
+    //                //selectedItem.Value = _KhamBenh_KB.Mabenh;
+    //                //cboChanDoan.Items.Add(selectedItem);
+    //                //selectedItem.Selected = true;
+    //                //selectedItem.DataBind();
+    //                //cboChanDoan.DataBind();
+    //                cboChanDoan.Text = _KhamBenh_KB.maicd;
+    //                cboChanDoan.SelectedValue = _KhamBenh_KB.Mabenh;
+    //            }
+    //            txtChanDoan.Text = _KhamBenh_KB.tenbenh;
+    //        }
+
+    //        _KhamBenh_Noi = KhamBenh_Noi.GetKhamBenh_Noi(_MaSoKham, _STT);
+    //        if (_KhamBenh_Noi.MaSoKham == "")
+    //        {
+    //            _KhamBenh_Noi = KhamBenh_Noi.NewKhamBenh_Noi();
+    //            _KhamBenh_Noi.MaSoKham = _MaSoKham;
+    //            _KhamBenh_Noi.STT = (_STT == 0 ? 1 : _STT);
+
+    //            _KhamBenh_Noi.MaDV = _KhamBenh_KB.MaDV;
+    //        }
+
+    //        if (_KhamBenh_Noi != null)
+    //        {
+    //            txtMach.Text = _KhamBenh_Noi.Mach;
+    //            txtHuyetap.Text = _KhamBenh_Noi.ApHuyet;
+    //            txtNhietdo.Text = _KhamBenh_Noi.NhietDo;
+    //            txtNhiptho.Text = _KhamBenh_Noi.NhipTho;
+    //            chkRubella.Checked = _KhamBenh_Noi.Rubella;
+    //            chkUonVan.Checked = _KhamBenh_Noi.UonVan;
+    //            chkTiemChungKhac.Checked = _KhamBenh_Noi.TiemChungKhac;
+
+    //            txtTiensubenh.Text = _ThongtinBN.TienSu;
+    //            txtDiungthuoc.Text = _ThongtinBN.TienSuThuoc;
+    //            txtTiensugiadinh.Text = _ThongtinBN.TienSuGiaDinh;
+    //            cboNhomMau.SelectedValue = _ThongtinBN.NhomMau;
+    //            txtMach.Text = _KhamBenh_Noi.Mach;
+    //            txtHuyetap.Text = _KhamBenh_Noi.ApHuyet;
+
+    //            txtNhietdo.Text = _KhamBenh_Noi.NhietDo;
+    //            txtNhiptho.Text = _KhamBenh_Noi.NhipTho;
+    //            txtChieuCao.Text = _KhamBenh_Noi.ChieuCao;
+    //            txtCanNang.Text = _KhamBenh_Noi.CanNang;
+    //            txtLoidan.Text = _KhamBenh_Noi.DieuTri;
+    //            txtbenhly.Text = _KhamBenh_Noi.BenhSu;
+    //            txtlydo.Text = _KhamBenh_Noi.LyDoKham;
+    //            txtToanthan.Text = _KhamBenh_Noi.ToanThan;
+    //            txtHohap.Text = _KhamBenh_Noi.HoHap;
+    //            if (txtCanNang.Text != "" && txtChieuCao.Text != "" && txtChieuCao.Text != "0")
+    //                txtBMI.Text = (decimal.Parse(txtCanNang.Text) * 10000 / (decimal.Parse(txtChieuCao.Text) * decimal.Parse(txtChieuCao.Text))).ToString("###.##");
+    //            if (txtHuyetap.Text != "")
+    //            {
+    //                int i = txtHuyetap.Text.LastIndexOf("/");
+    //                if (i > 0)
+    //                {
+    //                    txtHuyetapmin.Text = _KhamBenh_Noi.ApHuyet.Substring(0, i);
+    //                    txtHuyetapmax.Text = _KhamBenh_Noi.ApHuyet.Substring(i + 1);
+    //                }
+    //            }
+    //            txtTieuHoa.Text = _KhamBenh_Noi.TieuHoa;
+    //            txtCoxuongkhop.Text = _KhamBenh_Noi.XuongKhop;
+    //            txtThan.Text = _KhamBenh_Noi.ThanTNieuSDuc;
+    //            txttuanhoan.Text = _KhamBenh_Noi.TuanHoan;
+    //            txtrhm.Text = _KhamBenh_Noi.RangHamMat;
+    //            txttmh.Text = _KhamBenh_Noi.TaiMuiHong;
+    //            txtmat.Text = _KhamBenh_Noi.Mat;
+    //            txtthankinh.Text = _KhamBenh_Noi.ThanKinh;
+    //            txtkhac.Text = _KhamBenh_Noi.BenhLyKhac;
+    //            txtXutri.Text = _KhamBenh_Noi.HuongDT;
+    //            txtnoitiet.Text = _KhamBenh_Noi.Noitiet;
+    //            if (_KhamBenh_Noi.MaBV != "")
+    //            {
+    //                //RadComboBoxItem selectedItemc = new RadComboBoxItem();
+
+    //                //selectedItemc.Text = _KhamBenh_Noi.TenBV;
+    //                //selectedItemc.Value = _KhamBenh_Noi.MaBV;
+    //                //cboBVChuyen.Items.Add(selectedItemc);
+    //                //selectedItemc.Selected = true;
+    //                //selectedItemc.DataBind();
+    //                //cboBVChuyen.DataBind();
+    //                cboBVChuyen.Text = _KhamBenh_Noi.TenBV;
+    //                cboBVChuyen.SelectedValue = _KhamBenh_Noi.MaBV;
+
+    //            }
+
+    //        }
+    //    }
+    //    KiemTraHDT();
+    //    cboChanDoan.Focus();
+
+    //}
+    //private void LoadDetails_ThongTinTT(Boolean _load = true)
+    //{
+    //    switch (CurrentTabIndex)
+    //    {
+
+    //        case 1:
+    //            {
+    //                txtMaBNDV.Text = txtMaQL.Text;
+    //                txtHoTenDV.Text = txtHoTen.Text;
+    //                if (lblGioitinh.Items[0].Selected == true)
+    //                    optGTDV.Items[0].Selected = true;
+    //                else
+    //                    optGTDV.Items[1].Selected = true;
+    //                txtTuoiDV.Text = txtTuoi.Text;
+    //                break;
+    //            }
+    //        case 2:
+    //            {
+    //                txtMaBNT.Text = txtMaQL.Text;
+    //                dtNgaySinhT.Text = dtNgaySinh.Text;
+    //                txtHoTenT.Text = txtHoTen.Text;
+    //                if (lblGioitinh.Items[0].Selected == true)
+    //                    optGTT.Items[0].Selected = true;
+    //                else
+    //                    optGTT.Items[1].Selected = true;
+    //                txtTuoiT.Text = txtTuoi.Text;
+    //                break;
+    //            }
+    //        case 3:
+    //            {
+    //                txtMaBNLS.Text = txtMaQL.Text;
+    //                dtNgaySinhLS.Text = dtNgaySinh.Text;
+    //                txtHoTenLS.Text = txtHoTen.Text;
+    //                if (lblGioitinh.Items[0].Selected == true)
+    //                    optGTLS.Items[0].Selected = true;
+    //                else
+    //                    optGTLS.Items[1].Selected = true;
+    //                txtTuoiLS.Text = txtTuoi.Text;
+    //                break;
+    //            }
+
+
+    //        case 4:
+    //            {
+    //                txtMaBNDT.Text = txtMaQL.Text;
+    //                dtNgaySinhDT.Text = dtNgaySinh.Text;
+    //                txtHoTenDT.Text = txtHoTen.Text;
+    //                if (lblGioitinh.Items[0].Selected == true)
+    //                    optGTDT.Items[0].Selected = true;
+    //                else
+    //                    optGTDT.Items[1].Selected = true;
+    //                txtTuoiDT.Text = txtTuoi.Text;
+    //                break;
+    //            }
+    //        case 5:
+    //            {
+    //                txtMaBNKQ.Text = txtMaQL.Text;
+    //                dtNgaySinhKQ.Text = dtNgaySinh.Text;
+    //                txtHoTenKQ.Text = txtHoTen.Text;
+    //                if (lblGioitinh.Items[0].Selected == true)
+    //                    optGTKQ.Items[0].Selected = true;
+    //                else
+    //                    optGTKQ.Items[1].Selected = true;
+    //                txtTuoiKQ.Text = txtTuoi.Text;
+    //                break;
+    //            }
+    //        case 6:
+    //            {
+    //                txtMaBNKN.Text = txtMaQL.Text;
+    //                dtNgaySinhKN.Text = dtNgaySinh.Text;
+    //                txtHoTenKN.Text = txtHoTen.Text;
+    //                if (lblGioitinh.Items[0].Selected == true)
+    //                    optGTKN.Items[0].Selected = true;
+    //                else
+    //                    optGTKN.Items[1].Selected = true;
+    //                txtTuoiKN.Text = txtTuoi.Text;
+    //                break;
+    //            }
+    //            //case 7:
+    //            //    {
+    //            //        txtMaBNVT.Text = txtMaQL.Text;
+    //            //        dtNgaySinhVT.Text = dtNgaySinh.Text;
+    //            //        txtHoTenVT.Text = txtHoTen.Text;
+    //            //        if (lblGioitinh.Items[0].Selected == true)
+    //            //            optGTVT.Items[0].Selected = true;
+    //            //        else
+    //            //            optGTVT.Items[1].Selected = true;
+    //            //        txtTuoiVT.Text = txtTuoi.Text;
+    //            //        break;
+    //            //    }
+    //    }
+    //}
+    //#endregion
+
+    //ham lay url cua API lien thong DTDT
+    #endregion
+    public DataTable GetDTAccount(string Account, int lan = 0)
+    {
+        DataTable dr = new DataTable();
+        if (lan < 3)
+        {
+            string tenStore = "spAccount_GetDTDT";
+            string StrConection = ConfigurationManager.ConnectionStrings["SqlDataProvider"].ConnectionString + "; connection timeout=6000; pooling=true; Max Pool Size=6000;Timeout=6000;MultipleActiveResultSets=True";
+            using (SqlConnection Conection = new SqlConnection(StrConection))
+            {
+                Conection.Open();
+                using (SqlCommand Command = new SqlCommand(tenStore, Conection))
+                {
+                    Command.CommandType = CommandType.StoredProcedure;
+                    Command.Parameters.Add(new SqlParameter("@Account", Account));
+                    SqlDataAdapter dp = new SqlDataAdapter(Command);
+                    dp.Fill(dr);
+                }
+                if (dr.Rows.Count > 0 && dr.Rows[0][0].ToString().Length > 0)
+                    return dr;
+                else
+                    return GetDTAccount(Account, lan + 1);
+            }
+        }
+        else
+            return dr;
+    }
+    public DataTable GetPort(string loai)
+    {
+        DataTable dr = new DataTable();
+        string tenStore = "PACS_Port_Get";
+        string StrConection = ConfigurationManager.ConnectionStrings["SqlDataProvider"].ConnectionString + "; connection timeout=600; pooling=true; Max Pool Size=6000;Timeout=600;MultipleActiveResultSets=True";
+        using (SqlConnection Conection = new SqlConnection(StrConection))
+        {
+            Conection.Open();
+            using (SqlCommand Command = new SqlCommand(tenStore, Conection))
+            {
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.Parameters.Add(new SqlParameter("@Loai", loai));
+                SqlDataAdapter dp = new SqlDataAdapter(Command);
+                dp.Fill(dr);
+            }
+            //if (dr.Rows.Count > 0)
+            return dr;
+            //else
+            //    return "";
+        }
+    }
+
+
+    public DataTable GetPort1(string loai)
+    {
+        DataTable dr = new DataTable();
+        string tenStore = "PACS_Port_Get";
+        string StrConection = ConfigurationManager.ConnectionStrings["SqlDataProvider"].ConnectionString + "; connection timeout=600; pooling=true; Max Pool Size=6000;Timeout=600;MultipleActiveResultSets=True";
+        using (SqlConnection Conection = new SqlConnection(StrConection))
+        {
+            Conection.Open();
+            using (SqlCommand Command = new SqlCommand(tenStore, Conection))
+            {
+                Command.CommandType = CommandType.StoredProcedure;
+                //Command.Parameters.Add(new SqlParameter("@Loai", "View"));
+                Command.Parameters.Add(new SqlParameter("@Loai", loai));
+                SqlDataAdapter dp = new SqlDataAdapter(Command);
+                dp.Fill(dr);
+            }
+            //if (dr.Rows.Count > 0)
+            //    return dr.Rows[0][0].ToString();
+            //else
+            //    return "";
+            return dr;
+        }
+    }
+    //ham lay ma don thuoc dien tu
+    public static string GetMaxID()
+    {
+        string StrConection = ConfigurationManager.ConnectionStrings["SqlDataProvider"].ConnectionString + "; connection timeout=600; pooling=true; Max Pool Size=6000;Timeout=600;MultipleActiveResultSets=True";
+        DataSet ds = SqlHelper.ExecuteDataset(StrConection, "KhamBenh_ThuocSD_MaxIDDTDT");
+        if (ds != null)
+        {
+            return ds.Tables[0].Rows[0][0].ToString();
+        }
+        else
+        {
+            return "";
+        }
+    }
+    //ham ghi log
+    public static void WriteLog(string log)
+    {
+        string logname = "DTDT_Log_" + DateTime.Now.ToString("ddMMyyyy") + ".txt";
+        //string fileName = HttpContext.Current.Request.MapPath("MyLogs.txt");
+        string fileName = HttpContext.Current.Request.MapPath(logname);
+        if (!File.Exists(fileName))
+        {
+            using (StreamWriter sw = File.CreateText(fileName))
+            {
+                sw.WriteLine(DateTime.Now.ToString() + " " + log);
+                sw.Close();
+            }
+        }
+        else
+        {
+            using (StreamWriter sw = File.AppendText(fileName))
+            {
+                sw.WriteLine(DateTime.Now.ToString() + " " + log);
+                sw.Close();
+            }
+        }
+    }
+    //ham check don thuoc da gui hay chua
+    public bool CheckDT(string masokham, string ngaydk, string sttin, string dk)
+    {
+        bool kq = false;
+        DataTable dr = new DataTable();
+        string tenStore = "spKhamBenh_ThuocSD_CheckLT";
+        string StrConection = ConfigurationManager.ConnectionStrings["SqlDataProvider"].ConnectionString + "; connection timeout=600; pooling=true; Max Pool Size=6000;Timeout=600;MultipleActiveResultSets=True";
+        using (SqlConnection Conection = new SqlConnection(StrConection))
+        {
+            Conection.Open();
+            using (SqlCommand Command = new SqlCommand(tenStore, Conection))
+            {
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.Parameters.Add(new SqlParameter("@MaSoKham", masokham));
+                Command.Parameters.Add(new SqlParameter("@NgayDk", ngaydk));
+                Command.Parameters.Add(new SqlParameter("@sttin", sttin));
+                Command.Parameters.Add(new SqlParameter("@DK", dk));
+                SqlDataAdapter dp = new SqlDataAdapter(Command);
+                dp.Fill(dr);
+            }
+            if (dr.Rows.Count > 0)
+                kq = true;
+        }
+        return kq;
+    }
+    //ham gui don thuoc
+    public void CapNhatThuoc(DataTable don, string maloaidt)
+    {
+        string mss = "";
+        try
+        {
+            WriteLog("bat dau gui don thuoc" + _MaSoKham + " ngaydk: " + _NgayDK);
+            //lay ma lien thong don thuoc cua bac si
+            //neu bs khong co ma lien thong thi khong duoc gui
+            DataTable dtAC = dtAC = GetDTAccount(Pub_sAccount);
+            if (dtAC.Rows.Count > 0)
+            {
+                DTDTAPI rf = new DTDTAPI();
+
+                //string malienthongbs = dtAC.Rows[0][0].ToString();
+                //string passBS = dtAC.Rows[0][1].ToString();
+                string portdnkcb = "";
+                string appname = "";
+                string appkey = "";
+                string loaitoken = "DTDT";
+                DataTable dt = GetPort(loaitoken);
+                if (dt.Rows.Count > 0)
+                {
+                    donthuoc donthuoc = new donthuoc();
+                    donthuoc.loai_don_thuoc = maloaidt;
+                    portdnkcb = dt.Rows[0][0].ToString();
+                    appname = dt.Rows[0][1].ToString();
+                    appkey = dt.Rows[0][2].ToString();
+
+
+                }
+                //string token = rf.dangnhapBS(portdnkcb, malienthongbs, passBS, username);
+                //WriteLog("token" + token);
+                KhamBenh_Noi kbn = KhamBenh_Noi.GetKhamBenh_Noi(_MaSoKham, _STT);
+                string sttin = "";
+                string ngaydk = "";
+                DataTable dt1 = GetPort(loaitoken);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+
+                    sttin += dt1.Rows[i]["STT"].ToString() + ",";
+                    ngaydk = dt1.Rows[i]["NgayDK"].ToString();
+                }
+                if (sttin.Length > 0)
+                    sttin = sttin.Remove(sttin.Length - 1);
+                mss += " / STT in: " + sttin;
+                if (CheckDT(_MaSoKham, ngaydk, sttin, "") == false)
+                {
+                    donthuocUpdate dtcn = new donthuocUpdate();
+                    dtcn.ma_don_thuoc = GetMaxID();
+
+                    List<thongtinthuoc> ttdt = new List<thongtinthuoc>();
+
+                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    {
+                        thongtinthuoc t = new thongtinthuoc();
+                        t.biet_duoc = dt1.Rows[i]["TENGOC"].ToString();
+                        t.ten_thuoc = dt.Rows[i]["TENTM"].ToString();
+                        t.don_vi_tinh = dt.Rows[i]["TENDVT"].ToString();
+                        t.so_luong = int.Parse(string.IsNullOrEmpty(dt.Rows[i]["SLmua"].ToString()) ? "0" : dt.Rows[i]["SLmua"].ToString());
+                        t.cach_dung = dt.Rows[i]["CachDung"].ToString();                       
+                        ttdt.Add(t);
+
+
+                        dtcn.ma_dinh_danh_co_so_cung_ung_thuoc = dt.Rows[i]["MDDSCUT"].ToString();
+                        dtcn.ten_co_so_cung_ung_thuoc = dt.Rows[i]["TCSCUT"].ToString();
+                        dtcn.so_dien_thoai_co_so_cung_ung_thuoc = dt.Rows[i]["SDTCSCUT"].ToString();
+                        dtcn.dia_chi_co_so_cung_ung_thuoc = dt.Rows[i]["DCCSCUT"].ToString();
+                        dtcn.ma_hoa_don = dt.Rows[i]["MHD"].ToString();
+
+                    }
+                    dtcn.thong_tin_thuoc = ttdt;
+                    
+                    var serializer = new JavaScriptSerializer();
+                    string serializedResult = serializer.Serialize(dtcn);
+                    mss += " / " + serializedResult;
+                    string result = rf.capnhatdonthuoc(portdnkcb, appname, appkey, dtcn);
+
+                    WriteLog("result" + result);
+                    mss += " / " + result;
+
+                    if (result == "{\"success\":\"cập nhật  đơn thuốc thành công\"}")
+                    {
+                        string sql = "Update khambenh_thuocSD set SoDTDT ='" + dtcn.ma_don_thuoc + "' where and isnull(huy,0)=0 and masokham ='" + _ThongtinBN.KhamBenh.MaSoKham + "' and sott in(" + sttin + ") and datediff(d,ngaydk,'" + ngaydk + "')=0";
+                        WriteLog("sql" + sql);
+                        HTC.Business.DataProvider.Instance().ExcSQL(sql);
+                    }
+                }
+                else
+                {
+                    WriteLog("da lien thong don thuoc: masokham:" + _MaSoKham + " ngaydk: " + ngaydk + " sttin: " + sttin);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog("Loi: " + mss + " " + ex.ToString());
+        }
+    }
+    public class DTDTAPI
+    {
+        public string PostURL(string url, string username, string password, string jsondata)
+        {
+            Uri myUri = new Uri(url);
+            WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+            myWebRequest.ContentType = "application/json";
+            myWebRequest.Method = "POST";
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+            NetworkCredential myNetworkCredential = new NetworkCredential(username, password);
+            CredentialCache myCredentialCache = new CredentialCache();
+            myCredentialCache.Add(myUri, "Basic", myNetworkCredential);
+            myHttpWebRequest.PreAuthenticate = true;
+            myHttpWebRequest.Credentials = myCredentialCache;
+            using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(jsondata);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            WebResponse myWebResponse = myWebRequest.GetResponse();
+            Stream responseStream = myWebResponse.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(responseStream, Encoding.UTF8);
+            string pageContent = myStreamReader.ReadToEnd();
+            responseStream.Close();
+            myWebResponse.Close();
+            return pageContent;
+        }
+        public string PutURLtoken(string url, string token, string jsondata)
+        {
+            Uri myUri = new Uri(url);
+            WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+            myWebRequest.ContentType = "application/json";
+            myWebRequest.Method = "PUT";
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+            myHttpWebRequest.PreAuthenticate = true;
+            myHttpWebRequest.Headers.Add("Authorization", "Bearer " + token);
+            using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(jsondata);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            WebResponse myWebResponse = myWebRequest.GetResponse();
+            Stream responseStream = myWebResponse.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(responseStream, Encoding.UTF8);
+            string pageContent = myStreamReader.ReadToEnd();
+            responseStream.Close();
+            myWebResponse.Close();
+            return pageContent;
+        }
+        public string PostURLtoken(string url, string token, string jsondata)
+        {
+            Uri myUri = new Uri(url);
+            HttpWebRequest myWebRequest = (HttpWebRequest)WebRequest.Create(myUri);
+            myWebRequest.ContentType = "application/json";
+            myWebRequest.Method = "POST";
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+            myHttpWebRequest.PreAuthenticate = true;
+            myHttpWebRequest.Headers.Add("Authorization", "Bearer " + token);
+            using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(jsondata);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            HttpWebResponse myWebResponse = (HttpWebResponse)myWebRequest.GetResponse();
+            Stream responseStream = myWebResponse.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(responseStream, Encoding.UTF8);
+            string pageContent = myStreamReader.ReadToEnd();
+            responseStream.Close();
+            myWebResponse.Close();
+            return pageContent;
+        }
+        public string DeleteURLtoken(string url, string token)
+        {
+            Uri myUri = new Uri(url);
+            WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+            myWebRequest.ContentType = "application/json";
+            myWebRequest.Method = "DELETE";
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+            myHttpWebRequest.PreAuthenticate = true;
+            myHttpWebRequest.Headers.Add("Authorization", "Bearer " + token);
+            using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+            {
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            WebResponse myWebResponse = myWebRequest.GetResponse();
+            Stream responseStream = myWebResponse.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(responseStream, Encoding.UTF8);
+            string pageContent = myStreamReader.ReadToEnd();
+            responseStream.Close();
+            myWebResponse.Close();
+            return pageContent;
+        }
+        public string PostURLNoAuth(string url, string jsondata)
+        {
+            Uri myUri = new Uri(url);
+            WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+            myWebRequest.ContentType = "application/json";
+            myWebRequest.Method = "POST";
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+            myHttpWebRequest.PreAuthenticate = true;
+            //myHttpWebRequest.Headers.Add("Authorization", "Bearer " + token);
+            using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(jsondata);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            WebResponse myWebResponse = myWebRequest.GetResponse();
+            Stream responseStream = myWebResponse.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(responseStream, Encoding.UTF8);
+            string pageContent = myStreamReader.ReadToEnd();
+            responseStream.Close();
+            myWebResponse.Close();
+            return pageContent;
+            //var serializer = new JavaScriptSerializer();
+            //var token = serializer.Deserialize<dangnhapbacsi_return_data>(pageContent);
+            //return token.token;
+            // return pageContent;
+        }
+        public string GetURL(string url, string name, string key)
+        {
+            Uri myUri = new Uri(url);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(myUri);
+            request.ContentType = "application/json";
+            request.Headers.Add("app-name", name);
+            request.Headers.Add("app-key", key);
+            request.Method = "GET";
+            //HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+            //NetworkCredential myNetworkCredential = new NetworkCredential(username, password);
+            //CredentialCache myCredentialCache = new CredentialCache();
+            //myCredentialCache.Add(myUri, "Basic", myNetworkCredential);
+            //myHttpWebRequest.PreAuthenticate = true;
+            //myHttpWebRequest.Credentials = myCredentialCache;
+            //using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            //{
+            //    //streamWriter.Write(jsondata);
+            //    streamWriter.Flush();
+            //    streamWriter.Close();
+            //}
+            WebResponse myWebResponse = request.GetResponse();
+            Stream responseStream = myWebResponse.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(responseStream, Encoding.UTF8);
+            string pageContent = myStreamReader.ReadToEnd();
+            responseStream.Close();
+            myWebResponse.Close();
+            return pageContent;
+        }
+        public string PostAppName(string url, string name, string key, string jsondata)
+        {
+            Uri myUri = new Uri(url);
+            WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+            myWebRequest.ContentType = "application/json";
+            myWebRequest.Headers.Add("app-name", name);
+            myWebRequest.Headers.Add("app-key", key);
+            myWebRequest.Method = "POST";
+            //HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+            //NetworkCredential myNetworkCredential = new NetworkCredential(username, password);
+            //CredentialCache myCredentialCache = new CredentialCache();
+            //myCredentialCache.Add(myUri, "Basic", myNetworkCredential);
+            //myHttpWebRequest.PreAuthenticate = true;
+            //myHttpWebRequest.Credentials = myCredentialCache;
+            using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(jsondata);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            WebResponse myWebResponse = myWebRequest.GetResponse();
+            Stream responseStream = myWebResponse.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(responseStream, Encoding.UTF8);
+            string pageContent = myStreamReader.ReadToEnd();
+            responseStream.Close();
+            myWebResponse.Close();
+            return pageContent;
+        }
+        #region RESTfulAPI
+        //ham giai ma chuoi UTF-8
+        public string DecodeFromUtf8(string utf8String)
+        {
+            return Regex.Replace(
+              utf8String,
+              @"\\u(?<Value>[a-fA-F0-9]{4})",
+              m =>
+              {
+                  return ((char)int.Parse(m.Groups["Value"].Value, NumberStyles.HexNumber)).ToString();
+              });
+        }
+        //ham dang nhap co so kham chua benh de lay to_ken them bac si
+        public string dangnhapCoSoKCB(string port, string user, string pass)
+        {
+            string url = port + "/api/auth/dang-nhap-co-so-kham-chua-benh";
+            dangnhapcosokhamchuabenh dn = new dangnhapcosokhamchuabenh();
+            //RESTful rf = new RESTful();
+            dn.ma_lien_thong_co_so_kham_chua_benh = user;
+            dn.password = pass;
+            var serializer = new JavaScriptSerializer();
+            string serializedResult = serializer.Serialize(dn);
+            string returndata = PostURLNoAuth(url, serializedResult);
+            var data = serializer.Deserialize<dangnhapbacsi_return_data>(returndata);
+            if (data != null && data.token_type == "bearer" && !string.IsNullOrEmpty(data.token))
+                return data.token;
+            else return "";
+            //return serializedResult;
+            //return returndata;
+        }
+        //ham dang nhap bac si de lay to_ken day don thuoc
+        public string dangnhapBS(string port, string user, string pass, string macskcb)
+        {
+            string loai = "SAVETokenUpdate";
+            DataTable dr = new DataTable();
+            string tenStore = "spSAVETokenAPI_Get";
+            string StrConection = ConfigurationManager.ConnectionStrings["SqlDataProvider"].ConnectionString + "; connection timeout=600; pooling=true; Max Pool Size=6000;Timeout=600;MultipleActiveResultSets=True";
+            using (SqlConnection Conection = new SqlConnection(StrConection))
+            {
+                Conection.Open();
+                using (SqlCommand Command = new SqlCommand(tenStore, Conection))
+                {
+                    Command.CommandType = CommandType.StoredProcedure;
+                    Command.Parameters.Add(new SqlParameter("@Loai", loai));
+                    SqlDataAdapter dp = new SqlDataAdapter(Command);
+                    dp.Fill(dr);
+                }
+                if (dr.Rows.Count > 0)
+                    return dr.Rows[0][0].ToString();
+                else
+                {
+                    string url = port + "/auth/dang-nhap-bac-si";
+                    dangnhapbacsi dn = new dangnhapbacsi();
+                    dn.ma_lien_thong_bac_si = user;
+                    dn.ma_lien_thong_co_so_kham_chua_benh = macskcb;
+                    dn.password = pass;
+                    var serializer = new JavaScriptSerializer();
+                    string serializedResult = serializer.Serialize(dn);
+                    string token = PostURLNoAuth(url, serializedResult);
+                    //var data = serializer.Deserialize<dangnhapbacsi_return_data>(returndata);
+                    //if (data != null && data.token_type == "bearer" && !string.IsNullOrEmpty(data.token))
+                    //    return data.token;
+                    //else return "";
+                    //WriteLog(token);
+                    if (!string.IsNullOrEmpty(token) && token.Length > 0)
+                        CreateToken(loai, token);
+                    return token;
+
+                }
+
+            }
+        }
+        //Ham de ghi token vao bang HSSKTokenAPI
+        public void CreateToken(string loai, string token)
+        {
+            DataTable dr = new DataTable();
+            string tenStore = "spLUUTokenAPI_Token_CREATE";
+            string StrConection = ConfigurationManager.ConnectionStrings["SqlDataProvider"].ConnectionString + "; connection timeout=600; pooling=true; Max Pool Size=6000;Timeout=600;MultipleActiveResultSets=True";
+            using (SqlConnection Conection = new SqlConnection(StrConection))
+            {
+                Conection.Open();
+                using (SqlCommand Command = new SqlCommand(tenStore, Conection))
+                {
+                    Command.CommandType = CommandType.StoredProcedure;
+                    Command.Parameters.Add(new SqlParameter("@Token", token));
+                    Command.Parameters.Add(new SqlParameter("@Loai", loai));
+                    SqlDataAdapter dp = new SqlDataAdapter(Command);
+                    dp.Fill(dr);
+                }
+            }
+        }
+        //ham them ma lien thong bac si vao co so kcb
+        public string themBS(string port, string user, string token)
+        {
+            string url = port + "/api/v1/them-bac-si";
+            var serializer = new JavaScriptSerializer();
+            string serializedResult = "{\"ma_lien_thong_bac_si\" : \"" + user + "\"}";
+            string returndata = PostURLtoken(url, token, serializedResult);
+            //var data = serializer.Deserialize<dangnhapbacsi_return_data>(returndata);
+            //if (data != null && data.token_type == "bearer" && !string.IsNullOrEmpty(data.token))
+            //    return data.token;
+            //else return "";
+            //return serializedResult;
+            //return returndata;
+            string output = DecodeFromUtf8(returndata);
+            return output;
+        }
+        //ham xoa ma lien thong bac si khoi co so kcb
+        public string xoaBS(string port, string user, string token)
+        {
+            string url = port + "/api/v1/xoa-bac-si";
+            var serializer = new JavaScriptSerializer();
+            string serializedResult = "{\"ma_lien_thong_bac_si\" : \"" + user + "\"}";
+            string returndata = PostURLtoken(url, token, serializedResult);
+            //var data = serializer.Deserialize<dangnhapbacsi_return_data>(returndata);
+            //if (data != null && data.token_type == "bearer" && !string.IsNullOrEmpty(data.token))
+            //    return data.token;
+            //else return "";
+            //return serializedResult;
+            //return returndata;
+            string output = DecodeFromUtf8(returndata);
+            return output;
+        }
+        //ham gui don thuoc
+        public string Gui_don_thuoc(string port, string token, donthuoc dt)
+        {
+            string url = port + "/api/v1/gui-don-thuoc";
+            var serializer = new JavaScriptSerializer();
+            string serializedResult = serializer.Serialize(dt);
+            string returndata = PostURLtoken(url, token, serializedResult);
+            //var data = serializer.Deserialize<kq_don_thuoc_return>(returndata);
+            //if (data != null && data.Code == 200 && data.Ma_don_thuoc_quoc_gia != "")
+            //    return data.Ma_don_thuoc_quoc_gia;
+            //else return "";
+            //var output = System.Net.WebUtility.HtmlDecode(returndata);
+            string output = DecodeFromUtf8(returndata);
+            return output;
+        }
+        //ham lay thong tin don thuoc
+        public donthuocget laydonthuoc(string port, string madonthuoc, string name, string key)
+        {
+            string url = port + "/api/v1/thong-tin-don-thuoc/" + madonthuoc;
+            string returndata = GetURL(url, name, key);
+            var serializer = new JavaScriptSerializer();
+            var data = serializer.Deserialize<donthuocget>(returndata);
+            if (data != null)
+                return data;
+            else return null;
+        }
+        public string capnhatdonthuoc(string port, string name, string key, donthuocUpdate donthuoc)
+        {
+            string url = port + "/api/v1/cap-nhat-don-thuoc";
+            var serializer = new JavaScriptSerializer();
+            string serializedResult = serializer.Serialize(donthuoc);
+            string returndata = PostAppName(url, name, key, serializedResult);
+
+            string output = DecodeFromUtf8(returndata);
+            return output;
+        }
+        #endregion
+    }
+}
+

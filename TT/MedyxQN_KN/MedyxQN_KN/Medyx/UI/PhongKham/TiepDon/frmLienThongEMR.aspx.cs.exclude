@@ -1,0 +1,977 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using CrystalDecisions.CrystalReports.Engine;
+using HTC.Business.PhongKham;
+using HTC.Business.CategoryList;
+using HTC.Common.Web;
+using Telerik.Web.UI;
+using Microsoft.ApplicationBlocks.Data;
+using System.IO;
+using System.Xml;
+using System.Text;
+using System.Xml.Serialization;
+using System.Net;
+using System.Data.SqlClient;
+using Newtonsoft.Json;
+using System.Web.Script.Serialization;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using HIS_EMR_Core;
+using HIS_EMR_Core.Core;
+
+public partial class UI_PhongKham_KhamBenh_frmLienThongHSSK : WebBase
+{
+    private const string ViewState_DSBNList = "_DSBNList";
+    public DSBNList _DSBNList
+    {
+        get
+        {
+            return (DSBNList)ViewState[ViewState_DSBNList];
+        }
+        set
+        {
+            ViewState[ViewState_DSBNList] = value;
+        }
+    }
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            dtTuNgay.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            SetData();
+            grdDanhSach.DataSource = "";
+            LoadData();
+        }
+    }
+    protected void SetData()
+    {
+        HTC.Business.CategoryList.DMKhoaListcb list = HTC.Business.CategoryList.DMKhoaListcb.GetListByAccount(Pub_sAccount);
+        cboDsKhoa.DataSource = list;
+        cboDsKhoa.DataBind();
+    }
+    private void LoadData()
+    {
+        DateTime tungay = DateTime.Parse(dtTuNgay.Text);
+        string dk = "";
+        //int loai = int.Parse(rblNhomKhoa.SelectedValue);
+        _DSBNList = DSBNList.GetAll(cboDsKhoa.SelectedValue, tungay, tungay, 1, dk, false);
+        grdDanhSach.DataSource = _DSBNList;
+        grdDanhSach.DataBind();
+    }
+    protected void baraction_ButtonClick(object sender, RadToolBarEventArgs e)
+    {
+        try
+        {
+            if (((RadToolBarButton)e.Item).CommandName.Equals("cmdExit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            else if (((RadToolBarButton)e.Item).CommandName.Equals("cmdView", StringComparison.InvariantCultureIgnoreCase))
+            {
+                LoadData();
+            }
+            else if (((RadToolBarButton)e.Item).CommandName.Equals("cmdSave", StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (_DSBNList.Count > 0)
+                {
+                    UpdateDataSave();
+                }
+                else
+                {
+                    ShowMessage("Không có dữ liệu để liên thông!");
+                    return;
+                }
+            }
+            else if (((RadToolBarButton)e.Item).CommandName.Equals("cmdSaveDM", StringComparison.InvariantCultureIgnoreCase))
+            {
+                //new HIS_EMR_Core.Core.BaseCore("").DMTHUOC_ChungLoai_Update()
+                string path = Path.Combine(Server.MapPath("~/"), "mapobjectsettings.json");
+                BaseCore core = new BaseCore(path);
+                //var result = core.DMTHUOC_ChungLoai_GetAll();
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowMessage("Không thực hiện được yêu cầu" + ex.Message);
+            return;
+        }
+    }
+    protected void cboDsKhoa_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+    {
+        LoadData();
+    }
+    protected void grdDanhSach_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
+    {
+        if (_DSBNList != null)
+        {
+            grdDanhSach.DataSource = _DSBNList;
+        }
+    }
+    protected void dtTuNgay_TextChanged(object sender, EventArgs e)
+    {
+        LoadData();
+    }
+    public void UpdateDataSave()
+    {
+        DateTime tungay = DateTime.Parse(dtTuNgay.Text);
+        string dk = "";
+        //int loai = int.Parse(rblNhomKhoa.SelectedValue);
+        string tokenPID = "";
+        string tokenUpdate = "";
+        string portPID = "";
+        string usernamePID = "";
+        string passwordPID = "";
+        string loaitoken = "HSSKTokenPID";
+        DataTable dt = GetPort(loaitoken);
+        if (dt.Rows.Count > 0)
+        {
+            portPID = dt.Rows[0][0].ToString();
+            usernamePID = dt.Rows[0][1].ToString();
+            passwordPID = dt.Rows[0][2].ToString();
+        }
+        loaitoken = "HSSKTokenUpdate";
+        dt = GetPort(loaitoken);
+        string portUpdate = "";
+        string usernameUpdate = "";
+        string passwordUpdate = "";
+        if (dt.Rows.Count > 0)
+        {
+            portUpdate = dt.Rows[0][0].ToString();
+            usernameUpdate = dt.Rows[0][1].ToString();
+            passwordUpdate = dt.Rows[0][2].ToString();
+        }
+        for (int i = 0; i < _DSBNList.Count; i++)
+        {
+            
+        }
+        ShowMessage("Liên thông dữ liệu thành công!");
+        LoadData();
+    }
+    //ham lay url cua API lien thong HSSK
+    public DataTable GetPort(string loai)
+    {
+        DataTable dr = new DataTable();
+        string tenStore = "PACS_Port_Get";
+        string StrConection = ConfigurationManager.ConnectionStrings["SqlDataProvider"].ConnectionString + "; connection timeout=600; pooling=true; Max Pool Size=6000;Timeout=600;MultipleActiveResultSets=True";
+        using (SqlConnection Conection = new SqlConnection(StrConection))
+        {
+            Conection.Open();
+            using (SqlCommand Command = new SqlCommand(tenStore, Conection))
+            {
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.Parameters.Add(new SqlParameter("@Loai", loai));
+                SqlDataAdapter dp = new SqlDataAdapter(Command);
+                dp.Fill(dr);
+            }
+            //if (dr.Rows.Count > 0)
+            return dr;
+            //else
+            //    return "";
+        }
+    }
+    #region Token
+    //ham lay token API de lay PID 
+    //ktra trong bang HSSKTokenAPI xem da có token mà thời gian lấy token < thời gian hiện tại 25 phút thì lấy, neu khong thi goi API de lay token moi va luu token lay duoc vao bang HSSKTokenAPI
+    //Loai=HSSKTokenPID
+    //public string GetTokenPID(string port, string username, string password)
+    //{
+    //    string loai = "HSSKTokenPID";
+    //    DataTable dr = new DataTable();
+    //    string tenStore = "spHSSKTokenAPI_Get";
+    //    string StrConection = ConfigurationManager.ConnectionStrings["SqlDataProvider"].ConnectionString + "; connection timeout=600; pooling=true; Max Pool Size=6000;Timeout=600;MultipleActiveResultSets=True";
+    //    using (SqlConnection Conection = new SqlConnection(StrConection))
+    //    {
+    //        Conection.Open();
+    //        using (SqlCommand Command = new SqlCommand(tenStore, Conection))
+    //        {
+    //            Command.CommandType = CommandType.StoredProcedure;
+    //            Command.Parameters.Add(new SqlParameter("@Loai", loai));
+    //            SqlDataAdapter dp = new SqlDataAdapter(Command);
+    //            dp.Fill(dr);
+    //        }
+    //        if (dr.Rows.Count > 0)
+    //            return dr.Rows[0][0].ToString();
+    //        else
+    //        {
+    //            //chua co token trong ngay hoac token da qua han
+    //            //lay token moi
+    //            string url = port + "/Services/PID/thongTinBenhNhan/Login";
+    //            Hilo h = new Hilo();
+    //            string xau = h.GetTokenPID(url, username, password);
+    //            var returndata = JsonConvert.DeserializeObject<LoginError>(xau);
+    //            string token = returndata.Token;
+    //            if (!string.IsNullOrEmpty(token) && token.Length > 0)
+    //                CreateToken(loai, token);
+    //            else WriteLog(xau);
+    //            return token;
+    //        }
+    //    }
+    //}
+    ////ham lay token API de lay Update HSSK 
+    ////ktra trong bang HSSKTokenAPI xem da có token mà thời gian lấy token < thời gian hiện tại 25 phút thì lấy, neu khong thi goi API de lay token moi va luu token lay duoc vao bang HSSKTokenAPI
+    ////Loai=HSSKTokenUpdate
+    //public string GetTokenUpdate(string port, string username, string password)
+    //{
+    //    string loai = "HSSKTokenUpdate";
+    //    DataTable dr = new DataTable();
+    //    string tenStore = "spHSSKTokenAPI_Get";
+    //    string StrConection = ConfigurationManager.ConnectionStrings["SqlDataProvider"].ConnectionString + "; connection timeout=600; pooling=true; Max Pool Size=6000;Timeout=600;MultipleActiveResultSets=True";
+    //    using (SqlConnection Conection = new SqlConnection(StrConection))
+    //    {
+    //        Conection.Open();
+    //        using (SqlCommand Command = new SqlCommand(tenStore, Conection))
+    //        {
+    //            Command.CommandType = CommandType.StoredProcedure;
+    //            Command.Parameters.Add(new SqlParameter("@Loai", loai));
+    //            SqlDataAdapter dp = new SqlDataAdapter(Command);
+    //            dp.Fill(dr);
+    //        }
+    //        if (dr.Rows.Count > 0)
+    //            return dr.Rows[0][0].ToString();
+    //        else
+    //        {
+    //            //chua co token trong ngay hoac token da qua han
+    //            //lay token moi
+    //            string url = port + "/api/authenticate";
+    //            //WriteLog(url);
+    //            Hilo h = new Hilo();
+    //            string json = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
+    //            string xau = h.PostURL(url, json);
+    //            var returndata = JsonConvert.DeserializeObject<LoginError>(xau);
+    //            string token = returndata.id_token;
+    //            if (!string.IsNullOrEmpty(token) && token.Length > 0)
+    //                CreateToken(loai, token);
+    //            else WriteLog(xau);
+    //            return token;
+    //        }
+    //    }
+    //}
+    //Ham de ghi token vao bang HSSKTokenAPI
+    //public void CreateToken(string loai, string token)
+    //{
+    //    DataTable dr = new DataTable();
+    //    string tenStore = "spHSSKTokenAPI_Token_CREATE";
+    //    string StrConection = ConfigurationManager.ConnectionStrings["SqlDataProvider"].ConnectionString + "; connection timeout=600; pooling=true; Max Pool Size=6000;Timeout=600;MultipleActiveResultSets=True";
+    //    using (SqlConnection Conection = new SqlConnection(StrConection))
+    //    {
+    //        Conection.Open();
+    //        using (SqlCommand Command = new SqlCommand(tenStore, Conection))
+    //        {
+    //            Command.CommandType = CommandType.StoredProcedure;
+    //            Command.Parameters.Add(new SqlParameter("@Token", token));
+    //            Command.Parameters.Add(new SqlParameter("@Loai", loai));
+    //            SqlDataAdapter dp = new SqlDataAdapter(Command);
+    //            dp.Fill(dr);
+    //        }
+    //    }
+    //}
+    #endregion
+    //ham ghi log
+    public static void WriteLog(string log)
+    {
+        string logname = "HSSK_Log_" + DateTime.Now.ToString("ddMMyyyy");
+        //string fileName = HttpContext.Current.Request.MapPath("MyLogs.txt");
+        string fileName = HttpContext.Current.Request.MapPath(logname);
+        if (!File.Exists(fileName))
+        {
+            using (StreamWriter sw = File.CreateText(fileName))
+            {
+                sw.WriteLine(DateTime.Now.ToString() + " " + log);
+                sw.Close();
+            }
+        }
+        else
+        {
+            using (StreamWriter sw = File.AppendText(fileName))
+            {
+                sw.WriteLine(DateTime.Now.ToString() + " " + log);
+                sw.Close();
+            }
+        }
+    }
+    public static string Serialize<T>(T dataToSerialize)
+    {
+        try
+        {
+            var stringwriter = new System.IO.StringWriter();
+            var serializer = new XmlSerializer(typeof(T));
+            serializer.Serialize(stringwriter, dataToSerialize);
+            return stringwriter.ToString();
+        }
+        catch
+        {
+            throw;
+        }
+    }
+    #region EMR
+    public string Login(string url, string username, string password)
+    {
+        string kq = "";
+        Uri myUri = new Uri(url);
+        WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+        myWebRequest.ContentType = "application/json";
+        myWebRequest.Method = "GET";
+        HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+        myHttpWebRequest.PreAuthenticate = true;
+        //myHttpWebRequest.Headers.Add("U", username);
+        //myHttpWebRequest.Headers.Add("P", password);
+        string jsondata = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
+        using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+        {
+            streamWriter.Write(jsondata);
+            streamWriter.Flush();
+            streamWriter.Close();
+        }
+        WebResponse myWebResponse = myWebRequest.GetResponse();
+        Stream responseStream = myWebResponse.GetResponseStream();
+        StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+        string pageContent = myStreamReader.ReadToEnd();
+        responseStream.Close();
+        myWebResponse.Close();
+        //return pageContent;
+
+        return kq;
+    }
+    #endregion
+}
+#region class
+[Serializable()]
+public class DSBN
+{
+    public Int32 Ordernumber { get; set; }
+    public String maThe { get; set; }
+    public String hoTen { get; set; }
+    public String gioiTinh { get; set; }
+    public String nhomMauHeAbo { get; set; }
+    public String nhomMauHeRh { get; set; }
+    public String ngaySinh { get; set; }
+    public String maTinhKhaiSinh { get; set; }
+    public String maDanToc { get; set; }
+    public String maQuocTich { get; set; }
+    public String maTonGiao { get; set; }
+    public String maNgheNghiep { get; set; }
+    public String soCmnd { get; set; }
+    public String ngayCap { get; set; }
+    public String noiCap { get; set; }
+    public String diaChiChiTietThuongTru { get; set; }
+    public String maTinhThuongTru { get; set; }
+    public String maHuyenThuongTru { get; set; }
+    public String maXaThuongTru { get; set; }
+    public String diaChiChiTietHienTai { get; set; }
+    public String maTinhHienTai { get; set; }
+    public String maHuyenHienTai { get; set; }
+    public String maXaHienTai { get; set; }
+    public String dienThoaiNR { get; set; }
+    public String dienThoaiDd { get; set; }
+    public String email { get; set; }
+    public String hoTenBo { get; set; }
+    public String hoTenMe { get; set; }
+    public String maYTeBo { get; set; }
+    public String maYTeMe { get; set; }
+    public String nguoiChamSocChinh { get; set; }
+    public String quanHeNguoiChamSoc { get; set; }
+    public String dienThoaiCoDinhNCSC { get; set; }
+    public String dienThoaiDiDDongNCSC { get; set; }
+    public String maYTeCaNhan { get; set; }
+    public String tenBenh { get; set; }
+    public String ngayRaVien { get; set; }
+    public String tenKhoaRaVien { get; set; }
+    public String MaBN { get; set; }
+    public String maCSKCB { get; set; }
+    public String MaSoKham { get; set; }
+    public DSBN()
+    {
+        maThe = "";
+        hoTen = "";
+        gioiTinh = "";
+        nhomMauHeAbo = "";
+        nhomMauHeRh = "";
+        ngaySinh = "";
+        maTinhKhaiSinh = "";
+        maDanToc = "";
+        maQuocTich = "";
+        maTonGiao = "";
+        maNgheNghiep = "";
+        soCmnd = "";
+        ngayCap = "";
+        noiCap = "";
+        diaChiChiTietThuongTru = "";
+        maTinhThuongTru = "";
+        maHuyenThuongTru = "";
+        maXaThuongTru = "";
+        diaChiChiTietHienTai = "";
+        maTinhHienTai = "";
+        maHuyenHienTai = "";
+        maXaHienTai = "";
+        dienThoaiNR = "";
+        dienThoaiDd = "";
+        email = "";
+        hoTenBo = "";
+        hoTenMe = "";
+        maYTeBo = "";
+        maYTeMe = "";
+        nguoiChamSocChinh = "";
+        quanHeNguoiChamSoc = "";
+        dienThoaiCoDinhNCSC = "";
+        dienThoaiDiDDongNCSC = "";
+        maYTeCaNhan = "";
+        tenBenh = "";
+        ngayRaVien = "";
+        tenKhoaRaVien = "";
+        MaBN = "";
+        maCSKCB = "";
+        Ordernumber = 0;
+        MaSoKham = "";
+    }
+
+    public DSBN(String maThe, String hoTen, String gioiTinh, String nhomMauHeAbo, String nhomMauHeRh, String ngaySinh, String maTinhKhaiSinh, String maDanToc, String maQuocTich, String maTonGiao, String maNgheNghiep, String soCmnd, String ngayCap, String noiCap, String diaChiChiTietThuongTru, String maTinhThuongTru, String maHuyenThuongTru, String maXaThuongTru, String diaChiChiTietHienTai, String maTinhHienTai, String maHuyenHienTai, String maXaHienTai, String dienThoaiNR, String dienThoaiDd, String email, String hoTenBo, String hoTenMe, String maYTeBo, String maYTeMe, String nguoiChamSocChinh, String quanHeNguoiChamSoc, String dienThoaiCoDinhNCSC, String dienThoaiDiDDongNCSC, String maYTeCaNhan, String tenBenh, String ngayRaVien, String tenKhoaRaVien, String MaBN, String maCSKCB, string MaSoKham, Int32 Ordernumber)
+    {
+        this.maThe = maThe;
+        this.hoTen = hoTen;
+        this.gioiTinh = gioiTinh;
+        this.nhomMauHeAbo = nhomMauHeAbo;
+        this.nhomMauHeRh = nhomMauHeRh;
+        this.ngaySinh = ngaySinh;
+        this.maTinhKhaiSinh = maTinhKhaiSinh;
+        this.maDanToc = maDanToc;
+        this.maQuocTich = maQuocTich;
+        this.maTonGiao = maTonGiao;
+        this.maNgheNghiep = maNgheNghiep;
+        this.soCmnd = soCmnd;
+        this.ngayCap = ngayCap;
+        this.noiCap = noiCap;
+        this.diaChiChiTietThuongTru = diaChiChiTietThuongTru;
+        this.maTinhThuongTru = maTinhThuongTru;
+        this.maHuyenThuongTru = maHuyenThuongTru;
+        this.maXaThuongTru = maXaThuongTru;
+        this.diaChiChiTietHienTai = diaChiChiTietHienTai;
+        this.maTinhHienTai = maTinhHienTai;
+        this.maHuyenHienTai = maHuyenHienTai;
+        this.maXaHienTai = maXaHienTai;
+        this.dienThoaiNR = dienThoaiNR;
+        this.dienThoaiDd = dienThoaiDd;
+        this.email = email;
+        this.hoTenBo = hoTenBo;
+        this.hoTenMe = hoTenMe;
+        this.maYTeBo = maYTeBo;
+        this.maYTeMe = maYTeMe;
+        this.nguoiChamSocChinh = nguoiChamSocChinh;
+        this.quanHeNguoiChamSoc = quanHeNguoiChamSoc;
+        this.dienThoaiCoDinhNCSC = dienThoaiCoDinhNCSC;
+        this.dienThoaiDiDDongNCSC = dienThoaiDiDDongNCSC;
+        this.maYTeCaNhan = maYTeCaNhan;
+        this.tenBenh = tenBenh;
+        this.ngayRaVien = ngayRaVien;
+        this.tenKhoaRaVien = tenKhoaRaVien;
+        this.MaBN = MaBN;
+        this.maCSKCB = maCSKCB;
+        this.MaSoKham = MaSoKham;
+        this.Ordernumber = Ordernumber;
+    }
+    public DSBN(IDataReader dr, Int32 Ordernumber)
+    {
+        if (dr["maThe"].GetType().Name != "DBNull" && dr["maThe"] != null)
+        {
+            this.maThe = Convert.ToString(dr["maThe"]);
+        }
+        else
+        {
+            this.maThe = "";
+        }
+        if (dr["hoTen"].GetType().Name != "DBNull" && dr["hoTen"] != null)
+        {
+            this.hoTen = Convert.ToString(dr["hoTen"]);
+        }
+        else
+        {
+            this.hoTen = "";
+        }
+        if (dr["gioiTinh"].GetType().Name != "DBNull" && dr["gioiTinh"] != null)
+        {
+            this.gioiTinh = Convert.ToString(dr["gioiTinh"]);
+        }
+        else
+        {
+            this.gioiTinh = "";
+        }
+        if (dr["nhomMauHeAbo"].GetType().Name != "DBNull" && dr["nhomMauHeAbo"] != null)
+        {
+            this.nhomMauHeAbo = Convert.ToString(dr["nhomMauHeAbo"]);
+        }
+        else
+        {
+            this.nhomMauHeAbo = "";
+        }
+        if (dr["nhomMauHeRh"].GetType().Name != "DBNull" && dr["nhomMauHeRh"] != null)
+        {
+            this.nhomMauHeRh = Convert.ToString(dr["nhomMauHeRh"]);
+        }
+        else
+        {
+            this.nhomMauHeRh = "";
+        }
+        if (dr["ngaySinh"].GetType().Name != "DBNull" && dr["ngaySinh"] != null)
+        {
+            this.ngaySinh = Convert.ToString(dr["ngaySinh"]);
+        }
+        else
+        {
+            this.ngaySinh = "";
+        }
+        if (dr["maTinhKhaiSinh"].GetType().Name != "DBNull" && dr["maTinhKhaiSinh"] != null)
+        {
+            this.maTinhKhaiSinh = Convert.ToString(dr["maTinhKhaiSinh"]);
+        }
+        else
+        {
+            this.maTinhKhaiSinh = "";
+        }
+        if (dr["maDanToc"].GetType().Name != "DBNull" && dr["maDanToc"] != null)
+        {
+            this.maDanToc = Convert.ToString(dr["maDanToc"]);
+        }
+        else
+        {
+            this.maDanToc = "";
+        }
+        if (dr["maQuocTich"].GetType().Name != "DBNull" && dr["maQuocTich"] != null)
+        {
+            this.maQuocTich = Convert.ToString(dr["maQuocTich"]);
+        }
+        else
+        {
+            this.maQuocTich = "";
+        }
+        if (dr["maTonGiao"].GetType().Name != "DBNull" && dr["maTonGiao"] != null)
+        {
+            this.maTonGiao = Convert.ToString(dr["maTonGiao"]);
+        }
+        else
+        {
+            this.maTonGiao = "";
+        }
+        if (dr["maNgheNghiep"].GetType().Name != "DBNull" && dr["maNgheNghiep"] != null)
+        {
+            this.maNgheNghiep = Convert.ToString(dr["maNgheNghiep"]);
+        }
+        else
+        {
+            this.maNgheNghiep = "";
+        }
+        if (dr["soCmnd"].GetType().Name != "DBNull" && dr["soCmnd"] != null)
+        {
+            this.soCmnd = Convert.ToString(dr["soCmnd"]);
+        }
+        else
+        {
+            this.soCmnd = "";
+        }
+        if (dr["ngayCap"].GetType().Name != "DBNull" && dr["ngayCap"] != null)
+        {
+            this.ngayCap = Convert.ToString(dr["ngayCap"]);
+        }
+        else
+        {
+            this.ngayCap = "";
+        }
+        if (dr["noiCap"].GetType().Name != "DBNull" && dr["noiCap"] != null)
+        {
+            this.noiCap = Convert.ToString(dr["noiCap"]);
+        }
+        else
+        {
+            this.noiCap = "";
+        }
+        if (dr["diaChiChiTietThuongTru"].GetType().Name != "DBNull" && dr["diaChiChiTietThuongTru"] != null)
+        {
+            this.diaChiChiTietThuongTru = Convert.ToString(dr["diaChiChiTietThuongTru"]);
+        }
+        else
+        {
+            this.diaChiChiTietThuongTru = "";
+        }
+        if (dr["maTinhThuongTru"].GetType().Name != "DBNull" && dr["maTinhThuongTru"] != null)
+        {
+            this.maTinhThuongTru = Convert.ToString(dr["maTinhThuongTru"]);
+        }
+        else
+        {
+            this.maTinhThuongTru = "";
+        }
+        if (dr["maHuyenThuongTru"].GetType().Name != "DBNull" && dr["maHuyenThuongTru"] != null)
+        {
+            this.maHuyenThuongTru = Convert.ToString(dr["maHuyenThuongTru"]);
+        }
+        else
+        {
+            this.maHuyenThuongTru = "";
+        }
+        if (dr["maXaThuongTru"].GetType().Name != "DBNull" && dr["maXaThuongTru"] != null)
+        {
+            this.maXaThuongTru = Convert.ToString(dr["maXaThuongTru"]);
+        }
+        else
+        {
+            this.maXaThuongTru = "";
+        }
+        if (dr["diaChiChiTietHienTai"].GetType().Name != "DBNull" && dr["diaChiChiTietHienTai"] != null)
+        {
+            this.diaChiChiTietHienTai = Convert.ToString(dr["diaChiChiTietHienTai"]);
+        }
+        else
+        {
+            this.diaChiChiTietHienTai = "";
+        }
+        if (dr["maTinhHienTai"].GetType().Name != "DBNull" && dr["maTinhHienTai"] != null)
+        {
+            this.maTinhHienTai = Convert.ToString(dr["maTinhHienTai"]);
+        }
+        else
+        {
+            this.maTinhHienTai = "";
+        }
+        if (dr["maHuyenHienTai"].GetType().Name != "DBNull" && dr["maHuyenHienTai"] != null)
+        {
+            this.maHuyenHienTai = Convert.ToString(dr["maHuyenHienTai"]);
+        }
+        else
+        {
+            this.maHuyenHienTai = "";
+        }
+        if (dr["maXaHienTai"].GetType().Name != "DBNull" && dr["maXaHienTai"] != null)
+        {
+            this.maXaHienTai = Convert.ToString(dr["maXaHienTai"]);
+        }
+        else
+        {
+            this.maXaHienTai = "";
+        }
+        if (dr["dienThoaiNR"].GetType().Name != "DBNull" && dr["dienThoaiNR"] != null)
+        {
+            this.dienThoaiNR = Convert.ToString(dr["dienThoaiNR"]);
+        }
+        else
+        {
+            this.dienThoaiNR = "";
+        }
+        if (dr["dienThoaiDd"].GetType().Name != "DBNull" && dr["dienThoaiDd"] != null)
+        {
+            this.dienThoaiDd = Convert.ToString(dr["dienThoaiDd"]);
+        }
+        else
+        {
+            this.dienThoaiDd = "";
+        }
+        if (dr["email"].GetType().Name != "DBNull" && dr["email"] != null)
+        {
+            this.email = Convert.ToString(dr["email"]);
+        }
+        else
+        {
+            this.email = "";
+        }
+        if (dr["hoTenBo"].GetType().Name != "DBNull" && dr["hoTenBo"] != null)
+        {
+            this.hoTenBo = Convert.ToString(dr["hoTenBo"]);
+        }
+        else
+        {
+            this.hoTenBo = "";
+        }
+        if (dr["hoTenMe"].GetType().Name != "DBNull" && dr["hoTenMe"] != null)
+        {
+            this.hoTenMe = Convert.ToString(dr["hoTenMe"]);
+        }
+        else
+        {
+            this.hoTenMe = "";
+        }
+        if (dr["maYTeBo"].GetType().Name != "DBNull" && dr["maYTeBo"] != null)
+        {
+            this.maYTeBo = Convert.ToString(dr["maYTeBo"]);
+        }
+        else
+        {
+            this.maYTeBo = "";
+        }
+        if (dr["maYTeMe"].GetType().Name != "DBNull" && dr["maYTeMe"] != null)
+        {
+            this.maYTeMe = Convert.ToString(dr["maYTeMe"]);
+        }
+        else
+        {
+            this.maYTeMe = "";
+        }
+        if (dr["nguoiChamSocChinh"].GetType().Name != "DBNull" && dr["nguoiChamSocChinh"] != null)
+        {
+            this.nguoiChamSocChinh = Convert.ToString(dr["nguoiChamSocChinh"]);
+        }
+        else
+        {
+            this.nguoiChamSocChinh = "";
+        }
+        if (dr["quanHeNguoiChamSoc"].GetType().Name != "DBNull" && dr["quanHeNguoiChamSoc"] != null)
+        {
+            this.quanHeNguoiChamSoc = Convert.ToString(dr["quanHeNguoiChamSoc"]);
+        }
+        else
+        {
+            this.quanHeNguoiChamSoc = "";
+        }
+        if (dr["dienThoaiCoDinhNCSC"].GetType().Name != "DBNull" && dr["dienThoaiCoDinhNCSC"] != null)
+        {
+            this.dienThoaiCoDinhNCSC = Convert.ToString(dr["dienThoaiCoDinhNCSC"]);
+        }
+        else
+        {
+            this.dienThoaiCoDinhNCSC = "";
+        }
+        if (dr["dienThoaiDiDDongNCSC"].GetType().Name != "DBNull" && dr["dienThoaiDiDDongNCSC"] != null)
+        {
+            this.dienThoaiDiDDongNCSC = Convert.ToString(dr["dienThoaiDiDDongNCSC"]);
+        }
+        else
+        {
+            this.dienThoaiDiDDongNCSC = "";
+        }
+        if (dr["maYTeCaNhan"].GetType().Name != "DBNull" && dr["maYTeCaNhan"] != null)
+        {
+            this.maYTeCaNhan = Convert.ToString(dr["maYTeCaNhan"]);
+        }
+        else
+        {
+            this.maYTeCaNhan = "";
+        }
+        if (dr["tenBenh"].GetType().Name != "DBNull" && dr["tenBenh"] != null)
+        {
+            this.tenBenh = Convert.ToString(dr["tenBenh"]);
+        }
+        else
+        {
+            this.tenBenh = "";
+        }
+        if (dr["ngayRaVien"].GetType().Name != "DBNull" && dr["ngayRaVien"] != null)
+        {
+            this.ngayRaVien = Convert.ToDateTime(dr["ngayRaVien"]).ToString("dd/MM/yyyy");
+        }
+        else
+        {
+            this.ngayRaVien = "";
+        }
+        if (dr["tenKhoaRaVien"].GetType().Name != "DBNull" && dr["tenKhoaRaVien"] != null)
+        {
+            this.tenKhoaRaVien = Convert.ToString(dr["tenKhoaRaVien"]);
+        }
+        else
+        {
+            this.tenKhoaRaVien = "";
+        }
+        if (dr["MaBN"].GetType().Name != "DBNull" && dr["MaBN"] != null)
+        {
+            this.MaBN = Convert.ToString(dr["MaBN"]);
+        }
+        else
+        {
+            this.MaBN = "";
+        }
+        if (dr["maCSKCB"].GetType().Name != "DBNull" && dr["maCSKCB"] != null)
+        {
+            this.maCSKCB = Convert.ToString(dr["maCSKCB"]);
+        }
+        else
+        {
+            this.maCSKCB = "";
+        }
+        if (dr["MaSoKham"].GetType().Name != "DBNull" && dr["MaSoKham"] != null)
+        {
+            this.MaSoKham = Convert.ToString(dr["MaSoKham"]);
+        }
+        else
+        {
+            this.MaSoKham = "";
+        }
+        this.Ordernumber = Ordernumber;
+    }
+}
+[Serializable()]
+public class DSBNList : List<DSBN>
+{
+    public DSBNList()
+    { }
+    private static string ConnectString
+    {
+        get
+        {
+            return ConfigurationManager.ConnectionStrings["SqlDataProvider"].ConnectionString + "; connection timeout=600; pooling=true; Max Pool Size=6000;Timeout=600;MultipleActiveResultSets=True";
+        }
+    }
+    public static DSBNList GetAll(string makhoa, DateTime tunngay, DateTime denngay, int loai, string DK, bool qadmin)
+    {
+        DSBNList List = new DSBNList();
+        using (IDataReader dr = (IDataReader)SqlHelper.ExecuteReader(ConnectString, "dbo.HoSoSucKhoe_GETALL", makhoa, tunngay, denngay, loai, DK, qadmin))
+        {
+            int Ordernumber = 0;
+            while (dr.Read())
+            {
+                Ordernumber++;
+                List.Add(new DSBN(dr, Ordernumber));
+            }
+        }
+        return List;
+    }
+}
+
+public class Hilo
+{
+    //giai ma chuoi xml thanh object 
+    public T Deserialize<T>(string input) where T : class
+    {
+        System.Xml.Serialization.XmlSerializer ser = new System.Xml.Serialization.XmlSerializer(typeof(T));
+
+        using (StringReader sr = new StringReader(input))
+        {
+            return (T)ser.Deserialize(sr);
+        }
+    }
+    // ma hoa object thanh chuoi xml 
+    public string Serialize<T>(T ObjectToSerialize)
+    {
+        //XmlSerializer xmlSerializer = new XmlSerializer(ObjectToSerialize.GetType());
+
+        //using (StringWriter textWriter = new StringWriter())
+        //{
+        //    xmlSerializer.Serialize(textWriter, ObjectToSerialize);
+        //    return textWriter.ToString();
+        //}
+        System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(T));
+
+        XmlWriterSettings settings = new XmlWriterSettings();
+        settings.Encoding = new UnicodeEncoding(false, false); // no BOM in a .NET string
+        settings.Indent = true;
+        settings.OmitXmlDeclaration = true;
+
+        XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+        // exclude xsi and xsd namespaces by adding the following:
+        ns.Add(string.Empty, string.Empty);
+
+        using (StringWriter textWriter = new StringWriter())
+        {
+            using (XmlWriter xmlWriter = XmlWriter.Create(textWriter, settings))
+            {
+                serializer.Serialize(xmlWriter, ObjectToSerialize, ns);
+            }
+            return textWriter.ToString().Replace(" p5:nil=\"true\" xmlns:p5=\"http://www.w3.org/2001/XMLSchema-instance\"", "").Replace(" p2:nil=\"true\" xmlns:p2=\"http://www.w3.org/2001/XMLSchema-instance\"", "").Replace("\r\n ", string.Empty).Replace("  ", string.Empty); //This is the output as a string
+        }
+    }
+    public string PostURL(string url, string jsondata)
+    {
+        Uri myUri = new Uri(url);
+        WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+        myWebRequest.ContentType = "application/json";
+        myWebRequest.Method = "POST";
+        HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+        NetworkCredential myNetworkCredential = new NetworkCredential();
+        CredentialCache myCredentialCache = new CredentialCache();
+        myCredentialCache.Add(myUri, "Basic", myNetworkCredential);
+        myHttpWebRequest.PreAuthenticate = true;
+        myHttpWebRequest.Accept = "application/json";
+        myHttpWebRequest.Credentials = myCredentialCache;
+        using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+        {
+            streamWriter.Write(jsondata);
+            streamWriter.Flush();
+            streamWriter.Close();
+        }
+        WebResponse myWebResponse = myWebRequest.GetResponse();
+        Stream responseStream = myWebResponse.GetResponseStream();
+        StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+        string pageContent = myStreamReader.ReadToEnd();
+        responseStream.Close();
+        myWebResponse.Close();
+        return pageContent;
+    }
+    public string PostInvoice(string url, string token, string jsondata)
+    {
+        Uri myUri = new Uri(url);
+        WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+        myWebRequest.ContentType = "multipart/form-data";
+        myWebRequest.Method = "POST";
+        HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+        myHttpWebRequest.PreAuthenticate = true;
+        myHttpWebRequest.Headers.Add("Authorization", "Bearer " + token);
+        using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+        {
+            streamWriter.Write(jsondata);
+            streamWriter.Flush();
+            streamWriter.Close();
+        }
+        WebResponse myWebResponse = myWebRequest.GetResponse();
+        Stream responseStream = myWebResponse.GetResponseStream();
+        StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+        string pageContent = myStreamReader.ReadToEnd();
+        responseStream.Close();
+        myWebResponse.Close();
+        return pageContent;
+    }
+    public string PostURLtoken(string url, string token, string jsondata)
+    {
+        Uri myUri = new Uri(url);
+        WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+        myWebRequest.ContentType = "application/json";
+        myWebRequest.Method = "POST";
+        HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+        myHttpWebRequest.PreAuthenticate = true;
+        myHttpWebRequest.Headers.Add("Authorization", "Basic " + token);
+        using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+        {
+            streamWriter.Write(jsondata);
+            streamWriter.Flush();
+            streamWriter.Close();
+        }
+        WebResponse myWebResponse = myWebRequest.GetResponse();
+        Stream responseStream = myWebResponse.GetResponseStream();
+        StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+        string pageContent = myStreamReader.ReadToEnd();
+        responseStream.Close();
+        myWebResponse.Close();
+        return pageContent;
+    }
+    public string GetTokenPID(string url, string username, string password)
+    {
+        Uri myUri = new Uri(url);
+        WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+        myWebRequest.ContentType = "application/json";
+        myWebRequest.Method = "POST";
+        HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+        myHttpWebRequest.PreAuthenticate = true;
+        //myHttpWebRequest.Headers.Add("U", username);
+        //myHttpWebRequest.Headers.Add("P", password);
+        string jsondata = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
+        using (var streamWriter = new StreamWriter(myWebRequest.GetRequestStream()))
+        {
+            streamWriter.Write(jsondata);
+            streamWriter.Flush();
+            streamWriter.Close();
+        }
+        WebResponse myWebResponse = myWebRequest.GetResponse();
+        Stream responseStream = myWebResponse.GetResponseStream();
+        StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+        string pageContent = myStreamReader.ReadToEnd();
+        responseStream.Close();
+        myWebResponse.Close();
+        return pageContent;
+    }
+}
+public partial class Error
+{
+    public int ID { get; set; }
+    public string ErrorName { get; set; }
+    public string Description { get; set; }
+}
+#endregion

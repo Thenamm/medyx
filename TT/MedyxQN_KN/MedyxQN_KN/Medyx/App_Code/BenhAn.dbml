@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Medyx_sanKT" Class="BenhAnDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=HTC-SRV3\SQLSERVER2012;Initial Catalog=Medyx_sanKT;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Medyx_YHCTTWConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.BenhNhan_TienSu_San_C" Member="LinQ_BenhNhan_TienSu_San_Cs">
+    <Type Name="LinQ_BenhNhan_TienSu_San_C">
+      <Column Name="MaBN" Type="System.String" DbType="NVarChar(15) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="STT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ThoigianThainghen" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="Tuoithai" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DienbienThai" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Cachde" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Tresosinh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="HauSan" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Khac" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MaMay" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Huy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NgaySD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NguoiSD" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

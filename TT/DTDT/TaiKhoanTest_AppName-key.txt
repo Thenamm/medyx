@@ -1,0 +1,13 @@
+Cơ sở test: 
+ID: 0172011
+Password: 5EnOdKpJcf
+Bác sĩ test:      
+ID: 01008520NA-CCHN
+Password: PIdLqsBZu7 
+Link cập nhật đơn:  http://beta.donthuocquocgia.vn/ 
+Link đẩy đơn thuốc: http://api-beta.donthuocquocgia.vn/"
+
+
+
+App Name: HTTest
+App Key: zegWYYek3L4oVuWXJ3LJAiSVJ5e4rlbvTxqRWfRWlmz3sPX9m0MHoKjPzaJv

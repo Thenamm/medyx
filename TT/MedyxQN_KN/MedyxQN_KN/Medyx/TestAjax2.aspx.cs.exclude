@@ -1,0 +1,311 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using HTC.Business.CategoryList;
+using HTC.Business.Duoc;
+using HTC.Common.Web;
+using Telerik.Web.UI;
+using System.Collections;
+using CrystalDecisions.CrystalReports.Engine;
+public partial class UI_Duoc_Duoc_TestAJAX2: Page
+{
+
+    private const string ViewState_loai = "_loai";
+    public byte _loai
+    {
+        get
+        {
+            if (ViewState[ViewState_loai] == null)
+            {
+                ViewState[ViewState_loai] = 1;
+            }
+
+            return Byte.Parse(ViewState[ViewState_loai].ToString());
+        }
+
+        set
+        {
+            ViewState[ViewState_loai] = value;
+        }
+
+    }
+    private const string ViewState_loaiphieu = "_loaiphieu";
+    public byte _loaiphieu
+    {
+        get
+        {
+            if (ViewState[ViewState_loaiphieu] == null)
+            {
+                if (Request["loaiphieu"] == null)
+                    Response.Redirect("~/Default.aspx");
+                else
+                    ViewState[ViewState_loaiphieu] = Convert.ToByte(Request["loaiphieu"].ToString());
+            }
+
+            return (byte)ViewState[ViewState_loaiphieu];
+        }
+
+        set
+        {
+            ViewState[ViewState_loaiphieu] = value;
+        }
+
+    }
+    private const string ViewState_daphat = "_daphat";
+    public Boolean _daphat
+    {
+        get
+        {
+            if (ViewState[ViewState_daphat] == null)
+            {
+                ViewState[ViewState_daphat] = false;
+            }
+
+            return (Boolean)ViewState[ViewState_daphat];
+        }
+
+        set
+        {
+            ViewState[ViewState_daphat] = value;
+        }
+
+    }
+    private const string ViewState_daduyet = "_daduyet";
+    public Boolean _daduyet
+    {
+        get
+        {
+            if (ViewState[ViewState_daduyet] == null)
+            {
+                ViewState[ViewState_daduyet] = true;
+            }
+
+            return (Boolean)ViewState[ViewState_daduyet];
+        }
+
+        set
+        {
+            ViewState[ViewState_daduyet] = value;
+        }
+
+    }
+    private const string ViewState_dadung = "_dadung";
+
+    public Boolean _dadung
+    {
+        get
+        {
+            if (ViewState[ViewState_dadung] == null)
+            {
+                ViewState[ViewState_dadung] = false;
+            }
+
+            return (Boolean)ViewState[ViewState_dadung];
+        }
+
+        set
+        {
+            ViewState[ViewState_dadung] = value;
+        }
+
+    }
+    private const string ViewState_makhoa = "_makhoa";
+
+    public string _makhoa
+    {
+        get
+        {
+            if (ViewState[ViewState_makhoa] == null)
+            {
+                if (Request["makhoa"] != null)
+
+                    ViewState[ViewState_makhoa] = Request["makhoa"].ToString();
+            }
+
+            return (string)ViewState[ViewState_makhoa];
+        }
+
+        set
+        {
+            ViewState[ViewState_makhoa] = value;
+        }
+
+    }
+    private const string ViewState_makho = "_makho";
+
+    public string _makho
+    {
+        get
+        {
+            if (ViewState[ViewState_makho] == null)
+            {
+                if (Request["makho"] != null)
+
+                    ViewState[ViewState_makho] = Request["makho"].ToString();
+            }
+
+            return (string)ViewState[ViewState_makho];
+        }
+
+        set
+        {
+            ViewState[ViewState_makho] = value;
+        }
+
+    }
+    private const string ViewState_CurrentTab = "_CurrentTab";
+    public int _CurrentTabIndex
+    {
+        get
+        {
+            if (ViewState[ViewState_CurrentTab] == null)
+                return -1;
+            else
+                return (int)ViewState[ViewState_CurrentTab];
+        }
+
+        set
+        {
+            ViewState[ViewState_CurrentTab] = value;
+        }
+    }
+    private const string ViewState_Khambenh_ThuocSD_BN_getsListInfo = "_Khambenh_ThuocSD_BN_getsListInfo";
+
+    public Khambenh_ThuocSD_BN_getsListInfo _Khambenh_ThuocSD_BN_getsListInfo
+    {
+        get
+        {
+
+
+            return (Khambenh_ThuocSD_BN_getsListInfo)ViewState[ViewState_Khambenh_ThuocSD_BN_getsListInfo];
+        }
+
+        set
+        {
+            ViewState[ViewState_Khambenh_ThuocSD_BN_getsListInfo] = value;
+        }
+
+    }
+
+    private const string ViewState_Khambenh_ThuocSD_TON_getsListInfo = "_Khambenh_ThuocSD_TON_getsListInfo";
+
+    public Khambenh_ThuocSD_TON_getsListInfo _Khambenh_ThuocSD_TON_getsListInfo
+    {
+        get
+        {
+            return (Khambenh_ThuocSD_TON_getsListInfo)ViewState[ViewState_Khambenh_ThuocSD_TON_getsListInfo];
+        }
+
+        set
+        {
+            ViewState[ViewState_Khambenh_ThuocSD_TON_getsListInfo] = value;
+        }
+
+    }
+    private const string ViewState_Selected_Ma = "_Selected_Ma";
+    public string _Selected_Ma
+    {
+        get
+        {
+
+
+            return (string)ViewState[ViewState_Selected_Ma];
+        }
+
+        set
+        {
+            ViewState[ViewState_Selected_Ma] = value;
+        }
+
+    }
+    private const string ViewState_phat = "_phat";
+    public Boolean _phat
+    {
+        get
+        {
+            if (ViewState[ViewState_phat] == null)
+            {
+                if (Request["phat"] == null)
+                    ViewState[ViewState_phat] = Convert.ToBoolean("1");
+                else
+                    ViewState[ViewState_phat] = Convert.ToBoolean(Request["phat"].ToString());
+            }
+
+            return (Boolean)ViewState[ViewState_phat];
+        }
+
+        set
+        {
+            ViewState[ViewState_phat] = value;
+        }
+
+    }
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {                                                
+        }
+    }  
+
+   
+
+    protected void grdChiTiet_ItemCommand(object sender, GridCommandEventArgs e)
+    {
+    }
+
+    protected void grdChiTiet_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+    {
+    }    
+
+    private void LoadData()
+    {       
+
+    }
+
+    protected void baraction_ButtonClick(object sender, RadToolBarEventArgs e)
+    {
+        if (e.Item.Visible == true && e.Item.Enabled == true)
+        {
+            switch (e.Item.Value)
+            {          
+                case "cmdView":
+                    
+                    LoadData();
+                    
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    }
+    protected void UpdateData()
+    { }
+
+    protected void RadTabStrip1_TabClick(object sender, RadTabStripEventArgs e)
+    {
+        RadTab selectedTab = e.Tab;
+
+        _CurrentTabIndex = selectedTab.Index;
+        
+    }
+    protected void cboDSKho_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        
+    }
+    protected void cboDSKhoa_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        LoadData();        
+    }
+
+    protected void btnClick_Click(object sender, EventArgs e)
+    {
+        btnClick2.Text = "Test";
+        
+    }
+}
+
+

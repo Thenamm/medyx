@@ -1,0 +1,81 @@
+﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" CodeFile="TestAjax2.aspx.cs" Inherits="UI_Duoc_Duoc_TestAJAX2" %>
+
+<%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <title>ASP.NET TabStrip Demo - Dynamic PageView Creation via AJAX</title>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+    <form id="form1" runat="server">
+
+        <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="LoadingPanel"></telerik:RadAjaxManager>
+
+        <telerik:RadScriptManager runat="server" ID="RadScriptManager1" EnableScriptCombine="true" />
+
+        <telerik:RadAjaxLoadingPanel runat="server" ID="LoadingPanel1" Skin="MetroTouch">
+        </telerik:RadAjaxLoadingPanel>
+        
+        <telerik:RadAjaxManagerProxy ID="RadAjaxManagerProxy" runat="server">
+            <AjaxSettings>
+                <telerik:AjaxSetting AjaxControlID="RadTabStrip1">
+                    <UpdatedControls>
+                        <telerik:AjaxUpdatedControl ControlID="RadTabStrip1"></telerik:AjaxUpdatedControl>
+                        <telerik:AjaxUpdatedControl ControlID="RadMultiPage1" LoadingPanelID="LoadingPanel1"></telerik:AjaxUpdatedControl>
+                    </UpdatedControls>
+                </telerik:AjaxSetting>
+                <telerik:AjaxSetting AjaxControlID="RadMultiPage1">
+                    <UpdatedControls>
+                        <telerik:AjaxUpdatedControl ControlID="RadMultiPage1"></telerik:AjaxUpdatedControl>
+                    </UpdatedControls>
+                </telerik:AjaxSetting>
+            </AjaxSettings>
+        </telerik:RadAjaxManagerProxy>
+
+        <script type="text/javascript">
+            /* <![CDATA[ */
+            function onTabSelecting(sender, args) {
+                if (args.get_tab().get_pageViewID()) {
+                    args.get_tab().set_postBack(false);
+                }
+            }
+            /* ]]> */
+
+            function myUserControlClickHandler() {
+                        $find("<%= RadAjaxManager.GetCurrent(Page).ClientID %>").ajaxRequest("content"); 
+                }
+
+        </script>
+
+          
+
+        <telerik:RadTabStrip runat="server"
+            ID="RadTabStrip1"
+            MultiPageID="RadMultiPage1"
+            SelectedIndex="0"
+            Width="100%"
+            OnClientTabSelecting="onTabSelecting">
+            <Tabs>
+                <telerik:RadTab Width="300px" Text="Danh sách VT dùng của bệnh nhân" Value="0"></telerik:RadTab>
+                <telerik:RadTab Text="Số lượng VT phát" Value="1"></telerik:RadTab>
+            </Tabs>
+        </telerik:RadTabStrip>
+
+        <telerik:RadMultiPage runat="server" ID="RadMultiPage1" SelectedIndex="0">
+            <telerik:RadPageView runat="server" ID="pagevChitiet">
+                <asp:Button runat="server" Text="Click to Change Tab 2'data" ID="btnClick" OnClick="btnClick_Click" OnClientClick="myUserControlClickHandler(); return false;" />
+            </telerik:RadPageView>
+            <telerik:RadPageView runat="server" ID="pagevDanhSach">
+                <asp:Button runat="server" Text="" ID="btnClick2" />
+            </telerik:RadPageView>
+        </telerik:RadMultiPage>
+
+
+    </form>
+</body>
+</html>
+
+

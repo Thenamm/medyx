@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HSDLGCS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <GIAYCHUNGSINH>
+    <GIAYCHUNGSINH>
+      <MA_GCS>23BA00000254</MA_GCS>
+      <MA_BN>2300000255</MA_BN>
+      <MA_CT>10290</MA_CT>
+      <SO_SERI />
+      <MA_BHXH_NND />
+      <MA_THE_NND />
+      <HOTEN_NND>NGUYEN VAN A</HOTEN_NND>
+      <NGAYSINH_NND>20230803</NGAYSINH_NND>
+      <MA_DANTOC_NND>00113</MA_DANTOC_NND>
+      <MA_QUOCTICH_NND />
+      <LOAI_GIAYTO_NND>0</LOAI_GIAYTO_NND>
+      <SO_CMND_NND />
+      <NGAYCAP_CCCD_NND>19000101</NGAYCAP_CCCD_NND>
+      <NOICAP_CCCD_NND />
+      <NOI_DK_THUONGTRU_NND />
+      <MATINH_CU_TRU>89</MATINH_CU_TRU>
+      <MAHUYEN_CU_TRU>886</MAHUYEN_CU_TRU>
+      <MAXA_CU_TRU>30337</MAXA_CU_TRU>
+      <HO_TEN_CHA />
+      <MA_THE_TAM />
+      <TEN_CON />
+      <GIOI_TINH_CON>0</GIOI_TINH_CON>
+      <SO_CON />
+      <LAN_SINH>0</LAN_SINH>
+      <SO_CON_SONG />
+      <CAN_NANG_CON />
+      <NGAY_SINH_CON>190001010000</NGAY_SINH_CON>
+      <NOI_SINH_CON />
+      <TINH_TRANG_CON />
+      <SINHCON_PHAUTHUAT>false</SINHCON_PHAUTHUAT>
+      <SINHCON_DUOI32TUAN>false</SINHCON_DUOI32TUAN>
+      <GHI_CHU />
+      <NGUOI_DO_DE>000000</NGUOI_DO_DE>
+      <NGUOI_GHI_PHIEU />
+      <MA_TTDV />
+      <NGAY_CT>19000101</NGAY_CT>
+      <SO />
+      <QUYEN_SO />
+    </GIAYCHUNGSINH>
+  </GIAYCHUNGSINH>
+</HSDLGCS>
